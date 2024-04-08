@@ -53,7 +53,7 @@ public class Equipe {
     }
 
     
-    public void ParticiperEquipe(EpreuveCollective epreuveCollective){
+    // public void ParticiperEquipe(EpreuveCollective epreuveCollective){
 
-    }
+    // }
 }

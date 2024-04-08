@@ -24,16 +24,8 @@ public abstract class Sport {
         
     }
 
-    public void ajouteEquipe(Equipe equipe, Epreuve epreuve) {
-
-    }
-
     public Athlete getVainqueur(Epreuve epreuve){
         return null;
-    }
-
-    public void simuMatch(){
-        
     }
     
 }
