@@ -15,7 +15,6 @@ public class Executable {
         epreuveEscrime.ajouterParticipant(athlete2);
         epreuveEscrime.ajouterParticipant(athlete3);
         epreuveEscrime.ajouterParticipant(athlete4);
-        epreuveEscrime.jouer();
 
         Athlete athlete5 = new Athlete("Hanks", "Tom", 'M', usa, 90, 70, 80);
         Athlete athlete6 = new Athlete("Doe", "Jane", 'M', usa, 60, 95, 90);
@@ -36,6 +35,24 @@ public class Executable {
         Athlete athlete12 = new Athlete("Doe", "Jack", 'M', usa, 75, 80, 80);
 
         Equipe equipe2 = new Equipe("VolleyFrance", 6, france);
+        equipe2.ajouterMembre(athlete1);
+        equipe2.ajouterMembre(athlete2);
+        equipe2.ajouterMembre(athlete9);
+        equipe2.ajouterMembre(athlete10);
+        equipe2.ajouterMembre(athlete11);
+        equipe2.ajouterMembre(athlete12);
 
+        Sport volley = new Volley();
+        EpreuveCollective epreuveVolley = new EpreuveCollective(volley);
+        epreuveVolley.ajouterParticipant(equipe1);
+        epreuveVolley.ajouterParticipant(equipe2);
+
+        JeuxOlympique jo = new JeuxOlympique();
+        jo.ajouterEpreuve(epreuveEscrime);
+        jo.ajouterEpreuve(epreuveVolley);
+        jo.lancerLesJeux();
+
+        epreuveVolley.jouer();
+        epreuveEscrime.jouer();
     }
 }
