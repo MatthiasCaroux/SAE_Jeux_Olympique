@@ -10,7 +10,10 @@ public class Equipe {
     private int enduranceEquipe;
     private List<Athlete> lesAthlètes;
 
-    public Equipe(int forceEquipe, int agilitéEquipe, int enduranceEquipe){
+    public Equipe(String nomEquipe, int nbAthlètes, String nationalité, int forceEquipe, int agilitéEquipe, int enduranceEquipe){
+        this.nomEquipe = nomEquipe;
+        this.nbAthlètes = nbAthlètes;
+        this.nationalité = nationalité;
         this.forceEquipe = forceEquipe;
         this.agilitéEquipe = agilitéEquipe;
         this.enduranceEquipe = enduranceEquipe;
@@ -20,6 +23,35 @@ public class Equipe {
     public void ajouteAthlète(Athlete a){
         this.lesAthlètes.add(a);
     }
+
+    public String getNomEquipe(){
+        return this.nomEquipe;
+    }
+
+    public int getNbAthlètes(){
+        return this.nbAthlètes;
+    }
+
+    public String getNationalité() {
+        return this.nationalité;
+    }
+
+    public int getForceEquipe() {
+        return this.forceEquipe;
+    }
+
+    public int getAgilitéEquipe() {
+        return this.agilitéEquipe;
+    }
+
+    public int getEnduranceEquipe() {
+        return this.enduranceEquipe;
+    }
+
+    public List<Athlete> getLesAthlètes() {
+        return this.lesAthlètes;
+    }
+
     
     // public void ParticiperEquipe(EpreuveCollective epreuveCollective){
 
