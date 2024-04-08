@@ -36,17 +36,6 @@ public class Executable {
         Athlete athlete12 = new Athlete("Doe", "Jack", 'M', usa, 75, 80, 80);
 
         Equipe equipe2 = new Equipe("VolleyFrance", 6, france);
-        equipe2.ajouterMembre(athlete1);
-        equipe2.ajouterMembre(athlete2);
-        equipe2.ajouterMembre(athlete9);
-        equipe2.ajouterMembre(athlete10);
-        equipe2.ajouterMembre(athlete11);
-        equipe2.ajouterMembre(athlete12);
 
-        Sport volley = new Volley();
-        EpreuveCollective epreuveVolley = new EpreuveCollective(volley);
-        epreuveVolley.ajouterParticipant(equipe1);
-        epreuveVolley.ajouterParticipant(equipe2);
-        epreuveVolley.jouer();
     }
 }
