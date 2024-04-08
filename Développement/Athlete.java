@@ -32,7 +32,7 @@ public class Athlete {
         this.prenom = prenom;
     }
 
-    public String getPreom() {
+    public String getPrenom() {
         return this.prenom;
     }
 
