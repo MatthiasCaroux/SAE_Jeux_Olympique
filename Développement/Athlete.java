@@ -59,4 +59,16 @@ public class Athlete {
     public void addScore(int score) {
         this.score += score;
     }
+
+    public void setPays(Pays pays) {
+        this.pays = pays;
+    }
+
+    public Pays getPays() {
+        return this.pays;
+    }
+
+    public char getSexe() {
+        return this.sexe;
+    }
 }
