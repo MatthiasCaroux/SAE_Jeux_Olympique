@@ -14,7 +14,7 @@ public class EpreuveIndividuelle extends Epreuve{
      * @param athlete
      */
     public void ajouterParticipant(Athlete athlete) {
-        
+        this.participants.add(athlete);
     }
 
     @Override
