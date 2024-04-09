@@ -4,6 +4,11 @@ public abstract class Sport {
     private String nomSport;
     private boolean estCollectif;
 
+    public Sport(String nomSport, boolean estCollectif) {
+        this.nomSport = nomSport;
+        this.estCollectif = estCollectif;
+    }
+
     public void ajouteAthlete(Athlete athlete, Epreuve epreuve) {
 
     }

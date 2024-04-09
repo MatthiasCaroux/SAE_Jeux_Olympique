@@ -10,7 +10,7 @@ public class Executable {
         Athlete athlete4 = new Athlete("Patrick", "Mark", 'M', usa, 80, 85, 85);
 
         Sport epee = new Epee();
-        EpreuveIndividuelle epreuveEscrime = new EpreuveIndividuelle(epee);
+        EpreuveIndividuelle epreuveEscrime = new EpreuveIndividuelle(epee, 'M');
         epreuveEscrime.ajouterParticipant(athlete1);
         epreuveEscrime.ajouterParticipant(athlete2);
         epreuveEscrime.ajouterParticipant(athlete3);
@@ -43,14 +43,14 @@ public class Executable {
         equipe2.ajouterMembre(athlete12);
 
         Sport volley = new Volley();
-        EpreuveCollective epreuveVolley = new EpreuveCollective(volley);
+        EpreuveCollective epreuveVolley = new EpreuveCollective(volley, 'M');
         epreuveVolley.ajouterParticipant(equipe1);
         epreuveVolley.ajouterParticipant(equipe2);
 
-        JeuxOlympique jo = new JeuxOlympique();
-        jo.ajouterEpreuve(epreuveEscrime);
-        jo.ajouterEpreuve(epreuveVolley);
-        jo.lancerLesJeux();
+        JeuxOlympique jo2024 = new JeuxOlympique(2024, "Paris", "JO 2024");
+        jo2024.ajouteEpreuve(epreuveEscrime);
+        jo2024.ajouteEpreuve(epreuveVolley);
+        jo2024.lancerLesJO();
 
         epreuveVolley.jouer();
         epreuveEscrime.jouer();
