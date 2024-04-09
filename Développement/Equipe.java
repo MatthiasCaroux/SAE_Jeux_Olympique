@@ -4,23 +4,38 @@ import java.util.ArrayList;
 public class Equipe {
     private String nomEquipe;
     private int nbAthlètes;
-    private String nationalité;
+    private Pays nationalité;
     private int forceEquipe;
     private int agilitéEquipe;
     private int enduranceEquipe;
     private List<Athlete> lesAthlètes;
 
-    public Equipe(String nomEquipe, int nbAthlètes, String nationalité, int forceEquipe, int agilitéEquipe, int enduranceEquipe){
+    public Equipe(String nomEquipe, int nbAthlètes, Pays pays){
         this.nomEquipe = nomEquipe;
         this.nbAthlètes = nbAthlètes;
         this.nationalité = nationalité;
-        this.forceEquipe = forceEquipe;
-        this.agilitéEquipe = agilitéEquipe;
-        this.enduranceEquipe = enduranceEquipe;
         this.lesAthlètes = new ArrayList<>();
+
     }
 
-    public void ajouteAthlète(Athlete a){
+    /**
+     * Met a jour les attributs de l'équipe en fonction des attributs des athlètes
+     */
+    public void miseAJourAttributsEquipe(){
+        int force = 0;
+        int agilité = 0;
+        int endurance = 0;
+        for (Athlete a : this.lesAthlètes){
+            force += a.getForce();
+            agilité += a.getAgilite();
+            endurance += a.getEndurance();
+        }
+        this.forceEquipe = force;
+        this.agilitéEquipe = agilité;
+        this.enduranceEquipe = endurance;
+    }
+
+    public void ajouterMembre(Athlete a){
         this.lesAthlètes.add(a);
     }
 
@@ -32,7 +47,7 @@ public class Equipe {
         return this.nbAthlètes;
     }
 
-    public String getNationalité() {
+    public Pays getNationalité() {
         return this.nationalité;
     }
 

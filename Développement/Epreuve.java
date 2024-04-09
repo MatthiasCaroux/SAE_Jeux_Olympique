@@ -1,11 +1,15 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Epreuve{
     private char sexe;
     private Sport sport;
+    
 
     public Epreuve(Sport sport, char sexe){
         this.sport = sport;
         this.sexe = sexe;
+        
     }
 
     public void setSport(){
@@ -23,8 +27,6 @@ public abstract class Epreuve{
     public char getSexe(){
         return this.sexe;
     }
-
-    public abstract void ajouterParticipant(); 
 
     public abstract void jouer();
 
