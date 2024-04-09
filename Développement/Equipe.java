@@ -13,9 +13,8 @@ public class Equipe {
     public Equipe(String nomEquipe, int nbAthlètes, Pays pays){
         this.nomEquipe = nomEquipe;
         this.nbAthlètes = nbAthlètes;
-        this.nationalité = nationalité;
+        this.nationalité = pays;
         this.lesAthlètes = new ArrayList<>();
-
     }
 
     /**
