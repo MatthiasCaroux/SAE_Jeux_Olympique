@@ -10,11 +10,6 @@ public abstract class Sport {
         this.estCollectif = estCollectif;
     }
 
-
-    public Pays getPaysVainqueur(){
-        return null;
-    }
-
     public List<Athlete> getAthletes(){
         return this.lesAthletes;
     }
@@ -27,11 +22,11 @@ public abstract class Sport {
         return this.nomSport;
     }
 
-
-
-    public void classement(){
-        
+    public Pays getPaysVainqueur(){
+        return null;
     }
+
+    public void classement(){};
 
     
 }

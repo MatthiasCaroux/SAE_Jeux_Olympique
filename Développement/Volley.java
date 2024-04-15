@@ -11,10 +11,6 @@ public class Volley extends Sport{
         
     }
 
-    @Override
-    public Pays getPaysVainqueur() {
-        return null;
-    }
 
     @Override
     public List<Athlete> getAthletes() {
@@ -24,7 +20,12 @@ public class Volley extends Sport{
 
     @Override
     public void classement() {
-        
+        // a modif
+    }
+
+    @Override
+    public Pays getPaysVainqueur() {
+        return null; // a modif
     }
 
 }
