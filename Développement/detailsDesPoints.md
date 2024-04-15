@@ -9,12 +9,26 @@ Le fleuret necessite plus de tactique que l'épée, nous accorderons donc plus d
 #### Fleuret :
 //TODO
 ### Athltisme Haies :
-pour le 110m haies, 
+pour le 110m haies, la force est très importante pour courir vite et sauter les haies. l'endurence n'est pas tres importante car le 110 m haies est un effort intense court. l'agilité est importante afin de ne pas louper de pas entre les haies et de sauter comme il faut par dessus
+- force : 65    
+- endurence : 5
+- agilité : 30
 
 ### Natation nage libre :
-
+pour le 100m brasse, la force est tres importante pour avancer vite, l'agilité est moins présente que sur le 110m haies, mais l'endurence est très importante pour ce sport.
+- force : 50
+- endurence : 35
+- agilité : 15
 ## Sports collectifs:
+pour les sports collectifs, il faut faire une moyenne de toutes les moyennes, et, si c'est possible, prendre un joueur de l'équipe aléatoire et on lui change ses pourcentages (le goal au hand ou le libéro au volley)
+
 ### Volley:
 ### Athletisme relai:
+pour le 4x100m relai, on prends des stats qui ressemblent au 110m haies, mais on met plus de force.
+- force : 85
+- endurence : 5
+- agilité : 10
+
 ### Natation Relai :
+pour le 4x100m nage libre, on prends les mêmes stats que pour la brasse en individuel.
 ### HandBall :
