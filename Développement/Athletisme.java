@@ -8,8 +8,4 @@ public abstract class Athletisme extends Sport{
     public Pays getPaysVainqueur(){
         return null;
     }
-
-    @Override
-    public void classement(){};
-    
 }

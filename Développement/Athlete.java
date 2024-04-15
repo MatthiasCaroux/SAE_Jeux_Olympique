@@ -1,4 +1,4 @@
-public class Athlete {
+public class Athlete implements Comparable<Athlete> {
 
     private String nom;
     private String prenom;
@@ -70,5 +70,10 @@ public class Athlete {
 
     public char getSexe() {
         return this.sexe;
+    }
+
+    @Override
+    public int compareTo(Athlete a) {
+        return this.score - a.getScore();
     }
 }
