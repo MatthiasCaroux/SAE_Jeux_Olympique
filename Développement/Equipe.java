@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class Equipe {
+public class Equipe implements Comparable<Equipe> {
     private String nomEquipe;
     private int nbAthlètes;
     private Pays nationalité;
@@ -9,12 +9,14 @@ public class Equipe {
     private int agilitéEquipe;
     private int enduranceEquipe;
     private List<Athlete> lesAthlètes;
+    private int score;
 
     public Equipe(String nomEquipe, int nbAthlètes, Pays pays){
         this.nomEquipe = nomEquipe;
         this.nbAthlètes = nbAthlètes;
         this.nationalité = pays;
         this.lesAthlètes = new ArrayList<>();
+        this.score = 0;
     }
 
     /**
@@ -70,4 +72,9 @@ public class Equipe {
     // public void ParticiperEquipe(EpreuveCollective epreuveCollective){
 
     // }
+
+    @Override
+    public int compareTo(Equipe o) {
+        return this.score - o.score;
+    }
 }
