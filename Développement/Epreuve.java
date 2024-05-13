@@ -26,7 +26,8 @@ public abstract class Epreuve{
     }
 
     public Pays getVainqueur(){
-        return this.sport.getPaysVainqueur();
+        //TODO
+        return null;
     }
 
     public abstract void jouer();

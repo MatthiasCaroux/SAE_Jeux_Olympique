@@ -22,9 +22,7 @@ public abstract class Sport {
         return this.nomSport;
     }
 
-    public Pays getPaysVainqueur(){
-        return null;
-    }
+    public abstract Pays getPaysVainqueur();
 
     public void classement(){};
 

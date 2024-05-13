@@ -9,6 +9,10 @@ public class EpreuveIndividuelle extends Epreuve{
         this.participants = new ArrayList<>();
     }
 
+    public List<Athlete> getParticipants() {
+        return participants;
+    }
+
     /**
      * Met un athlete dans la liste des participants
      * @param athlete
@@ -21,6 +25,7 @@ public class EpreuveIndividuelle extends Epreuve{
     public void jouer() {
         
     }
+
 
     
 }

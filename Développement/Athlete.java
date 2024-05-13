@@ -76,4 +76,9 @@ public class Athlete implements Comparable<Athlete> {
     public int compareTo(Athlete a) {
         return this.score - a.getScore();
     }
+
+    @Override
+    public String toString() {
+        return this.nom + " " + this.prenom + " (" + this.pays.getNomPays() + ")";
+    }
 }
