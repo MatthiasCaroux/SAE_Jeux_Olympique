@@ -67,11 +67,10 @@ public class Equipe implements Comparable<Equipe> {
     public List<Athlete> getLesAthlètes() {
         return this.lesAthlètes;
     }
-
     
-    // public void ParticiperEquipe(EpreuveCollective epreuveCollective){
-
-    // }
+    public void ParticiperEquipe(EpreuveCollective epreuveCollective){
+        epreuveCollective.ajouterParticipant(this);
+    }
 
     @Override
     public int compareTo(Equipe o) {
