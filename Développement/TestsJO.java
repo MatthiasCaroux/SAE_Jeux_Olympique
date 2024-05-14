@@ -18,7 +18,7 @@ public class TestsJO {
         System.out.println(e.getPaysVainqueur()); 
         System.out.println(a1.getScore());
         System.out.println(e.getParticipants());
-        System.out.println(h.getAthletes());
+        System.out.println(h.getParticipants());
         e.jouer();
         System.out.println(a1.getScore());
         System.out.println(a2.getScore());

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class EpreuveIndividuelle extends Epreuve{
+public abstract class EpreuveIndividuelle extends Epreuve{
     private List<Athlete> participants;
 
     public EpreuveIndividuelle(Sport sport, char sexe) {
@@ -20,7 +20,7 @@ public class EpreuveIndividuelle extends Epreuve{
      */
     public void ajouterParticipant(Athlete athlete) {
         this.participants.add(athlete);
-        this.getSport().getAthletes().add(athlete);
+        this.getSport().getParticipants().add(athlete);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class EpreuveIndividuelle extends Epreuve{
 
     @Override
     public Athlete getVainqueur() {
-        return Collections.max(participants);
+        return Collections.max(this.participants);
     }
 
     @Override
@@ -46,6 +46,6 @@ public class EpreuveIndividuelle extends Epreuve{
         return this.getVainqueur().getPays();
     }
 
-
-    
+    @Override
+    public abstract Equipe getEquipeVainqueur();
 }

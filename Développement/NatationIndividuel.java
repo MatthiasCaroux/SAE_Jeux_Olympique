@@ -15,7 +15,7 @@ public class NatationIndividuel extends Natation{
     @Override
     public void jouer(){
         double score = 0;
-        for (Athlete athlete : this.getAthletes()) {
+        for (Athlete athlete : this.getParticipants()) {
             score = athlete.getAgilite() * 0.5 + athlete.getEndurance() * 0.35 + athlete.getForce() * 0.15;
             athlete.setScore((int) score);
         }

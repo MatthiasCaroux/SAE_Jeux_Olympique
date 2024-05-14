@@ -27,6 +27,8 @@ public abstract class Epreuve{
 
     public abstract Athlete getVainqueur();
 
+    public abstract Equipe getEquipeVainqueur();
+
     public abstract Pays getPaysVainqueur();
 
     public abstract void jouer();
