@@ -38,6 +38,7 @@ public class Equipe implements Comparable<Equipe> {
 
     public void ajouterMembre(Athlete a){
         this.lesAthlètes.add(a);
+        this.miseAJourAttributsEquipe();
     }
 
     public String getNomEquipe(){
@@ -70,6 +71,10 @@ public class Equipe implements Comparable<Equipe> {
     
     public void ParticiperEquipe(EpreuveCollective epreuveCollective){
         epreuveCollective.ajouterParticipant(this);
+    }
+
+    public void setScore(int score){
+        this.score = score;
     }
 
     @Override

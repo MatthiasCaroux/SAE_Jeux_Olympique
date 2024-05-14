@@ -6,7 +6,7 @@ public class Epee extends Escrime{
 
     @Override
     public void jouer() {
-        for (Athlete athlete : this.getAthletes()) {
+        for (Athlete athlete : this.getParticipants()) {
             double score = athlete.getAgilite() * 0.20 + athlete.getEndurance() * 0.40 + athlete.getForce() * 0.40;
             athlete.setScore((int) score);
         }
