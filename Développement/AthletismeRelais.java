@@ -5,13 +5,11 @@ public class AthletismeRelais extends Athletisme{
     }
 
     @Override
-    public Pays getPaysVainqueur(){
-        return null; // a modif
-    }
-
-    @Override
-    public void classement(){
-        // a modif
-    }
-    
+    public void jouer() {
+        // for (Athlete athlete : this.getAthletes()) {
+        //     double score = athlete.getAgilite() * 0.30 + athlete.getEndurance() * 0.05 + athlete.getForce() * 0.65;
+        //     athlete.setScore((int) score);
+        // }
+        // TODO
+    }   
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Sport {
@@ -8,6 +9,7 @@ public abstract class Sport {
     public Sport(String nomSport, boolean estCollectif) {
         this.nomSport = nomSport;
         this.estCollectif = estCollectif;
+        this.lesAthletes = new ArrayList<>();
     }
 
     public List<Athlete> getAthletes(){
@@ -22,11 +24,5 @@ public abstract class Sport {
         return this.nomSport;
     }
 
-    public Pays getPaysVainqueur(){
-        return null;
-    }
-
-    public void classement(){};
-
-    
+    public abstract void jouer(); 
 }
