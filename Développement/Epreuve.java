@@ -31,6 +31,10 @@ public abstract class Epreuve{
 
     public abstract void jouer();
 
+    protected abstract Object getNom();
+
+    protected abstract void add(Athlete athlete);
+
 }
 
 
