@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class EpreuveIndividuelle extends Epreuve{
@@ -19,11 +20,30 @@ public class EpreuveIndividuelle extends Epreuve{
      */
     public void ajouterParticipant(Athlete athlete) {
         this.participants.add(athlete);
+        this.getSport().getAthletes().add(athlete);
     }
 
     @Override
     public void jouer() {
-        
+        this.getSport().jouer();
+        // this.getClassement();
+    }
+
+    public List<Athlete> getClassement() {
+        List<Athlete> copy = new ArrayList<>(this.participants);
+        Collections.sort(copy);
+        Collections.reverse(copy);
+        return copy;
+    }
+
+    @Override
+    public Athlete getVainqueur() {
+        return Collections.max(participants);
+    }
+
+    @Override
+    public Pays getPaysVainqueur() {
+        return this.getVainqueur().getPays();
     }
 
 

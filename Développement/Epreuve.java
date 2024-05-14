@@ -25,10 +25,9 @@ public abstract class Epreuve{
         return this.sexe;
     }
 
-    public Pays getVainqueur(){
-        //TODO
-        return null;
-    }
+    public abstract Athlete getVainqueur();
+
+    public abstract Pays getPaysVainqueur();
 
     public abstract void jouer();
 

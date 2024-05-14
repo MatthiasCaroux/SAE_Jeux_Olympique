@@ -5,13 +5,10 @@ public class Fleuret extends Escrime{
     }
 
     @Override
-    public Pays getPaysVainqueur(){
-        return null ;// a modif;
+    public void jouer() {
+        for (Athlete athlete : this.getAthletes()) {
+            double score = athlete.getAgilite() * 0.40 + athlete.getEndurance() * 0.40 + athlete.getForce() * 0.20;
+            athlete.setScore((int) score);
+        }
     }
-
-    @Override
-    public void classement(){
-        // a modif
-    }
-    
 }

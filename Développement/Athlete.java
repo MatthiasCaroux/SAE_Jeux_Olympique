@@ -79,6 +79,6 @@ public class Athlete implements Comparable<Athlete> {
 
     @Override
     public String toString() {
-        return this.nom + " " + this.prenom + " (" + this.pays.getNomPays() + ")";
+        return this.nom + " " + this.prenom;
     }
 }
