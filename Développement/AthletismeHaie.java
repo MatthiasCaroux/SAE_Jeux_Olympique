@@ -6,8 +6,9 @@ public class AthletismeHaie extends Athletisme{
 
     @Override
     public void jouer() {
+        double score = 0;
         for (Athlete athlete : this.getAthletes()) {
-            double score = athlete.getAgilite() * 0.30 + athlete.getEndurance() * 0.05 + athlete.getForce() * 0.65;
+            score = athlete.getAgilite() * 0.30 + athlete.getEndurance() * 0.05 + athlete.getForce() * 0.65;
             athlete.setScore((int) score);
         }
     }
