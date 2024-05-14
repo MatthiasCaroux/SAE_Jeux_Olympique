@@ -10,11 +10,11 @@ public class Volley extends Sport {
 
     public void ajouteAthlete(Athlete athlete, Epreuve epreuve) {
 
-        if (epreuve instanceof EpreuveCollective && epreuve.getNom().equals("Volley")) {
-            epreuve.add(athlete);
-        } else {
-            System.out.println("Erreur : Cette épreuve n'est pas adaptée au volley.");
-        }
+        // if (epreuve instanceof EpreuveCollective && epreuve.getNom().equals("Volley")) {
+        //     epreuve.add(athlete);
+        // } else {
+        //     System.out.println("Erreur : Cette épreuve n'est pas adaptée au volley.");
+        // }
         // a modif
 
     }

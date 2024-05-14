@@ -15,4 +15,9 @@ public class Pays {
     public int getScoreTotal() {
         return this.scoreTotal;
     }
+
+    @Override
+    public String toString() {
+        return this.nomPays;
+    }
 }
