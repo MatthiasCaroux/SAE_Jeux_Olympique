@@ -1,4 +1,18 @@
 public abstract class Epreuve{
+    
+
+    public enum Sport{
+        ATHLETISME, 
+        NATATION,
+        NATATION_RELAI,
+        GYMNASTIQUE, 
+        FOOTBALL, 
+        ASKETBALL, 
+        HANDBALL, 
+        VOLLEYBALL
+    }
+
+
     private char sexe;
     private Sport sport;
     
@@ -31,11 +45,7 @@ public abstract class Epreuve{
 
     public abstract Pays getPaysVainqueur();
 
-    public abstract void jouer();
-
-    // protected abstract Object getNom();
-
-    // protected abstract void add(Athlete athlete);
+    public abstract void participer(Participant participant);
 
 }
 

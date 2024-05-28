@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Sport{//<T> {
+public abstract class Sport{
     private String nomSport;
     private boolean estCollectif;
     private List<Athlete> lesParticipants;

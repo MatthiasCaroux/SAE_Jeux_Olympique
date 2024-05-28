@@ -1,4 +1,4 @@
-public class Athlete implements Comparable<Athlete> {
+public class Athlete implements Comparable<Athlete>, Participant {
 
     private String nom;
     private String prenom;
@@ -80,5 +80,10 @@ public class Athlete implements Comparable<Athlete> {
     @Override
     public String toString() {
         return this.nom + " " + this.prenom;
+    }
+
+    @Override
+    public int getAgilité() {
+        return this.agilite;
     }
 }
