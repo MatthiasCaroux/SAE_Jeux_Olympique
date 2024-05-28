@@ -1,28 +1,37 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public abstract class Sport{
+public class Sport{
+
     private String nomSport;
     private boolean estCollectif;
-    private List<Athlete> lesParticipants;
-    private List<Equipe> lesEquipesParticipantes;
+    private List<Participant> lesParticipants;
+    private static Map<String, Integer> lesCoefs;
 
     public Sport(String nomSport, boolean estCollectif) {
         this.nomSport = nomSport;
         this.estCollectif = estCollectif;
-        if (estCollectif){
-            this.lesParticipants = null;
-            this.lesEquipesParticipantes = new ArrayList<>();
-        }
-        else{
-            this.lesParticipants = new ArrayList<>();
-            this.lesEquipesParticipantes = null;
-        }
+        this.lesParticipants = new ArrayList<>();
+        this.lesCoefs = new HashMap<>();
+        lesCoefs.put("ATHLETISME", 1);
+        lesCoefs.put("NATATION", 2);
+        lesCoefs.put("NATATION_RELAI", 3);
+        lesCoefs.put("GYMNASTIQUE", 4);
+        lesCoefs.put("FOOTBALL", 5);
+        lesCoefs.put("BASKETBALL", 6);
+        lesCoefs.put("HANDBALL", 7);
 
     }
 
-    public List<Athlete> getParticipants(){
+
+    public List<Participant> getParticipants(){
         return this.lesParticipants;
+    }
+
+    public Map<String, Integer> getLesCoefs(){
+        return this.lesCoefs;
     }
 
     public boolean estCollectif(){
@@ -33,9 +42,16 @@ public abstract class Sport{
         return this.nomSport;
     }
 
-    public List<Equipe> getEquipesParticipantes(){
-        return this.lesEquipesParticipantes;
-    }
 
-    public abstract void jouer(); 
+
+    public enum TypeSport{
+        ATHLETISME, 
+        NATATION,
+        NATATION_RELAI,
+        GYMNASTIQUE, 
+        FOOTBALL, 
+        BASKETBALL, 
+        HANDBALL, 
+        VOLLEYBALL
+    }
 }

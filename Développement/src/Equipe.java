@@ -9,7 +9,13 @@ public class Equipe implements Comparable<Equipe>, Participant {
 
     public Equipe(String nomEquipe, Pays pays){
         this.lesAthlètes = new ArrayList<>();
+        this.nomEquipe = nomEquipe;
         this.score = 0;
+        this.nationalité = pays;
+    }
+
+    public Pays getPays(){
+        return this.nationalité;
     }
 
 
@@ -63,9 +69,6 @@ public class Equipe implements Comparable<Equipe>, Participant {
     }
 
 
-
-    
-
     public void setScore(int score){
         this.score = score;
     }
@@ -73,6 +76,11 @@ public class Equipe implements Comparable<Equipe>, Participant {
     @Override
     public int compareTo(Equipe o) {
         return this.score - o.score;
+    }
+
+    @Override
+    public String toString() {
+        return this.nomEquipe;
     }
 
 }

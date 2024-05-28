@@ -78,12 +78,12 @@ public class Athlete implements Comparable<Athlete>, Participant {
     }
 
     @Override
-    public String toString() {
-        return this.nom + " " + this.prenom;
+    public int getAgilité() {
+        return this.agilite;
     }
 
     @Override
-    public int getAgilité() {
-        return this.agilite;
+    public String toString() {
+        return this.nom + " " + this.prenom;
     }
 }

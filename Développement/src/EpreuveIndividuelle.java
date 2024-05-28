@@ -1,11 +1,29 @@
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-public abstract class EpreuveIndividuelle extends Epreuve{
+public class EpreuveIndividuelle extends Epreuve {
 
-    public EpreuveIndividuelle(Epreuve.Sport sport, char sexe) {
+    private ArrayList<Athlete> athletes = new ArrayList<>();
+
+    public EpreuveIndividuelle(Sport sport, char sexe) {
         super(sport, sexe);
+        this.athletes = new ArrayList<>();
     }
-    
+
+    @Override
+    public Participant getVainqueur() {
+        return null;
+    }
+
+
+    @Override
+    public Pays getPaysVainqueur() {
+        return null;
+    }
+
+    @Override
+    public void participer(Participant participant) {
+        if (participant instanceof Athlete) {
+            this.athletes.add((Athlete) participant);
+        }
+    }
 }
