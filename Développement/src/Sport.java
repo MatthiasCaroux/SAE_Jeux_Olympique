@@ -1,41 +1,54 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+public class Sport{
 
-public abstract class Sport{//<T> {
-    private String nomSport;
-    private boolean estCollectif;
-    private List<Athlete> lesParticipants;
-    private List<Equipe> lesEquipesParticipantes;
+    public enum TypeSport{
+        NatationBrasse,
+        NatationRelais,
+        Handball,
+        Volley,
+        Escrimefleuret,
+        EscrimeÉpée,
+        AthlétismeHaie,
+        AthlétismeRelais
+    }
 
-    public Sport(String nomSport, boolean estCollectif) {
+    private TypeSport nomSport;
+    private List<Participant> lesParticipants;
+    private static Map<String, Integer> lesCoefs;
+
+    public Sport(TypeSport nomSport) {
         this.nomSport = nomSport;
-        this.estCollectif = estCollectif;
-        if (estCollectif){
-            this.lesParticipants = null;
-            this.lesEquipesParticipantes = new ArrayList<>();
-        }
-        else{
-            this.lesParticipants = new ArrayList<>();
-            this.lesEquipesParticipantes = null;
-        }
+        this.lesParticipants = new ArrayList<>();
+        this.lesCoefs = new HashMap<>();
+        lesCoefs.put("ATHLETISME", 1);
+        lesCoefs.put("NATATION", 2);
+        lesCoefs.put("NATATION_RELAI", 3);
+        lesCoefs.put("GYMNASTIQUE", 4);
+        lesCoefs.put("FOOTBALL", 5);
+        lesCoefs.put("BASKETBALL", 6);
+        lesCoefs.put("HANDBALL", 7);
+        lesCoefs.put("VOLLEYBALL", 8);
+        lesCoefs.put("ESCRIME", 9);
+        
+
 
     }
 
-    public List<Athlete> getParticipants(){
+
+    public List<Participant> getParticipants(){
         return this.lesParticipants;
     }
 
-    public boolean estCollectif(){
-        return this.estCollectif;
+    public Map<String, Integer> getLesCoefs(){
+        return this.lesCoefs;
     }
 
-    public String getNomSport(){
+    public TypeSport getNomSport(){
         return this.nomSport;
     }
 
-    public List<Equipe> getEquipesParticipantes(){
-        return this.lesEquipesParticipantes;
-    }
-
-    public abstract void jouer(); 
+    
 }

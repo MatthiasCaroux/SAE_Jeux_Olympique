@@ -1,4 +1,4 @@
-public class Athlete implements Comparable<Athlete> {
+public class Athlete implements Comparable<Athlete>, Participant {
 
     private String nom;
     private String prenom;
@@ -64,6 +64,7 @@ public class Athlete implements Comparable<Athlete> {
         this.pays = pays;
     }
 
+    @Override
     public Pays getPays() {
         return this.pays;
     }
@@ -75,6 +76,11 @@ public class Athlete implements Comparable<Athlete> {
     @Override
     public int compareTo(Athlete a) {
         return this.score - a.getScore();
+    }
+
+    @Override
+    public int getAgilité() {
+        return this.agilite;
     }
 
     @Override

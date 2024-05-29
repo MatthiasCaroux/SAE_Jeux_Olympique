@@ -1,39 +1,44 @@
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-public abstract class EpreuveCollective extends Epreuve{
-    private List<Equipe> participants;
+public class EpreuveCollective extends Epreuve{
+
+    private ArrayList<Equipe> equipes = new ArrayList<>();
+    private Sport sport;
 
     public EpreuveCollective(Sport sport, char sexe) {
         super(sport, sexe);
-        this.participants = new ArrayList<>();
-    } 
-
-    public List<Equipe> getParticipants() {
-        return participants;
+        this.equipes = new ArrayList<>();
     }
 
-    public void ajouterParticipant(Equipe equipe) {
-        this.participants.add(equipe);
-        this.getSport().getEquipesParticipantes().add(equipe);
+    public ArrayList<Equipe> getEquipes() {
+        return this.equipes;
     }
 
     @Override
-    public void jouer() {
-        
+    public Participant getVainqueur() {
+        int scoreMax = 0;
+        Equipe equipeGagnante = this.equipes.get(0);
+        for (Equipe equipe : equipes) {
+            int scoreEquipe = equipe.getAgilité() + equipe.getEndurance();
+            if (scoreEquipe > scoreMax) {
+                scoreMax = scoreEquipe;
+                equipeGagnante = equipe;
+            }
+        }
+        return equipeGagnante;
     }
 
-    @Override
-    public Equipe getEquipeVainqueur() {
-        return Collections.max(this.participants);
-    }
 
     @Override
     public Pays getPaysVainqueur() {
-        return this.getEquipeVainqueur().getNationalité();
+        return getVainqueur().getPays();
     }
 
     @Override
-    public abstract Athlete getVainqueur();
+    public void participer(Participant participant) {
+        if(participant instanceof Equipe){
+            this.equipes.add((Equipe) participant);
+        }
+    }
+    
 }

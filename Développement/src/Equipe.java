@@ -1,44 +1,65 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class Equipe implements Comparable<Equipe> {
+public class Equipe implements Comparable<Equipe>, Participant {
     private String nomEquipe;
-    private int nbAthlètes;
     private Pays nationalité;
-    private int forceEquipe;
-    private int agilitéEquipe;
-    private int enduranceEquipe;
     private List<Athlete> lesAthlètes;
     private int score;
 
-    public Equipe(String nomEquipe, int nbAthlètes, Pays pays){
-        this.nomEquipe = nomEquipe;
-        this.nbAthlètes = nbAthlètes;
-        this.nationalité = pays;
+    public Equipe(String nomEquipe, Pays pays){
         this.lesAthlètes = new ArrayList<>();
+        this.nomEquipe = nomEquipe;
         this.score = 0;
+        this.nationalité = pays;
     }
 
-    /**
-     * Met a jour les attributs de l'équipe en fonction des attributs des athlètes
-     */
-    public void miseAJourAttributsEquipe(){
-        int force = 0;
-        int agilité = 0;
-        int endurance = 0;
-        for (Athlete a : this.lesAthlètes){
-            force += a.getForce();
-            agilité += a.getAgilite();
-            endurance += a.getEndurance();
-        }
-        this.forceEquipe = force;
-        this.agilitéEquipe = agilité;
-        this.enduranceEquipe = endurance;
+    @Override
+    public Pays getPays(){
+        return this.nationalité;
     }
+
+
+    public List<Athlete> getLesAthlètes() {
+        return this.lesAthlètes;
+    }
+
+
+    @Override
+    public int getForce() {
+        int forceEquipe = 0;
+        for (Athlete athlete : lesAthlètes) {
+            forceEquipe += athlete.getForce();
+        }
+        return forceEquipe;
+    }
+
+    @Override
+    public int getEndurance() {
+        int enduranceEquipe = 0;
+        for (Athlete athlete : lesAthlètes) {
+            enduranceEquipe += athlete.getEndurance();
+        }
+        return enduranceEquipe;
+    }
+
+    @Override
+    public int getAgilité() {
+        int agilitéEquipe = 0;
+        for (Athlete athlete : lesAthlètes) {
+            agilitéEquipe += athlete.getAgilité();
+        }
+        return agilitéEquipe;
+    }
+    
 
     public void ajouterMembre(Athlete a){
-        this.lesAthlètes.add(a);
-        this.miseAJourAttributsEquipe();
+        if (a.getPays().equals(this.nationalité)){
+            this.lesAthlètes.add(a);
+        }
+        else{
+            System.out.println("L'athlète" + a +" n'a pas la même nationalité que l'équipe");
+        }
     }
 
     public String getNomEquipe(){
@@ -46,32 +67,13 @@ public class Equipe implements Comparable<Equipe> {
     }
 
     public int getNbAthlètes(){
-        return this.nbAthlètes;
+        return this.lesAthlètes.size();
     }
 
     public Pays getNationalité() {
         return this.nationalité;
     }
 
-    public int getForceEquipe() {
-        return this.forceEquipe;
-    }
-
-    public int getAgilitéEquipe() {
-        return this.agilitéEquipe;
-    }
-
-    public int getEnduranceEquipe() {
-        return this.enduranceEquipe;
-    }
-
-    public List<Athlete> getLesAthlètes() {
-        return this.lesAthlètes;
-    }
-    
-    public void ParticiperEquipe(EpreuveCollective epreuveCollective){
-        epreuveCollective.ajouterParticipant(this);
-    }
 
     public void setScore(int score){
         this.score = score;
@@ -81,4 +83,10 @@ public class Equipe implements Comparable<Equipe> {
     public int compareTo(Equipe o) {
         return this.score - o.score;
     }
+
+    @Override
+    public String toString() {
+        return this.nomEquipe;
+    }
+
 }
