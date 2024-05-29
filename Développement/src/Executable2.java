@@ -39,8 +39,6 @@ public class Executable2 {
         equipe2.ajouterMembre(Pierre);
 
 
-        
-
         Sport handball = new Sport(Sport.TypeSport.Handball);
 
         EpreuveCollective football = new EpreuveCollective(handball, 'M');
