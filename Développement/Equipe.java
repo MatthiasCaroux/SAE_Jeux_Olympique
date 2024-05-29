@@ -10,13 +10,15 @@ public class Equipe implements Comparable<Equipe> {
     private int enduranceEquipe;
     private List<Athlete> lesAthlètes;
     private int score;
+    private char sexe;
 
-    public Equipe(String nomEquipe, int nbAthlètes, Pays pays){
+    public Equipe(String nomEquipe, int nbAthlètes, Pays pays, char sexe){
         this.nomEquipe = nomEquipe;
         this.nbAthlètes = nbAthlètes;
         this.nationalité = pays;
         this.lesAthlètes = new ArrayList<>();
         this.score = 0;
+        this.sexe = sexe;
     }
 
     /**
@@ -37,8 +39,10 @@ public class Equipe implements Comparable<Equipe> {
     }
 
     public void ajouterMembre(Athlete a){
-        this.lesAthlètes.add(a);
-        this.miseAJourAttributsEquipe();
+        if (a.getSexe() == this.sexe) {
+            this.lesAthlètes.add(a);
+            this.miseAJourAttributsEquipe();
+        }
     }
 
     public String getNomEquipe(){
