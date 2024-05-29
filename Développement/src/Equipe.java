@@ -89,4 +89,12 @@ public class Equipe implements Comparable<Equipe>, Participant {
         return this.nomEquipe;
     }
 
+    public void removeAthlete(Athlete a){
+        this.lesAthlètes.remove(a);
+    }
+
+    public void removeAthlete(int index){
+        this.lesAthlètes.remove(index);
+    }
+
 }

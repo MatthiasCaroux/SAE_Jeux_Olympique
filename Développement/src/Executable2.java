@@ -1,7 +1,3 @@
-import java.lang.ProcessBuilder.Redirect.Type;
-
-
-
 public class Executable2 {
 
     public static void main(String[] args) {
@@ -23,6 +19,9 @@ public class Executable2 {
         equipe1.ajouterMembre(Lucas);
         equipe1.ajouterMembre(Jack);
         equipe1.ajouterMembre(Mark);
+        equipe1.ajouterMembre(new Athlete("Hanks", "Tom", 'M', France, 90, 70, 80));
+        equipe1.ajouterMembre(new Athlete("Doe", "Jane", 'M', France, 60, 95, 90));
+        equipe1.ajouterMembre(new Athlete("Doe", "John", 'M', France, 80, 80, 80));
 
 
 
@@ -37,23 +36,33 @@ public class Executable2 {
         equipe2.ajouterMembre(Thomas);
         equipe2.ajouterMembre(Paul);
         equipe2.ajouterMembre(Pierre);
+        equipe2.ajouterMembre(new Athlete("Doe", "Jane", 'M', USA, 60, 95, 90));
+        equipe2.ajouterMembre(new Athlete("Doe", "John", 'M', USA, 80, 80, 80));
+        equipe2.ajouterMembre(new Athlete("Doe", "Jill", 'M', USA, 70, 85, 85));
+        System.out.println(equipe2.getLesAthlètes());
 
 
-        Sport handball = new Sport(Sport.TypeSport.Handball);
 
-        EpreuveCollective football = new EpreuveCollective(handball, 'M');
-        football.participer(equipe1);
-        football.participer(equipe2);
+
+        // Sport handball = new Sport(Sport.TypeSport.Handball);
+        // System.out.println(handball.getNomSport());
+
+        EpreuveCollective football = new EpreuveCollective(Epreuve.TypeSport.Handball, Epreuve.Sexe.M);
+        System.out.println(football.getSport());
+        System.out.println(football.getSexe());
+        
+        try {
+            football.participer(equipe1);
+            football.participer(equipe2);
+            System.out.println(football.getEquipes());
+        } catch (PasViableException e) {
+            System.err.println("L'équipe n'est pas viable");
+        }
         football.getEquipes();
 
         Pays paysVainqueur = football.getPaysVainqueur();
-        System.out.println("Le pays vainqueur est : " + paysVainqueur.toString());
+        System.out.println("Le pays vainqueur est : " + paysVainqueur);
         Participant p = football.getVainqueur();
-        System.out.println("Le vainqueur est : " + p.toString());
-
-
-
-        
-
+        System.out.println("Le vainqueur est : " + p);
     }
 }
