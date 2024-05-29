@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class EpreuveCollective extends Epreuve{
 
     private ArrayList<Equipe> equipes = new ArrayList<>();
+    private Sport sport;
 
     public EpreuveCollective(Sport sport, char sexe) {
         super(sport, sexe);
@@ -30,16 +31,7 @@ public class EpreuveCollective extends Epreuve{
 
     @Override
     public Pays getPaysVainqueur() {
-        int scoreMax = 0;
-        Equipe equipeGagnante = this.equipes.get(0);
-        for (Equipe equipe : equipes) {
-            int scoreEquipe = equipe.getAgilité() + equipe.getEndurance();
-            if (scoreEquipe > scoreMax) {
-                scoreMax = scoreEquipe;
-                equipeGagnante = equipe;
-            }
-        }
-        return equipeGagnante.getPays();
+        return getVainqueur().getPays();
     }
 
     @Override

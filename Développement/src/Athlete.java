@@ -64,6 +64,7 @@ public class Athlete implements Comparable<Athlete>, Participant {
         this.pays = pays;
     }
 
+    @Override
     public Pays getPays() {
         return this.pays;
     }

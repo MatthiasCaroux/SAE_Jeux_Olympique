@@ -1,3 +1,7 @@
+import java.lang.ProcessBuilder.Redirect.Type;
+
+
+
 public class Executable2 {
 
     public static void main(String[] args) {
@@ -11,8 +15,8 @@ public class Executable2 {
         
         Athlete Jean = new Athlete("Dupont", "Jean", 'M', France, 75, 80, 85);
         Athlete Lucas = new Athlete("Hautin", "Lucas", 'M', France, 85, 80, 75);
-        Athlete Jack = new Athlete("Doe", "Jack", 'M', USA, 75, 80, 80);
-        Athlete Mark = new Athlete("Patrick", "Mark", 'M', USA, 80, 85, 85);
+        Athlete Jack = new Athlete("Doe", "Jack", 'M', France, 75, 80, 80);
+        Athlete Mark = new Athlete("Patrick", "Mark", 'M', France, 80, 85, 85);
 
         Equipe equipe1 = new Equipe("Equipe 1", France);
         equipe1.ajouterMembre(Jean);
@@ -22,10 +26,10 @@ public class Executable2 {
 
 
 
-        Athlete Matthias = new Athlete("Caroux", "Matthias", 'M', France, 75, 80, 85);
+        Athlete Matthias = new Athlete("Caroux", "Matthias", 'M', USA, 75, 80, 85);
         Athlete Thomas = new Athlete("Doe", "Thomas", 'M', USA, 75, 80, 80);
         Athlete Paul = new Athlete("Patrick", "Paul", 'M', USA, 80, 85, 85);
-        Athlete Pierre = new Athlete("Dupont", "Pierre", 'M', France, 85, 80, 75);
+        Athlete Pierre = new Athlete("Dupont", "Pierre", 'M', USA, 85, 80, 75);
 
 
         Equipe equipe2 = new Equipe("Equipe 2", USA);
@@ -37,9 +41,9 @@ public class Executable2 {
 
         
 
-        Sport foot = new Sport("Foot", true);
+        Sport handball = new Sport(Sport.TypeSport.Handball);
 
-        EpreuveCollective football = new EpreuveCollective(foot, 'M');
+        EpreuveCollective football = new EpreuveCollective(handball, 'M');
         football.participer(equipe1);
         football.participer(equipe2);
         football.getEquipes();

@@ -14,6 +14,7 @@ public class Equipe implements Comparable<Equipe>, Participant {
         this.nationalité = pays;
     }
 
+    @Override
     public Pays getPays(){
         return this.nationalité;
     }
@@ -53,7 +54,12 @@ public class Equipe implements Comparable<Equipe>, Participant {
     
 
     public void ajouterMembre(Athlete a){
-        this.lesAthlètes.add(a);
+        if (a.getPays().equals(this.nationalité)){
+            this.lesAthlètes.add(a);
+        }
+        else{
+            System.out.println("L'athlète" + a +" n'a pas la même nationalité que l'équipe");
+        }
     }
 
     public String getNomEquipe(){
