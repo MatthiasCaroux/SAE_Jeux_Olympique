@@ -6,12 +6,14 @@ public class Equipe implements Comparable<Equipe>, Participant {
     private Pays nationalité;
     private List<Athlete> lesAthlètes;
     private int score;
+    private Epreuve.Sexe sexe;
 
-    public Equipe(String nomEquipe, Pays pays){
+    public Equipe(String nomEquipe, Pays pays, Epreuve.Sexe sexe){
         this.lesAthlètes = new ArrayList<>();
         this.nomEquipe = nomEquipe;
         this.score = 0;
         this.nationalité = pays;
+        this.sexe = sexe;
     }
 
     @Override
@@ -55,10 +57,15 @@ public class Equipe implements Comparable<Equipe>, Participant {
 
     public void ajouterMembre(Athlete a){
         if (a.getPays().equals(this.nationalité)){
-            this.lesAthlètes.add(a);
+            if (a.getSexe() == this.sexe){
+                this.lesAthlètes.add(a);
+            }
+            else{
+                System.out.println("L'athlète " + a +" n'a pas le même sexe que l'équipe");
+            }
         }
         else{
-            System.out.println("L'athlète" + a +" n'a pas la même nationalité que l'équipe");
+            System.out.println("L'athlète " + a +" n'a pas la même nationalité que l'équipe");
         }
     }
 
@@ -74,7 +81,10 @@ public class Equipe implements Comparable<Equipe>, Participant {
         return this.nationalité;
     }
 
-
+    public Epreuve.Sexe getSexeEquipe() {
+        return this.sexe;
+    }
+    
     public void setScore(int score){
         this.score = score;
     }
