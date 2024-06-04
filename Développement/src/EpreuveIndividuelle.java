@@ -11,13 +11,23 @@ public class EpreuveIndividuelle extends Epreuve {
 
     @Override
     public Participant getVainqueur() {
+        // int scoreMax = 0;
+        // Athlete athleteGagnant = this.athletes.get(0);
+        // for (Athlete athlete : this.athletes) {
+        //     int scoreAthlete = // mettre ici le calcul du score de l'athlete
+        //     if (scoreAthlete > scoreMax) {
+        //         scoreMax = scoreAthlete;
+        //         athleteGagnant = athlete;
+        //     }
+        // }
+        // return athleteGagnant;
         return null;
     }
 
 
     @Override
     public Pays getPaysVainqueur() {
-        return null;
+        return getVainqueur().getPays();
     }
 
     @Override
