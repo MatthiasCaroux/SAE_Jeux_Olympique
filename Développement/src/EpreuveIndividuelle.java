@@ -4,7 +4,7 @@ public class EpreuveIndividuelle extends Epreuve {
 
     private ArrayList<Athlete> athletes = new ArrayList<>();
 
-    public EpreuveIndividuelle(Sport sport, char sexe) {
+    public EpreuveIndividuelle(TypeSport sport, Sexe sexe) {
         super(sport, sexe);
         this.athletes = new ArrayList<>();
     }
