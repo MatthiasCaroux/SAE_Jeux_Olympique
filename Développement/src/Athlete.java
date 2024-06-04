@@ -2,14 +2,14 @@ public class Athlete implements Comparable<Athlete>, Participant {
 
     private String nom;
     private String prenom;
-    private char sexe;
+    private Epreuve.Sexe sexe;
     private Pays pays;
     private int force;
     private int endurance;
     private int agilite;
     private int score;
 
-    public Athlete(String nom, String prenom, char sexe, Pays pays, int force, int endurance, int agilite) {
+    public Athlete(String nom, String prenom, Epreuve.Sexe sexe, Pays pays, int force, int endurance, int agilite) {
         this.nom = nom;
         this.prenom = prenom;
         this.sexe = sexe;
@@ -69,7 +69,7 @@ public class Athlete implements Comparable<Athlete>, Participant {
         return this.pays;
     }
 
-    public char getSexe() {
+    public Epreuve.Sexe getSexe() {
         return this.sexe;
     }
 
