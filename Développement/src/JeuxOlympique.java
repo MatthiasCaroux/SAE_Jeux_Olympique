@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class JeuxOlympique {
@@ -6,12 +7,17 @@ public class JeuxOlympique {
     private String lieu;
     private String nomJO;
     private List<Epreuve> epreuves;
+    private List<Pays> lesPays;
+    private List<Pays> classementPays;
+    // private Map<Pays, Map<String, Integer>> lesMedailles;
 
     public JeuxOlympique(int annee, String lieu, String nomJO) {
         this.annee = annee;
         this.lieu = lieu;
         this.nomJO = nomJO;
         this.epreuves = new ArrayList<>();
+        this.lesPays = new ArrayList<>();
+        this.classementPays = new ArrayList<>();
     }
 
     public int getAnnee() {
@@ -38,25 +44,82 @@ public class JeuxOlympique {
         this.nomJO = nomJO;
     }
 
-    public void ajouteEpreuve(Epreuve epreuve) {
+    public void ajouteEpreuve(Epreuve epreuve) throws EpreuveDejaPresenteException {
+        if (this.epreuves.contains(epreuve)) {
+            throw new EpreuveDejaPresenteException(epreuve);
+        }
         this.epreuves.add(epreuve);
+        for (Participant p : epreuve.getParticipants()) {
+            if (!this.lesPays.contains(p.getPays())) {
+                this.lesPays.add(p.getPays());
+            }
+        }
     }
 
-    public Pays vainqueurEpreuve(Epreuve epreuve) {
-        return null;
+    public Pays vainqueurEpreuve(Epreuve epreuve) throws EpreuveNonCommenceeException {
+        try {
+            return epreuve.getPaysVainqueur();
+        } catch (EpreuveNonCommenceeException e) {
+            throw new EpreuveNonCommenceeException(epreuve);
+        }
     }
 
     public Pays vainqueurJeuxOlympique() {
+
         return null;
     }
 
+    public List<Pays> getClassementPays() throws JeuxPasCommenceException {
+        if (this.classementPays.isEmpty()) {
+            throw new JeuxPasCommenceException(this);
+        }
+        System.out.println("Je suis dans getClassementPays");
+        Collections.sort(this.classementPays, new PaysComparator());
+        System.out.println("Et je suis passé par là");
+        return classementPays;
+    }
     public int getScore(Pays pays){
-        return 0;
+        return pays.getScoreTotal();
     }
 
-    public void lancerLesJO(){
-        
+    public void lancerToutesLesEpreuves(){
+        for (Epreuve epreuve : this.epreuves) {
+            try {
+                epreuve.jouerEpreuve();
+                for (Participant participant : epreuve.getParticipants()) {
+                    if (!this.classementPays.contains(participant.getPays())) {
+                        this.classementPays.add(participant.getPays());
+                    }
+                }
+            } catch (EpreuveDejaJoueeException e) {
+                // Ne rien faire, intentionnellement laissé vide
+            }
+        }
     }
 
+    public void lancerUneEpreuve(Epreuve epreuve) throws EpreuveDejaJoueeException{
+        try {
+            epreuve.jouerEpreuve();
+            for (Participant participant : epreuve.getParticipants()) {
+                if (!this.classementPays.contains(participant.getPays())) {
+                    this.classementPays.add(participant.getPays());
+                }
+            }
+        } catch (EpreuveDejaJoueeException e) {
+            throw new EpreuveDejaJoueeException(epreuve);
+        }
+    }
 
+    public List<Epreuve> getEpreuves() {
+        return epreuves;
+    }
+
+    public List<Pays> getLesPays() {
+        return lesPays;
+    }
+
+    @Override
+    public String toString() {
+        return "Jeux Olympique de " + this.annee;
+    }
 }

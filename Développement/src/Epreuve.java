@@ -1,3 +1,9 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public abstract class Epreuve{
 
     public enum TypeSport{
@@ -12,17 +18,33 @@ public abstract class Epreuve{
     }
 
     public enum Sexe {
-        M,
-        F
+        M {
+            public String toString() {
+                return "Masculin";
+            }
+        },
+        F {
+            public String toString() {
+                return "Féminin";
+            }
+        }
     }
 
-    private TypeSport sport;
-    private Sexe sexe;
+    protected TypeSport sport;
+    protected Sexe sexe;
+    protected List<Participant> participants;
+    protected Map<Participant, Double> classement;
     
 
     public Epreuve(TypeSport sport, Sexe sexe){
         this.sport = sport;
         this.sexe = sexe;
+        this.participants = new ArrayList<>();
+        this.classement = null;
+    }
+
+    public List<Participant> getParticipants(){
+        return this.participants;
     }
 
     public void setSport(TypeSport sport){
@@ -38,9 +60,48 @@ public abstract class Epreuve{
         return this.sexe;
     }
 
-    public abstract Participant getVainqueur();
+    public Map<Participant, Double> getClassement() throws EpreuveNonCommenceeException{
+        if (this.classement == null) {
+            throw new EpreuveNonCommenceeException(this);
+        }
+        return this.classement;
+    }
 
-    public abstract Pays getPaysVainqueur();
+    public void jouerEpreuve() throws EpreuveDejaJoueeException {
+        if (this.classement == null) {
+            this.classement = new HashMap();
+            for (Participant participant : this.getParticipants()) {
+                this.classement.put(participant, this.calculeScore(participant));
+            }
+            this.majClassement();
+        } else {
+            throw new EpreuveDejaJoueeException(this);
+        }
+    }
+
+    public void majClassement() {
+        Collections.sort(this.getParticipants(), new ParticipantComparator(this.classement));
+        for (int i = 0; i < this.getParticipants().size(); ++i) {
+            if (i == 0) {
+                this.getParticipants().get(i).getPays().ajouterMedaille("Or");
+            } else if (i == 1) {
+                this.getParticipants().get(i).getPays().ajouterMedaille("Argent");
+            } else if (i == 2) {
+                this.getParticipants().get(i).getPays().ajouterMedaille("Bronze");
+            }
+        }
+    }
+
+    public Participant getVainqueur() throws EpreuveNonCommenceeException {
+        if (this.classement == null) {
+            throw new EpreuveNonCommenceeException(this);
+        }
+        return Collections.max(this.classement.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+    public Pays getPaysVainqueur() throws EpreuveNonCommenceeException {
+        return this.getVainqueur().getPays();
+    }
 
     public abstract void participer(Participant participant) throws Exception;
 
@@ -64,6 +125,69 @@ public abstract class Epreuve{
                 return (participant.getAgilité()*0.4 + participant.getEndurance()*0.6 + participant.getForce()*0.0);
             default:
                 return 0;
+        }
+    }
+
+    public String toString(){
+        return this.getSport() + " " + this.getSexe();
+    }
+
+    public String rapport() throws EpreuveNonCommenceeException {
+        if (this.classement == null) {
+            throw new EpreuveNonCommenceeException(this);
+        }
+        String rapport = "Rapport de l'épreuve " + this + "\n";
+        switch (this.getSport()) {
+            case Handball:
+                rapport += "Nombre de buts marqués par équipe : \n";
+                for (Participant participant : this.getParticipants()) {
+                    rapport += participant + " : " + Math.round(this.classement.get(participant)%32) + "\n";
+                }
+                return rapport;
+            case Volley:
+                rapport += "Nombre de sets gagnés par équipe : \n";
+                for (Participant participant : this.getParticipants()) {
+                    rapport += participant + " : " + Math.round(this.classement.get(participant)%this.getParticipants().size()) + "\n";
+                }
+                return rapport;
+            case NatationRelais:
+                rapport += "Temps de chaque équipe : \n";
+                for (Participant participant : this.getParticipants()) {
+                    rapport += participant + " : " + (1000 - this.classement.get(participant))/8 + " secondes\n";
+                }
+                return rapport;
+            case AthlétismeRelais:
+                rapport += "Temps de chaque équipe : \n";
+                for (Participant participant : this.getParticipants()) {
+                    rapport += participant + " : " + (1000 - this.classement.get(participant))/8 + " secondes\n";
+                }
+                return rapport;
+            case NatationBrasse:
+                rapport += "Temps de chaque nageur : \n";
+                for (Participant participant : this.getParticipants()) {
+                    rapport += participant + " : " + (1000 - this.classement.get(participant))/10.4 + " secondes\n";
+                }
+                return rapport;
+            case Escrimefleuret:
+                rapport += "Nombre de touches par escrimeur : \n";
+                for (Participant participant : this.getParticipants()) {
+                    rapport += participant + " : " + Math.round(this.classement.get(participant)%15) + "\n";
+                }
+                return rapport;
+            case EscrimeÉpée:
+                rapport += "Nombre de touches par escrimeur : \n";
+                for (Participant participant : this.getParticipants()) {
+                    rapport += participant + " : " + Math.round(this.classement.get(participant)%15) + "\n";
+                }
+                return rapport;
+            case AthlétismeHaie:
+                rapport += "Temps de chaque coureur : \n";
+                for (Participant participant : this.getParticipants()) {
+                    rapport += participant + " : " + (1000 - this.classement.get(participant))/16.7 + " secondes\n";
+                }
+                return rapport;
+            default:
+                return "Pas de rapport disponible pour cette épreuve";
         }
     }
 }
