@@ -6,15 +6,29 @@ import java.util.Map;
 
 public abstract class Epreuve{
 
-    public enum TypeSport{
-        NatationBrasse,
-        NatationRelais,
-        Handball,
-        Volley,
-        Escrimefleuret,
-        EscrimeÉpée,
-        AthlétismeHaie,
-        AthlétismeRelais
+    public enum TypeSport {
+        NatationBrasse(1),
+        NatationRelais(4),
+        Handball(7),
+        Volley(6),
+        Escrimefleuret(1),
+        EscrimeÉpée(1),
+        AthlétismeHaie(1),
+        AthlétismeRelais(4);
+
+        private final int nbParticipantNecessaire;
+
+        TypeSport(int nbParticipantNecessaire) {
+            this.nbParticipantNecessaire = nbParticipantNecessaire;
+        }
+
+        TypeSport() {
+            this.nbParticipantNecessaire = 1;
+        }
+
+        public int getNbParticipantNecessaire() {
+            return this.nbParticipantNecessaire;
+        }
     }
 
     public enum Sexe {
@@ -69,7 +83,7 @@ public abstract class Epreuve{
 
     public void jouerEpreuve() throws EpreuveDejaJoueeException {
         if (this.classement == null) {
-            this.classement = new HashMap();
+            this.classement = new HashMap<>();
             for (Participant participant : this.getParticipants()) {
                 this.classement.put(participant, this.calculeScore(participant));
             }

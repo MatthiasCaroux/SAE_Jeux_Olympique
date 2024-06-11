@@ -65,8 +65,15 @@ public class JeuxOlympique {
     }
 
     public Pays vainqueurJeuxOlympique() {
-
-        return null;
+        Pays vainqueur = null;
+        int scoreMax = 0;
+        for (Pays pays : this.classementPays) {
+            if (pays.getScoreTotal() > scoreMax) {
+                scoreMax = pays.getScoreTotal();
+                vainqueur = pays;
+            }
+        }
+        return vainqueur;
     }
 
     public List<Pays> getClassementPays() throws JeuxPasCommenceException {
