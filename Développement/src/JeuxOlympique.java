@@ -217,7 +217,7 @@ public class JeuxOlympique {
 
     /**
      * Méthode permettant de récupérer les épreuves auquels participe un athlete
-     * @param l'athlete à qui on veut les épreuves auquels il a participé
+     * @param athlete l'athlete à qui on veut les épreuves auquels il a participé
      * @return les épreuves auquels participe un athlete
      */
     public List<Epreuve> getEpreuveDuParticipant(Athlete athlete) {
@@ -243,7 +243,7 @@ public class JeuxOlympique {
 
     /**
      * Méthode permettant de récupérer les épreuves auquels participe un pays
-     * @param le pays à qui on veut les épreuves auquels il a participé
+     * @param pays le pays à qui on veut les épreuves auquels il a participé
      * @return les épreuves auquels participe un pays
      */
     public List<Epreuve> getEpreuvesDuPays(Pays pays) {
