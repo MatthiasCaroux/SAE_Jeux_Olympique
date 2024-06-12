@@ -9,15 +9,29 @@ public abstract class Epreuve{
     /**
      * Enumération des différents types de sport
      */
-    public enum TypeSport{
-        NatationBrasse,
-        NatationRelais,
-        Handball,
-        Volley,
-        Escrimefleuret,
-        EscrimeÉpée,
-        AthlétismeHaie,
-        AthlétismeRelais
+    public enum TypeSport {
+        NatationBrasse(),
+        NatationRelais(4),
+        Handball(7),
+        Volley(6),
+        Escrimefleuret(),
+        EscrimeÉpée(),
+        AthlétismeHaie(),
+        AthlétismeRelais(4);
+
+        private final int nbParticipantNecessaire;
+
+        TypeSport(int nbParticipantNecessaire) {
+            this.nbParticipantNecessaire = nbParticipantNecessaire;
+        }
+
+        TypeSport() {
+            this.nbParticipantNecessaire = 1;
+        }
+
+        public int getNbParticipantNecessaire() {
+            return this.nbParticipantNecessaire;
+        }
     }
 
     /**

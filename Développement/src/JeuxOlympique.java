@@ -128,8 +128,15 @@ public class JeuxOlympique {
      * @return le pays vainqueur des jeux olympiques
      */
     public Pays vainqueurJeuxOlympique() {
-
-        return null;
+        Pays vainqueur = null;
+        int scoreMax = 0;
+        for (Pays pays : this.classementPays) {
+            if (pays.getScoreTotal() > scoreMax) {
+                scoreMax = pays.getScoreTotal();
+                vainqueur = pays;
+            }
+        }
+        return vainqueur;
     }
 
     /**
@@ -206,6 +213,49 @@ public class JeuxOlympique {
      */
     public List<Pays> getLesPays() {
         return lesPays;
+    }
+
+    /**
+     * Méthode permettant de récupérer les épreuves auquels participe un athlete
+     * @param l'athlete à qui on veut les épreuves auquels il a participé
+     * @return les épreuves auquels participe un athlete
+     */
+    public List<Epreuve> getEpreuveDuParticipant(Athlete athlete) {
+        List<Epreuve> lesEpreuves = new ArrayList<>();
+        for (Epreuve epreuve : this.epreuves) {
+            if (epreuve instanceof EpreuveIndividuelle) {
+                EpreuveIndividuelle epreuveIndividuelle = (EpreuveIndividuelle) epreuve;
+                if (epreuveIndividuelle.getParticipants().contains(athlete)) {
+                    lesEpreuves.add(epreuve);
+                }
+            } else {
+                EpreuveCollective epreuveCollective = (EpreuveCollective) epreuve;
+                for (Participant participant : epreuveCollective.getParticipants()) {
+                    Equipe equipe = (Equipe) participant;
+                    if (equipe.getLesAthlètes().contains(athlete)) {
+                        lesEpreuves.add(epreuve);
+                    }
+                }
+            }
+        }
+        return lesEpreuves;
+    }
+
+    /**
+     * Méthode permettant de récupérer les épreuves auquels participe un pays
+     * @param le pays à qui on veut les épreuves auquels il a participé
+     * @return les épreuves auquels participe un pays
+     */
+    public List<Epreuve> getEpreuvesDuPays(Pays pays) {
+        List<Epreuve> lesEpreuves = new ArrayList<>();
+        for (Epreuve epreuve : this.epreuves) {
+            for (Participant participant : epreuve.getParticipants()) {
+                if (participant.getPays().equals(pays)) {
+                    lesEpreuves.add(epreuve);
+                }
+            }
+        }
+        return lesEpreuves;
     }
 
     /**

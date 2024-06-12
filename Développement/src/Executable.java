@@ -5,7 +5,7 @@ public class Executable {
         // Athlete athlete1 = new Athlete("Dupont", "Jean", 'M', france, 75, 80, 85);
         // Athlete athlete2 = new Athlete("Hautin", "Lucas", 'M', france, 85, 80, 75);
         
-        // Pays usa = new Pays("USA");
+        // Pays usa = USA;
         // Athlete athlete3 = new Athlete("Doe", "Jack", 'M', usa, 75, 80, 80);
         // Athlete athlete4 = new Athlete("Patrick", "Mark", 'M', usa, 80, 85, 85);
 
