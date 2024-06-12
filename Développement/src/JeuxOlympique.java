@@ -125,6 +125,39 @@ public class JeuxOlympique {
         return lesPays;
     }
 
+    public List<Epreuve> getEpreuveDuParticipant(Athlete athlete) {
+        List<Epreuve> lesEpreuves = new ArrayList<>();
+        for (Epreuve epreuve : this.epreuves) {
+            if (epreuve instanceof EpreuveIndividuelle) {
+                EpreuveIndividuelle epreuveIndividuelle = (EpreuveIndividuelle) epreuve;
+                if (epreuveIndividuelle.getParticipants().contains(athlete)) {
+                    lesEpreuves.add(epreuve);
+                }
+            } else {
+                EpreuveCollective epreuveCollective = (EpreuveCollective) epreuve;
+                for (Participant participant : epreuveCollective.getParticipants()) {
+                    Equipe equipe = (Equipe) participant;
+                    if (equipe.getLesAthlètes().contains(athlete)) {
+                        lesEpreuves.add(epreuve);
+                    }
+                }
+            }
+        }
+        return lesEpreuves;
+    }
+
+    public List<Epreuve> getEpreuvesDuPays(Pays pays) {
+        List<Epreuve> lesEpreuves = new ArrayList<>();
+        for (Epreuve epreuve : this.epreuves) {
+            for (Participant participant : epreuve.getParticipants()) {
+                if (participant.getPays().equals(pays)) {
+                    lesEpreuves.add(epreuve);
+                }
+            }
+        }
+        return lesEpreuves;
+    }
+
     @Override
     public String toString() {
         return "Jeux Olympique de " + this.annee;

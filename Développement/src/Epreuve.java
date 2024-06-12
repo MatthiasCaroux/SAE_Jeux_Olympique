@@ -7,13 +7,13 @@ import java.util.Map;
 public abstract class Epreuve{
 
     public enum TypeSport {
-        NatationBrasse(1),
+        NatationBrasse(),
         NatationRelais(4),
         Handball(7),
         Volley(6),
-        Escrimefleuret(1),
-        EscrimeÉpée(1),
-        AthlétismeHaie(1),
+        Escrimefleuret(),
+        EscrimeÉpée(),
+        AthlétismeHaie(),
         AthlétismeRelais(4);
 
         private final int nbParticipantNecessaire;
