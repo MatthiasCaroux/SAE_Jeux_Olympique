@@ -1,9 +1,17 @@
 public class EpreuveCollective extends Epreuve{
 
+    /**
+     * Constructeur de la classe EpreuveCollective
+     * @param sport le sport de l'épreuve
+     * @param sexe le sexe de l'épreuve
+     */
     public EpreuveCollective(TypeSport sport, Sexe sexe) {
         super(sport, sexe);
     }
 
+    /**
+     * Méthode permettant de faire participer une équipe à une épreuve collective
+     */
     @Override
     public void participer(Participant participant) throws TropDeJoueursException, PasAssezDeJoueursException, PasUneEquipeException, EquipeDejaParticipanteException {
         if(participant instanceof Equipe) {
@@ -53,33 +61,6 @@ public class EpreuveCollective extends Epreuve{
             }
         } else {
             throw new PasUneEquipeException();
-        }
-    }
-
-    public boolean estViable(Equipe equipe){
-        switch (this.getSport()) {
-            case Handball:
-                if (equipe.getNbAthlètes() == 7) {
-                    return true;
-                }
-                return false;
-            case Volley:
-                if (equipe.getNbAthlètes() == 6) {
-                    return true;
-                }
-                return false;
-            case NatationRelais:
-                if (equipe.getNbAthlètes() == 4) {
-                    return true;
-                }
-                return false;
-            case AthlétismeRelais:
-                if (equipe.getNbAthlètes() == 4) {
-                    return true;
-                }
-                return false;
-            default:
-                return false;
         }
     }
 }
