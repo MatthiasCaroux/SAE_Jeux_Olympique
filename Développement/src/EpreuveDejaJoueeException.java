@@ -1,3 +1,6 @@
+/**
+ * Classe EpreuveDejaJoueeException
+ */
 public class EpreuveDejaJoueeException extends Exception {
 
     /**

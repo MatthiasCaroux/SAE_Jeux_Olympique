@@ -1,3 +1,6 @@
+/**
+ * Classe PasUneEquipeException
+ */
 public class PasUneEquipeException extends Exception{
 
     /**

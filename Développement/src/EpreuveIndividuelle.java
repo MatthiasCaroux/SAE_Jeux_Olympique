@@ -1,3 +1,6 @@
+/**
+ * Classe EpreuveIndividuelle, héritant de la classe Epreuve
+ */
 public class EpreuveIndividuelle extends Epreuve {
 
     /**

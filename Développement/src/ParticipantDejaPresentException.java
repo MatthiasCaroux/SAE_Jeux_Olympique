@@ -1,3 +1,6 @@
+/**
+ * Classe ParticipantDejaPresentException
+ */
 public class ParticipantDejaPresentException extends Exception {
 
     /**

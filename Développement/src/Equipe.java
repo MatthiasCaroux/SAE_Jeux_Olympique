@@ -1,6 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Classe représentant une équipe
+ */
 public class Equipe implements Comparable<Equipe>, Participant {
     /**
      * le nom de l'équipe

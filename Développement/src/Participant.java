@@ -1,3 +1,6 @@
+/**
+ * Interface Participant
+ */
 public interface Participant {
 
     /**

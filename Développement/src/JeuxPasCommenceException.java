@@ -1,3 +1,6 @@
+/**
+ * Classe JeuxPasCommenceException
+ */
 public class JeuxPasCommenceException extends Exception{
 
     /**

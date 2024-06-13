@@ -1,3 +1,6 @@
+/**
+ * Classe EpreuveCollective, héritant de la classe Epreuve
+ */
 public class EpreuveCollective extends Epreuve{
 
     /**

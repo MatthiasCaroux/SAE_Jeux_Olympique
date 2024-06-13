@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe abstraite représentant une épreuve
+ */
 public abstract class Epreuve{
 
     /**
