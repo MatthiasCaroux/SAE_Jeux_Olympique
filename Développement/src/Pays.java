@@ -79,4 +79,13 @@ public class Pays {
     public Map<String, Integer> getMedailles() {
         return this.medailles;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Pays) {
+            Pays pays = (Pays) obj;
+            return this.nomPays.equals(pays.getNomPays());
+        }
+        return false;
+    }
 }
