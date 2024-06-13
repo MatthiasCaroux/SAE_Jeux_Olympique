@@ -99,6 +99,15 @@ public class JeuxOlympique {
         this.nomJO = nomJO;
     }
 
+    public List<Participant> lesParticipantsAuxJo(){
+        List<Participant> lesParticipantsAuxJo = new ArrayList<>();
+        for (Epreuve epreuve : this.epreuves) {
+            lesParticipantsAuxJo.addAll(epreuve.getParticipants());
+        }
+        return lesParticipantsAuxJo;
+    }
+    
+
     /**
      * Méthode permettant d'ajouter une épreuve aux jeux olympiques
      * @param epreuve l'épreuve à ajouter
@@ -116,12 +125,16 @@ public class JeuxOlympique {
         }
     }
 
-<<<<<<< HEAD
     public boolean equipePleine(Participant equipe, Epreuve.TypeSport sport) {
         Equipe equipeSport = (Equipe) equipe;
         return equipeSport.getLesAthlètes().size() == sport.getNbParticipantNecessaire();
     }
 
+    /**
+     * Permet de récupérer les participants par épreuve et de les ajouter avec le fichier CSV
+     * @param cheminVersCSV
+     * @return
+     */
     public Map<Epreuve, List<Participant>> getParticipantsParEpreuve(String cheminVersCSV){
         Map<Epreuve, List<Participant>> participantsParEpreuve = new HashMap<>();
         for (Epreuve epreuve : this.epreuves) {
@@ -136,6 +149,7 @@ public class JeuxOlympique {
             BufferedReader br = new BufferedReader(new FileReader(cheminVersCSV));
             String line = "";
             br.readLine();
+            int indice = 0;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
                 String nom = values[0];
@@ -168,7 +182,8 @@ public class JeuxOlympique {
                                 }
                             }
                             if(!joueurAjoute){
-                                Equipe nouvelleEquipeNatation = new Equipe(nom, pays, sexe);
+                                Equipe nouvelleEquipeNatation = new Equipe(pays.getNomPays() + " " + indice, pays, sexe);
+                                indice++;
                                 nouvelleEquipeNatation.ajouterMembre(athlete);
                                 participantsParEpreuve.get(e).add(nouvelleEquipeNatation);
                                 joueurAjoute = true;
@@ -176,7 +191,8 @@ public class JeuxOlympique {
                         }
                     }
                     if (!sportExiste) {
-                        Equipe nouvelleEquipeNatation = new Equipe(nom, pays, sexe);
+                        Equipe nouvelleEquipeNatation = new Equipe(pays.getNomPays() + " " + indice, pays, sexe);
+                        indice++;
                         nouvelleEquipeNatation.ajouterMembre(athlete);
                         EpreuveCollective nouvelleEpreuve = new EpreuveCollective(Epreuve.TypeSport.NatationRelais, sexe);
                         participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
@@ -202,7 +218,8 @@ public class JeuxOlympique {
                                 }
                             }
                             if(!joueurAjoute){
-                                Equipe nouvelleEquipeVolley = new Equipe(nom, pays, sexe);
+                                Equipe nouvelleEquipeVolley = new Equipe(pays.getNomPays() + " " + indice, pays, sexe);
+                                indice++;
                                 nouvelleEquipeVolley.ajouterMembre(athlete);
                                 participantsParEpreuve.get(e).add(nouvelleEquipeVolley);
                                 joueurAjoute = true;
@@ -210,7 +227,8 @@ public class JeuxOlympique {
                         }
                     }
                     if (!sportExiste) {
-                        Equipe nouvelleEquipeVolley = new Equipe(nom, pays, sexe);
+                        Equipe nouvelleEquipeVolley = new Equipe(pays.getNomPays() + " " + indice, pays, sexe);
+                        indice++;
                         nouvelleEquipeVolley.ajouterMembre(athlete);
                         EpreuveCollective nouvelleEpreuve = new EpreuveCollective(Epreuve.TypeSport.Volley, sexe);
                         participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
@@ -236,7 +254,8 @@ public class JeuxOlympique {
                                 }
                             }
                             if(!joueurAjoute){
-                                Equipe nouvelleEquipeHandball = new Equipe(nom, pays, sexe);
+                                Equipe nouvelleEquipeHandball = new Equipe(pays.getNomPays() + " " + indice, pays, sexe);
+                                indice++;
                                 nouvelleEquipeHandball.ajouterMembre(athlete);
                                 participantsParEpreuve.get(e).add(nouvelleEquipeHandball);
                                 joueurAjoute = true;
@@ -244,7 +263,8 @@ public class JeuxOlympique {
                         }
                     }
                     if (!sportExiste) {
-                        Equipe nouvelleEquipeHandball = new Equipe(nom, pays, sexe);
+                        Equipe nouvelleEquipeHandball = new Equipe(pays.getNomPays() + " " + indice, pays, sexe);
+                        indice++;
                         nouvelleEquipeHandball.ajouterMembre(athlete);
                         EpreuveCollective nouvelleEpreuve = new EpreuveCollective(Epreuve.TypeSport.Handball, sexe);
                         participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
@@ -272,7 +292,8 @@ public class JeuxOlympique {
                             }
                             if(!joueurAjoute){
                                 System.out.println("le joueur na pas été ajouté on va donc créer une nouvelle équipe");
-                                Equipe nouvelleEquipeAthletisme = new Equipe(nom, pays, sexe);
+                                Equipe nouvelleEquipeAthletisme = new Equipe(pays.getNomPays() + " " + indice, pays, sexe);
+                                indice++;
                                 nouvelleEquipeAthletisme.ajouterMembre(athlete);
                                 participantsParEpreuve.get(e).add(nouvelleEquipeAthletisme);
                                 joueurAjoute = true;
@@ -280,7 +301,8 @@ public class JeuxOlympique {
                         }
                     }
                     if (!sportExiste) {
-                        Equipe nouvelleEquipeAthletisme = new Equipe(nom, pays, sexe);
+                        Equipe nouvelleEquipeAthletisme = new Equipe(pays.getNomPays() + " " + indice, pays, sexe);
+                        indice++;
                         nouvelleEquipeAthletisme.ajouterMembre(athlete);
                         EpreuveCollective nouvelleEpreuve = new EpreuveCollective(Epreuve.TypeSport.AthlétismeRelais, sexe);
                         participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
@@ -341,27 +363,69 @@ public class JeuxOlympique {
                         EpreuveIndividuelle nouvelleEpreuve = new EpreuveIndividuelle(Epreuve.TypeSport.NatationBrasse, sexe);
                         participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
                         participantsParEpreuve.get(nouvelleEpreuve).add(athlete);
-                    }                   
+                    }
 
                 }
             }
             br.close();
-            System.out.println("J'ai fini de lire le fichier");
+            // on a fini de lire le fichier
             System.out.println(participantsParEpreuve);
         } catch (Exception e) {
             System.out.println("Erreur lors de la lecture du fichier");
         }
+        System.out.println(this.epreuves);// doit etre vide
+        //maintenant on va reconstruire la liste des epreuves et ajouter les nouvelles
+        for (Epreuve epreuve : participantsParEpreuve.keySet()) {
+            if (epreuve instanceof EpreuveIndividuelle){
+                EpreuveIndividuelle epreuveIndividuelle = (EpreuveIndividuelle) epreuve;
+                List<Participant> participants = participantsParEpreuve.get(epreuve);
+                for (Participant participant : participants) {
+                    try {
+                        epreuveIndividuelle.participer(participant);
+                    } catch (Exception e) {
+                        // Ne rien faire, intentionnellement laissé vide
+                        System.err.println(e.getMessage());
+                    }
+                    
+                }
+                try{
+                    this.ajouteEpreuve(epreuveIndividuelle);
+                }
+                catch (Exception e){
+                    System.err.println(e.getMessage());
+                }
+            }
+            else if (epreuve instanceof EpreuveCollective){
+                List<Participant> participants = participantsParEpreuve.get(epreuve);
+                EpreuveCollective epreuveCollective = (EpreuveCollective) epreuve;
+                for (Participant participant : participants) {
+                    try {
+                        epreuveCollective.participer(participant);
+                    } catch (Exception e) {
+                        // Ne rien faire, intentionnellement laissé vide
+                        System.err.println(e.getMessage());
+                    }
+                }
+                try{
+                    if (!epreuveCollective.getParticipants().isEmpty()){
+                        this.ajouteEpreuve(epreuveCollective);
+                    }
+                }
+                catch (Exception e){
+                    System.err.println(e.getMessage());
+                }
+            }
+        }
+        System.out.println(this.epreuves);
         return participantsParEpreuve;
     }
 
-=======
     /**
      * Méthode permettant de récupérer le vainqueur d'une épreuve
      * @param epreuve l'épreuve
      * @return le pays vainqueur de l'épreuve
      * @throws EpreuveNonCommenceeException si l'épreuve n'est pas commencée
      */
->>>>>>> origin
     public Pays vainqueurEpreuve(Epreuve epreuve) throws EpreuveNonCommenceeException {
         try {
             return epreuve.getPaysVainqueur();
@@ -395,9 +459,7 @@ public class JeuxOlympique {
         if (this.classementPays.isEmpty()) {
             throw new JeuxPasCommenceException(this);
         }
-        System.out.println("Je suis dans getClassementPays");
         Collections.sort(this.classementPays, new PaysComparator());
-        System.out.println("Et je suis passé par là");
         return classementPays;
     }
 

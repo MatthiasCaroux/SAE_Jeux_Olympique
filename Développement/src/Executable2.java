@@ -59,7 +59,7 @@ public class Executable2 {
             System.err.println(e.getMessage());
         } 
         System.out.println(hand.getParticipants());
-        System.out.println("ICICI");
+        // System.out.println("ICICI");
 
         try {
             // hand.jouerEpreuve(); // Pour tester l'erreur, commenter cette ligne
