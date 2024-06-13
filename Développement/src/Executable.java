@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+=======
+/**
+ * Executable
+ */
+>>>>>>> origin
 public class Executable {
     
     public static void main(String[] args) {

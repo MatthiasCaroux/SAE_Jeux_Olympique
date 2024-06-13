@@ -1,3 +1,6 @@
+/**
+ * Executable2
+ */
 public class Executable2 {
 
     public static void main(String[] args) {
@@ -163,6 +166,8 @@ public class Executable2 {
             System.out.println(natation.rapport());
             System.out.println(jo2024.getEpreuves());
             System.out.println(jo2024.getClassementPays());
+            System.out.println("Les épreuves auquels Matthias a participé : " + jo2024.getEpreuveDuParticipant(Matthias));
+            System.out.println("Les épreuves auquels la France a participé : " + jo2024.getEpreuvesDuPays(France));
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
