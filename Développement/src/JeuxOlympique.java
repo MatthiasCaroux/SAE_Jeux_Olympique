@@ -60,7 +60,7 @@ public class JeuxOlympique {
         }
     }
 
-    public static boolean equipePleine(Participant equipe, Epreuve.TypeSport sport) {
+    public boolean equipePleine(Participant equipe, Epreuve.TypeSport sport) {
         Equipe equipeSport = (Equipe) equipe;
         return equipeSport.getLesAthlètes().size() == sport.getNbParticipantNecessaire();
     }
@@ -78,8 +78,9 @@ public class JeuxOlympique {
         try {
             BufferedReader br = new BufferedReader(new FileReader(cheminVersCSV));
             String line = "";
+            br.readLine();
             while ((line = br.readLine()) != null) {
-                String[] values = line.split(";");
+                String[] values = line.split(",");
                 String nom = values[0];
                 String prenom = values[1];
                 Epreuve.Sexe sexe = Epreuve.Sexe.valueOf(values[2]);
@@ -91,18 +92,22 @@ public class JeuxOlympique {
                 Athlete athlete = new Athlete(nom, prenom, sexe, pays, force, endurance, agilite);
                 boolean joueurAjoute = false;
                 boolean sportExiste = false;
-                if (nomSPort == "Natation relais libre"){
+                if (nomSPort.equals("Natation relais libre")){
                     System.out.println("Le nom du sport est Natation relais libre");
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.NatationRelais) {
                             sportExiste = true;
                             for (Participant equipe : participantsParEpreuve.get(e)){
                                 Equipe equipeNatation = (Equipe) equipe;
-                                if (!(equipePleine(equipe, Epreuve.TypeSport.NatationRelais)) && equipe.getPays().equals(athlete.getPays()) && equipeNatation.getSexeEquipe() == athlete.getSexe()){
-                                    equipeNatation.ajouterMembre(athlete);
+                                if (!(equipePleine(equipeNatation, Epreuve.TypeSport.AthlétismeRelais))){
+                                    if (equipeNatation.getPays().getNomPays().equals(athlete.getPays().getNomPays())){
+                                        if (equipeNatation.getSexeEquipe().equals(athlete.getSexe())){                                    
+                                            equipeNatation.ajouterMembre(athlete);
                                     System.out.println("J'ai ajouté un membre à l'équipe de natation");
                                     joueurAjoute = true;
                                     break;
+                                        }
+                                    }
                                 }
                             }
                             if(!joueurAjoute){
@@ -121,18 +126,22 @@ public class JeuxOlympique {
                         participantsParEpreuve.get(nouvelleEpreuve).add(nouvelleEquipeNatation);                        
                     }
                 }
-                else if (nomSPort == "Volley-Ball"){
+                else if (nomSPort.equals("Volley-Ball")){
                     System.out.println("Le nom du sport est Volley-Ball");
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.Volley) {
                             sportExiste = true;
                             for (Participant equipe : participantsParEpreuve.get(e)){
                                 Equipe equipeVolley = (Equipe) equipe;
-                                if (!(equipePleine(equipe, Epreuve.TypeSport.Volley)) && equipe.getPays().equals(athlete.getPays()) && equipeVolley.getSexeEquipe() == athlete.getSexe()){
-                                    equipeVolley.ajouterMembre(athlete);
-                                    System.out.println("J'ai ajouté un membre à l'équipe de volley");
-                                    joueurAjoute = true;
-                                    break;
+                                if (!(equipePleine(equipeVolley, Epreuve.TypeSport.AthlétismeRelais))){
+                                    if (equipeVolley.getPays().getNomPays().equals(athlete.getPays().getNomPays())){
+                                        if (equipeVolley.getSexeEquipe().equals(athlete.getSexe())){                                    
+                                            equipeVolley.ajouterMembre(athlete);
+                                            System.out.println("J'ai ajouté un membre à l'équipe de volley");
+                                            joueurAjoute = true;
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                             if(!joueurAjoute){
@@ -151,18 +160,22 @@ public class JeuxOlympique {
                         participantsParEpreuve.get(nouvelleEpreuve).add(nouvelleEquipeVolley);                        
                     }
                 }
-                else if (nomSPort == "Handball"){
+                else if (nomSPort.equals("Handball")){
                     System.out.println("Le nom du sport est Handball");
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.Handball) {
                             sportExiste = true;
                             for (Participant equipe : participantsParEpreuve.get(e)){
                                 Equipe equipeHandball = (Equipe) equipe;
-                                if (!(equipePleine(equipe, Epreuve.TypeSport.Handball)) && equipe.getPays().equals(athlete.getPays()) && equipeHandball.getSexeEquipe() == athlete.getSexe()){
-                                    equipeHandball.ajouterMembre(athlete);
-                                    System.out.println("J'ai ajouté un membre à l'équipe de handball");
-                                    joueurAjoute = true;
-                                    break;
+                                if (!(equipePleine(equipeHandball, Epreuve.TypeSport.AthlétismeRelais))){
+                                    if (equipeHandball.getPays().getNomPays().equals(athlete.getPays().getNomPays())){
+                                        if (equipeHandball.getSexeEquipe().equals(athlete.getSexe())){                                    
+                                            equipeHandball.ajouterMembre(athlete);
+                                            System.out.println("J'ai ajouté un membre à l'équipe de handball");
+                                            joueurAjoute = true;
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                             if(!joueurAjoute){
@@ -181,21 +194,27 @@ public class JeuxOlympique {
                         participantsParEpreuve.get(nouvelleEpreuve).add(nouvelleEquipeHandball);                        
                     }
                 }
-                else if (nomSPort == "Athlétisme relais 400m"){
+                else if (nomSPort.equals("Athlétisme relais 400m")){
                     System.out.println("Le nom du sport est Athlétisme relais 400m");
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.AthlétismeRelais) {
                             sportExiste = true;
                             for (Participant equipe : participantsParEpreuve.get(e)){
                                 Equipe equipeAthletisme = (Equipe) equipe;
-                                if (!(equipePleine(equipe, Epreuve.TypeSport.AthlétismeRelais)) && equipe.getPays().equals(athlete.getPays()) && equipeAthletisme.getSexeEquipe() == athlete.getSexe()){
-                                    equipeAthletisme.ajouterMembre(athlete);
-                                    System.out.println("J'ai ajouté un membre à l'équipe d'athlétisme");
-                                    joueurAjoute = true;
-                                    break;
+                                if (!(equipePleine(equipeAthletisme, Epreuve.TypeSport.AthlétismeRelais))){
+                                    if (equipeAthletisme.getPays().getNomPays().equals(athlete.getPays().getNomPays())){
+                                        if (equipeAthletisme.getSexeEquipe().equals(athlete.getSexe())){
+                                            System.out.println("Tout les tests sont passés");
+                                            equipeAthletisme.ajouterMembre(athlete);
+                                            System.out.println("J'ai ajouté un membre à l'équipe d'athlétisme");
+                                            joueurAjoute = true;
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                             if(!joueurAjoute){
+                                System.out.println("le joueur na pas été ajouté on va donc créer une nouvelle équipe");
                                 Equipe nouvelleEquipeAthletisme = new Equipe(nom, pays, sexe);
                                 nouvelleEquipeAthletisme.ajouterMembre(athlete);
                                 participantsParEpreuve.get(e).add(nouvelleEquipeAthletisme);
@@ -211,7 +230,7 @@ public class JeuxOlympique {
                         participantsParEpreuve.get(nouvelleEpreuve).add(nouvelleEquipeAthletisme);                        
                     }
                 }
-                else if (nomSPort == "Escrime fleuret"){
+                else if (nomSPort.equals("Escrime fleuret")){
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.Escrimefleuret) {
                             sportExiste = true;
@@ -225,20 +244,23 @@ public class JeuxOlympique {
                     }
                     
                 }
-                else if (nomSPort == "Escrime épée"){
+                else if (nomSPort.equals("Escrime épée")){
+
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.EscrimeÉpée) {
+                            System.out.println(e.getSport());
                             sportExiste = true;
                             participantsParEpreuve.get(e).add(athlete);
                         }
                     }
+                    
                     if (!sportExiste) {
                         EpreuveIndividuelle nouvelleEpreuve = new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, sexe);
                         participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
                         participantsParEpreuve.get(nouvelleEpreuve).add(athlete);
                     }
                 }
-                else if (nomSPort == "Athétisme 110 haies"){
+                else if (nomSPort.equals("Athétisme 110 haies")){
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.AthlétismeHaie) {
                             sportExiste = true;
@@ -251,7 +273,7 @@ public class JeuxOlympique {
                         participantsParEpreuve.get(nouvelleEpreuve).add(athlete);
                     }
                 }
-                else if (nomSPort == "Natation 100 brasse"){
+                else if (nomSPort.equals("Natation 100 brasse")){
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.NatationBrasse) {
                             sportExiste = true;

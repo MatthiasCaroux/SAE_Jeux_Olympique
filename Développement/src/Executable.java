@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Executable {
     
@@ -46,5 +47,81 @@ public class Executable {
 
         Map<Epreuve, List<Participant>> map = jo.getParticipantsParEpreuve("./Développement/donnees.csv");
         System.out.println(map);
+        List<Participant> participants = map.get(hand);
+        for (Participant participant : participants) {
+            if (participant instanceof Athlete) {
+                System.out.println("Athlete: " + participant);
+            } else {
+                Equipe equipe = (Equipe) participant;
+                System.out.println("Equipe: " + equipe.getLesAthlètes());
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Scanner scanner = new Scanner(System.in);
+        // int choix = 0;
+
+        // while (choix != 4) {
+        //     System.out.println("╔════════════════════════════════════════╗");
+        //     System.out.println("║                 Menu                   ║");
+        //     System.out.println("╠════════════════════════════════════════╣");
+        //     System.out.println("║ 1) Simuler les Jeux Olympiques         ║");
+        //     System.out.println("╠════════════════════════════════════════╣");
+        //     System.out.println("║ 2) Afficher tous les athlètes des Jeux ║");
+        //     System.out.println("╠════════════════════════════════════════╣");
+        //     System.out.println("║ 3) Afficher toute les épreuves         ║");
+        //     System.out.println("╠════════════════════════════════════════╣");
+        //     System.out.println("║ 4) Quitter                             ║");
+        //     System.out.println("╚════════════════════════════════════════╝");
+        //     System.out.print("Choisissez une option: ");
+        //     choix = scanner.nextInt();
+
+        //     switch (choix) {
+        //         case 1:
+        //             System.out.println("lancement des jeux");
+        //             break;
+        //         case 2:
+        //             System.out.println("toto");
+        //             break;
+        //         case 3:
+        //             System.out.println("les compétitions sont :");
+        //             break;
+        //         case 4:
+        //             System.out.println("Au revoir!");
+        //             break;
+        //         default:
+        //             System.out.println("Option invalide. Veuillez réessayer.");
+        //     }
+        // }
     }
 }
