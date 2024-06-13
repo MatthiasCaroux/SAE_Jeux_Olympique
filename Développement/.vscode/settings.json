@@ -1,9 +1,10 @@
 {
     "java.project.sourcePaths": [
+        ".",
         "src"
     ],
     "java.project.referencedLibraries": [
-        "lib/hamcrest-core-1.3.jar",
-        "lib/junit-4.13.2.jar"
+        "/home/iut45/Etudiants/o22301527/Documents/SAE/SAE_Jeux_Olympique/Développement/lib/hamcrest-core-1.3.jar",
+        "/home/iut45/Etudiants/o22301527/Documents/SAE/SAE_Jeux_Olympique/Développement/lib/junit-4.13.2.jar"
     ]
 }
