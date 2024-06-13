@@ -1,3 +1,6 @@
+/**
+ * Classe représentant un athlète
+ */
 public class Athlete implements Comparable<Athlete>, Participant {
 
     /**

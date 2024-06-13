@@ -1,5 +1,8 @@
 import java.util.Comparator;
 
+/**
+ * Classe permettant de comparer les pays
+ */
 public class PaysComparator implements Comparator<Pays> {
 
     /**

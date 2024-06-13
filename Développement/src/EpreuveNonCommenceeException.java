@@ -1,3 +1,6 @@
+/**
+ * Classe EpreuveNonCommenceeException
+ */
 public class EpreuveNonCommenceeException extends Exception {
 
     /**

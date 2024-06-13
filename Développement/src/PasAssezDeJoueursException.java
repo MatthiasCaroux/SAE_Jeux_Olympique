@@ -1,3 +1,6 @@
+/**
+ * Classe PasAssezDeJoueursException
+ */
 public class PasAssezDeJoueursException extends Exception {
 
     /**

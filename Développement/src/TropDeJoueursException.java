@@ -1,3 +1,6 @@
+/**
+ * Classe TropDeJoueursException
+ */
 public class TropDeJoueursException extends Exception{
 
     /**

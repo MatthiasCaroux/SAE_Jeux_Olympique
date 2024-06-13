@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Classe représentant les jeux olympiques
+ */
 public class JeuxOlympique {
     /**
      * l'année des jeux olympiques

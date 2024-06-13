@@ -1,3 +1,6 @@
+/**
+ * Executable2
+ */
 public class Executable2 {
 
     public static void main(String[] args) {

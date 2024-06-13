@@ -1,6 +1,9 @@
 import java.util.Comparator;
 import java.util.Map;
 
+/**
+ * Classe permettant de comparer les participants
+ */
 public class ParticipantComparator implements Comparator<Participant> {
 
     /**

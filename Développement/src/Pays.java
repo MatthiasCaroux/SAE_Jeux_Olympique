@@ -1,6 +1,9 @@
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Classe représentant un pays
+ */
 public class Pays {
     
     /**

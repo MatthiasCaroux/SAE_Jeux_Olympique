@@ -1,3 +1,6 @@
+/**
+ * Classe EquipeDejaParticipanteException
+ */
 public class EquipeDejaParticipanteException extends Exception{
 
     /**
