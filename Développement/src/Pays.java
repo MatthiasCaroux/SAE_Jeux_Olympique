@@ -19,7 +19,7 @@ public class Pays {
     public String getNomPays() {
         return this.nomPays;
     }
-
+    
     public int getScoreTotal() {
         return this.scoreTotal;
     }
