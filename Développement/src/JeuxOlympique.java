@@ -1,6 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JeuxOlympique {
     private int annee;
@@ -54,6 +58,221 @@ public class JeuxOlympique {
                 this.lesPays.add(p.getPays());
             }
         }
+    }
+
+    public static boolean equipePleine(Participant equipe, Epreuve.TypeSport sport) {
+        Equipe equipeSport = (Equipe) equipe;
+        return equipeSport.getLesAthlètes().size() == sport.getNbParticipantNecessaire();
+    }
+
+    public Map<Epreuve, List<Participant>> getParticipantsParEpreuve(String cheminVersCSV){
+        Map<Epreuve, List<Participant>> participantsParEpreuve = new HashMap<>();
+        for (Epreuve epreuve : this.epreuves) {
+            participantsParEpreuve.put(epreuve, epreuve.getParticipants());
+        }
+        System.out.println("Je suis dans getParticipantsParEpreuve");
+        System.out.println(participantsParEpreuve);
+        //vider la liste des epreuves car elle va etre reconstruite a la fin de la methode
+        this.epreuves.clear();
+        // a ce moment la on a tous les participants par epreuve representé par une map comme cela : {Epreuve1 : [Participant1, Participant2, Participant3], Epreuve2 : [Participant4, Participant5, Participant6]}
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(cheminVersCSV));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(";");
+                String nom = values[0];
+                String prenom = values[1];
+                Epreuve.Sexe sexe = Epreuve.Sexe.valueOf(values[2]);
+                Pays pays = new Pays(values[3]);
+                String nomSPort = values[4];
+                int force = Integer.parseInt(values[5]);
+                int endurance = Integer.parseInt(values[6]);
+                int agilite = Integer.parseInt(values[7]);
+                Athlete athlete = new Athlete(nom, prenom, sexe, pays, force, endurance, agilite);
+                boolean joueurAjoute = false;
+                boolean sportExiste = false;
+                if (nomSPort == "Natation relais libre"){
+                    System.out.println("Le nom du sport est Natation relais libre");
+                    for (Epreuve e : participantsParEpreuve.keySet()) {
+                        if (e.getSport() == Epreuve.TypeSport.NatationRelais) {
+                            sportExiste = true;
+                            for (Participant equipe : participantsParEpreuve.get(e)){
+                                Equipe equipeNatation = (Equipe) equipe;
+                                if (!(equipePleine(equipe, Epreuve.TypeSport.NatationRelais)) && equipe.getPays().equals(athlete.getPays()) && equipeNatation.getSexeEquipe() == athlete.getSexe()){
+                                    equipeNatation.ajouterMembre(athlete);
+                                    System.out.println("J'ai ajouté un membre à l'équipe de natation");
+                                    joueurAjoute = true;
+                                    break;
+                                }
+                            }
+                            if(!joueurAjoute){
+                                Equipe nouvelleEquipeNatation = new Equipe(nom, pays, sexe);
+                                nouvelleEquipeNatation.ajouterMembre(athlete);
+                                participantsParEpreuve.get(e).add(nouvelleEquipeNatation);
+                                joueurAjoute = true;
+                            }
+                        }
+                    }
+                    if (!sportExiste) {
+                        Equipe nouvelleEquipeNatation = new Equipe(nom, pays, sexe);
+                        nouvelleEquipeNatation.ajouterMembre(athlete);
+                        EpreuveCollective nouvelleEpreuve = new EpreuveCollective(Epreuve.TypeSport.NatationRelais, sexe);
+                        participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
+                        participantsParEpreuve.get(nouvelleEpreuve).add(nouvelleEquipeNatation);                        
+                    }
+                }
+                else if (nomSPort == "Volley-Ball"){
+                    System.out.println("Le nom du sport est Volley-Ball");
+                    for (Epreuve e : participantsParEpreuve.keySet()) {
+                        if (e.getSport() == Epreuve.TypeSport.Volley) {
+                            sportExiste = true;
+                            for (Participant equipe : participantsParEpreuve.get(e)){
+                                Equipe equipeVolley = (Equipe) equipe;
+                                if (!(equipePleine(equipe, Epreuve.TypeSport.Volley)) && equipe.getPays().equals(athlete.getPays()) && equipeVolley.getSexeEquipe() == athlete.getSexe()){
+                                    equipeVolley.ajouterMembre(athlete);
+                                    System.out.println("J'ai ajouté un membre à l'équipe de volley");
+                                    joueurAjoute = true;
+                                    break;
+                                }
+                            }
+                            if(!joueurAjoute){
+                                Equipe nouvelleEquipeVolley = new Equipe(nom, pays, sexe);
+                                nouvelleEquipeVolley.ajouterMembre(athlete);
+                                participantsParEpreuve.get(e).add(nouvelleEquipeVolley);
+                                joueurAjoute = true;
+                            }
+                        }
+                    }
+                    if (!sportExiste) {
+                        Equipe nouvelleEquipeVolley = new Equipe(nom, pays, sexe);
+                        nouvelleEquipeVolley.ajouterMembre(athlete);
+                        EpreuveCollective nouvelleEpreuve = new EpreuveCollective(Epreuve.TypeSport.Volley, sexe);
+                        participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
+                        participantsParEpreuve.get(nouvelleEpreuve).add(nouvelleEquipeVolley);                        
+                    }
+                }
+                else if (nomSPort == "Handball"){
+                    System.out.println("Le nom du sport est Handball");
+                    for (Epreuve e : participantsParEpreuve.keySet()) {
+                        if (e.getSport() == Epreuve.TypeSport.Handball) {
+                            sportExiste = true;
+                            for (Participant equipe : participantsParEpreuve.get(e)){
+                                Equipe equipeHandball = (Equipe) equipe;
+                                if (!(equipePleine(equipe, Epreuve.TypeSport.Handball)) && equipe.getPays().equals(athlete.getPays()) && equipeHandball.getSexeEquipe() == athlete.getSexe()){
+                                    equipeHandball.ajouterMembre(athlete);
+                                    System.out.println("J'ai ajouté un membre à l'équipe de handball");
+                                    joueurAjoute = true;
+                                    break;
+                                }
+                            }
+                            if(!joueurAjoute){
+                                Equipe nouvelleEquipeHandball = new Equipe(nom, pays, sexe);
+                                nouvelleEquipeHandball.ajouterMembre(athlete);
+                                participantsParEpreuve.get(e).add(nouvelleEquipeHandball);
+                                joueurAjoute = true;
+                            }
+                        }
+                    }
+                    if (!sportExiste) {
+                        Equipe nouvelleEquipeHandball = new Equipe(nom, pays, sexe);
+                        nouvelleEquipeHandball.ajouterMembre(athlete);
+                        EpreuveCollective nouvelleEpreuve = new EpreuveCollective(Epreuve.TypeSport.Handball, sexe);
+                        participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
+                        participantsParEpreuve.get(nouvelleEpreuve).add(nouvelleEquipeHandball);                        
+                    }
+                }
+                else if (nomSPort == "Athlétisme relais 400m"){
+                    System.out.println("Le nom du sport est Athlétisme relais 400m");
+                    for (Epreuve e : participantsParEpreuve.keySet()) {
+                        if (e.getSport() == Epreuve.TypeSport.AthlétismeRelais) {
+                            sportExiste = true;
+                            for (Participant equipe : participantsParEpreuve.get(e)){
+                                Equipe equipeAthletisme = (Equipe) equipe;
+                                if (!(equipePleine(equipe, Epreuve.TypeSport.AthlétismeRelais)) && equipe.getPays().equals(athlete.getPays()) && equipeAthletisme.getSexeEquipe() == athlete.getSexe()){
+                                    equipeAthletisme.ajouterMembre(athlete);
+                                    System.out.println("J'ai ajouté un membre à l'équipe d'athlétisme");
+                                    joueurAjoute = true;
+                                    break;
+                                }
+                            }
+                            if(!joueurAjoute){
+                                Equipe nouvelleEquipeAthletisme = new Equipe(nom, pays, sexe);
+                                nouvelleEquipeAthletisme.ajouterMembre(athlete);
+                                participantsParEpreuve.get(e).add(nouvelleEquipeAthletisme);
+                                joueurAjoute = true;
+                            }
+                        }
+                    }
+                    if (!sportExiste) {
+                        Equipe nouvelleEquipeAthletisme = new Equipe(nom, pays, sexe);
+                        nouvelleEquipeAthletisme.ajouterMembre(athlete);
+                        EpreuveCollective nouvelleEpreuve = new EpreuveCollective(Epreuve.TypeSport.AthlétismeRelais, sexe);
+                        participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
+                        participantsParEpreuve.get(nouvelleEpreuve).add(nouvelleEquipeAthletisme);                        
+                    }
+                }
+                else if (nomSPort == "Escrime fleuret"){
+                    for (Epreuve e : participantsParEpreuve.keySet()) {
+                        if (e.getSport() == Epreuve.TypeSport.Escrimefleuret) {
+                            sportExiste = true;
+                            participantsParEpreuve.get(e).add(athlete);
+                        }
+                    }
+                    if (!sportExiste) {
+                        EpreuveIndividuelle nouvelleEpreuve = new EpreuveIndividuelle(Epreuve.TypeSport.Escrimefleuret, sexe);
+                        participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
+                        participantsParEpreuve.get(nouvelleEpreuve).add(athlete);
+                    }
+                    
+                }
+                else if (nomSPort == "Escrime épée"){
+                    for (Epreuve e : participantsParEpreuve.keySet()) {
+                        if (e.getSport() == Epreuve.TypeSport.EscrimeÉpée) {
+                            sportExiste = true;
+                            participantsParEpreuve.get(e).add(athlete);
+                        }
+                    }
+                    if (!sportExiste) {
+                        EpreuveIndividuelle nouvelleEpreuve = new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, sexe);
+                        participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
+                        participantsParEpreuve.get(nouvelleEpreuve).add(athlete);
+                    }
+                }
+                else if (nomSPort == "Athétisme 110 haies"){
+                    for (Epreuve e : participantsParEpreuve.keySet()) {
+                        if (e.getSport() == Epreuve.TypeSport.AthlétismeHaie) {
+                            sportExiste = true;
+                            participantsParEpreuve.get(e).add(athlete);
+                        }
+                    }
+                    if (!sportExiste) {
+                        EpreuveIndividuelle nouvelleEpreuve = new EpreuveIndividuelle(Epreuve.TypeSport.AthlétismeHaie, sexe);
+                        participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
+                        participantsParEpreuve.get(nouvelleEpreuve).add(athlete);
+                    }
+                }
+                else if (nomSPort == "Natation 100 brasse"){
+                    for (Epreuve e : participantsParEpreuve.keySet()) {
+                        if (e.getSport() == Epreuve.TypeSport.NatationBrasse) {
+                            sportExiste = true;
+                            participantsParEpreuve.get(e).add(athlete);
+                        }
+                    }
+                    if (!sportExiste) {
+                        EpreuveIndividuelle nouvelleEpreuve = new EpreuveIndividuelle(Epreuve.TypeSport.NatationBrasse, sexe);
+                        participantsParEpreuve.put(nouvelleEpreuve, new ArrayList<>());
+                        participantsParEpreuve.get(nouvelleEpreuve).add(athlete);
+                    }                   
+
+                }
+            }
+            br.close();
+            System.out.println("J'ai fini de lire le fichier");
+            System.out.println(participantsParEpreuve);
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la lecture du fichier");
+        }
+        return participantsParEpreuve;
     }
 
     public Pays vainqueurEpreuve(Epreuve epreuve) throws EpreuveNonCommenceeException {
