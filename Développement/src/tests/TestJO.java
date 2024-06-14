@@ -1,15 +1,16 @@
-package src.modele;
+package src.tests;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
+import src.modele.*;
+
 
 /**
  * Classe de test pour Executable2
  */
-public class Executable2Test {
+public class TestJO {
 
     private Equipe equipe1;
     private Equipe equipe2;
