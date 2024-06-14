@@ -1,7 +1,6 @@
 package src.modele.jeuxOlympique;
 
 import src.modele.exceptions.*;
-import src.modele.jeuxOlympique.*;
 
 import java.util.List;
 import java.util.Map;
@@ -64,6 +63,8 @@ public class Executable {
         try {
             Pays paysVainqueur = hand.getPaysVainqueur();
             Participant p = hand.getVainqueur();
+            System.out.println("Le pays vainqueur est : " + paysVainqueur.getNomPays());
+            System.out.println("Le participant vainqueur est : " + p);
         } catch (EpreuveNonCommenceeException e) {
         }
 
@@ -90,14 +91,14 @@ public class Executable {
             natrelais.participer(test);
 
         } catch (Exception e) {
-            // system.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         } 
 
         try {
-            // natrelais.jouerEpreuve();
-            // system.out.println(natrelais.rapport());
+            natrelais.jouerEpreuve();
+            System.out.println(natrelais.rapport());
         } catch (Exception e) {
-            // system.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
         
 
@@ -127,12 +128,8 @@ public class Executable {
             jo2024.ajouteEpreuve(natrelais);
 
         } catch (Exception e) {
-            // system.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
-
-        // system.out.println("USA : " + USA.getMedailles() + ", Score : " + USA.getScoreTotal());
-        // system.out.println("France : " + France.getMedailles() + ", Score : " + France.getScoreTotal());
-        // system.out.println("Allemagne : " + allemagne.getMedailles() + ", Score : " + allemagne.getScoreTotal());
      
 
 
@@ -143,25 +140,6 @@ public class Executable {
 
         Map<Epreuve, List<Participant>> map = jo2024.getParticipantsParEpreuve("./Développement/donnees.csv");
         System.out.println(map);
-
-        // System.out.println();
-        // for (Map.Entry<Epreuve, List<Participant>> dico : map.entrySet()) {
-        //     System.out.println("------" + dico.getKey() + "--------");
-        //     for (Participant participant : dico.getValue()) {
-        //         if (participant instanceof Athlete) {
-        //             System.out.println("Athlete: " + participant);
-        //         } else {
-        //             Equipe equipe = (Equipe) participant;
-        //             System.out.println(" - " + equipe.getNomEquipe() + " " + equipe.getLesAthlètes());
-        //         }
-        //     }
-        //     System.out.println();
-        // }
-
-
-
-
-
 
 
         Scanner scanner = new Scanner(System.in);
@@ -187,8 +165,6 @@ public class Executable {
             switch (choix) {
                 case 1:
                     try{
-                        // jo2024.lancerUneEpreuve(hand);
-                        // System.out.println(hand.rapport());
                         jo2024.lancerToutesLesEpreuves();
                         System.out.println(jo2024.getClassementPays());
                         for (Pays pays : jo2024.getLesPays()) {
@@ -237,5 +213,6 @@ public class Executable {
                     System.out.println("Option invalide. Veuillez réessayer.");
             }
         }
+        scanner.close();
     }
 }

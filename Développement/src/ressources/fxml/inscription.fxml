@@ -88,7 +88,7 @@
             <children>
                 <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@jeuxOlympique2024.png" />
+                        <Image url="@../images/jeuxOlympique2024.png" />
                     </image>
                 </ImageView>
             </children>

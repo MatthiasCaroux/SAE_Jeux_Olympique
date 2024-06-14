@@ -11,7 +11,7 @@
       <Label text="Bienvenue aux JO 2024" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
       <ImageView fitHeight="200.0" fitWidth="300.0">
          <image>
-            <Image url="@jeuxOlympique.png" />
+            <Image url="@../images/jeuxOlympique.png" />
          </image>
       </ImageView>
       <Button fx:id="seConnecter" mnemonicParsing="false" text="Se connecter" style="-fx-background-color: #007AFF; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10 20 10 20;" />

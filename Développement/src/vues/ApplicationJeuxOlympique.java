@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.fxml.FXMLLoader;
+import src.controlleur.*;
 
 public class ApplicationJeuxOlympique extends Application {
     Scene sceneFenetreAccueil;
@@ -28,16 +29,17 @@ public class ApplicationJeuxOlympique extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        loader = new FXMLLoader(this.getClass().getResource("accueil.fxml"));
+        System.out.println("Lancement de l'application");
+        loader = new FXMLLoader(this.getClass().getResource("/fxml/accueil.fxml"));
         this.fenetreAccueil = loader.load();
 
-        loaderConnexion = new FXMLLoader(this.getClass().getResource("connexion.fxml"));
+        loaderConnexion = new FXMLLoader(this.getClass().getResource("/fxml/connexion.fxml"));
         this.fenetreConnexion = loaderConnexion.load();
 
-        loaderInscription = new FXMLLoader(this.getClass().getResource("inscription.fxml"));
+        loaderInscription = new FXMLLoader(this.getClass().getResource("/fxml/inscription.fxml"));
         this.fenetreInscription = loaderInscription.load();
 
-        loaderClassement = new FXMLLoader(this.getClass().getResource("classement.fxml"));
+        loaderClassement = new FXMLLoader(this.getClass().getResource("/fxml/classement.fxml"));
         this.fenetreClassement = loaderClassement.load();
 
 
