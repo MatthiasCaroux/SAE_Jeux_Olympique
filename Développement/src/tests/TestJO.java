@@ -4,7 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
-import src.modele.*;
+import src.modele.jeuxOlympique.*;
 
 
 /**
