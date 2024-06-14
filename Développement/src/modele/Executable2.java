@@ -1,3 +1,7 @@
+package src.modele;
+
+import src.exceptions.*;
+
 /**
  * Executable2
  */

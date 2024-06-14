@@ -1,4 +1,9 @@
+package src.comparator;
+
+
 import java.util.Comparator;
+import src.modele.*;
+
 
 /**
  * Classe permettant de comparer les pays

@@ -1,3 +1,4 @@
+package src.exceptions;
 /**
  * Classe PasAssezDeJoueursException
  */

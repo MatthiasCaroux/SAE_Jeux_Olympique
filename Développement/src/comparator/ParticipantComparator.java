@@ -1,5 +1,8 @@
+package src.comparator;
 import java.util.Comparator;
 import java.util.Map;
+import src.modele.*;
+
 
 /**
  * Classe permettant de comparer les participants

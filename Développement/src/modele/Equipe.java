@@ -1,3 +1,5 @@
+package src.modele;
+
 import java.util.List;
 import java.util.ArrayList;
 

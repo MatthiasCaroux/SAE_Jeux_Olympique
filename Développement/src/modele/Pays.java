@@ -1,3 +1,5 @@
+package src.modele;
+
 import java.util.HashMap;
 import java.util.Map;
 

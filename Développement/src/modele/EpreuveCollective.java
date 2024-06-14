@@ -1,3 +1,6 @@
+package src.modele;
+import src.exceptions.*;
+
 /**
  * Classe EpreuveCollective, héritant de la classe Epreuve
  */

@@ -1,3 +1,8 @@
+package src.exceptions;
+
+import src.modele.*;
+
+
 /**
  * Classe EpreuveDejaPresenteException
  */

@@ -1,3 +1,5 @@
+package src.modele;
+
 /**
  * Classe représentant un athlète
  */
