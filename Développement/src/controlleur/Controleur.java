@@ -1,8 +1,9 @@
 package src.controlleur;
+import src.vues.*;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import src.vues.ApplicationJeuxOlympique;
+
 
 public class Controleur implements EventHandler<ActionEvent>{
 
