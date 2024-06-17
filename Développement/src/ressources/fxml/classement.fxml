@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <!-- Menu supérieur avec le logo et les onglets -->
+    <top>
+        <VBox alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="77.0" prefWidth="800.0" spacing="70.0" style="-fx-background-color: white; -fx-border-width: 0 0 2px 0; -fx-background-color: transparent transparent black transparent;">
+                    <children>
+                        <ImageView fitHeight="72.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/jeuxOlympique.png" />
+                            </image>
+                        </ImageView>
+                        <Label style="-fx-font-size: 16px;" text="Jeux Olympique" />
+                        <Label style="-fx-font-size: 16px;" text="Athlètes" />
+                        <Label style="-fx-font-size: 16px;" text="Equipes" />
+                        <Label style="-fx-font-size: 16px;" text="Classement" />
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
+
+    <!-- Contenu principal avec le classement des pays -->
+    <center>
+        <VBox spacing="20.0" style="-fx-background-color: white;">
+            <children>
+                <Label prefHeight="45.0" prefWidth="302.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Classement des Pays" />
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+    </center>
+</BorderPane>

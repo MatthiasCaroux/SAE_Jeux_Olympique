@@ -1,0 +1,18 @@
+{
+    "java.project.sourcePaths": [
+        "Développement",
+        "Développement/src/ressources"
+    ],
+    "java.project.referencedLibraries": [
+        "/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/lib/junit-4.13.2.jar",
+        "/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/lib/hamcrest-core-1.3.jar",
+        "/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/lib/javafx.media.jar",
+        "/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/lib/javafx.web.jar",
+        "/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/lib/javafx.fxml.jar",
+        "/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/lib/javafx.graphics.jar",
+        "/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/lib/javafx.swing.jar",
+        "/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/lib/javafx.controls.jar",
+        "/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/lib/javafx.base.jar"
+    ],
+    "java.dependency.packagePresentation": "hierarchical"
+}
