@@ -34,7 +34,7 @@ public class ApplicationJeuxOlympique extends Application {
     public void init() throws ClassNotFoundException, SQLException, Exception{
         System.out.println("Initialisation de l'application");
         this.requete = new Requete();
-        System.out.println(this.requete.idMaxUtilisateur());
+        System.out.println(this.requete.idMaxUtilisateur("UTILISATEUR"));
         System.out.println(this.requete.connexion("admin", "admin"));
         this.requete.inscription("niksan", "niksan@niksan.niksan.niksan", "niksan");
         this.requete.inscription("matthias", "matthias@matthias.matthias", "matthias");
