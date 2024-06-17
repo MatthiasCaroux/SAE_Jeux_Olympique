@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe de test pour Executable2
+ */
 public class Executable2Test {
 
     private Equipe equipe1;
@@ -46,7 +49,7 @@ public class Executable2Test {
         assertEquals(this.equipe2.getPays(), test.getPays());
         assertEquals(80, test.getForce());
         assertEquals(80, test.getEndurance());
-        assertEquals(80, test.getAgilite());
+        assertEquals(80, test.getAgilité());
     }
 
     @Test
