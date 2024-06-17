@@ -24,7 +24,8 @@ public class ApplicationJeuxOlympique extends Application {
     FXMLLoader loaderClassement;
   
     @Override
-    public void init(){    
+    public void init(){
+        System.out.println("Initialisation de l'application");
     }
     
     @Override
@@ -54,24 +55,48 @@ public class ApplicationJeuxOlympique extends Application {
         stage.show();
 
         Button boutonConnexion = (Button) sceneFenetreAccueil.lookup("#seConnecter");
-        boutonConnexion.setOnAction(e -> {
-            stage.setScene(sceneConnexion);
-            stage.setTitle("Fenetre de connexion");
-        });
+        boutonConnexion.setOnAction(new ControleurFenetre(this, sceneConnexion, "Fenetre de connexion"));
 
         Button boutonSinscrire = (Button) sceneFenetreAccueil.lookup("#sinscrire");
-        boutonSinscrire.setOnAction(e -> {
-            stage.setScene(sceneInscription);
-            stage.setTitle("Fenetre d'inscription");
-        });
+        boutonSinscrire.setOnAction(new ControleurFenetre(this, sceneInscription, "Fenetre d'inscription"));
 
         Button boutonClassement = (Button) sceneConnexion.lookup("#entrer");
-        boutonClassement.setOnAction(e -> {
-            stage.setScene(sceneClassement);
-            stage.setTitle("Fenetre de classement");
-        });
-
+        boutonClassement.setOnAction(new ControleurFenetre(this, sceneClassement, "Fenetre de classement"));
     }
+
+    public void changerFenetre(Scene scene, String titre){
+        Stage stage = null;
+        if (titre.equals("Fenetre de connexion")) {
+            stage = (Stage) sceneFenetreAccueil.getWindow();
+        }
+        else if (titre.equals("Fenetre d'inscription")) {
+            stage = (Stage) sceneFenetreAccueil.getWindow();
+        }
+        else if (titre.equals("Fenetre de classement")) {
+            stage = (Stage) sceneConnexion.getWindow();
+        }
+        stage.setScene(scene);
+        stage.setTitle(titre);
+    }
+
+    public Scene getSceneFenetreAccueil() {
+        return sceneFenetreAccueil;
+    }
+
+    public Scene getSceneConnexion() {
+        return sceneConnexion;
+    }
+
+    public Scene getSceneInscription() {
+        return sceneInscription;
+    }
+
+    public Scene getSceneClassement() {
+        return sceneClassement;
+    }
+
+
+    
 
     public static void main(String[] args) {
         launch(args);

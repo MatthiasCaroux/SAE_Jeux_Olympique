@@ -6,15 +6,15 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #FFFFFF;">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="855.0" spacing="20.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Bienvenue aux JO 2024" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+      <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Bienvenue aux JO 2024" />
       <ImageView fitHeight="200.0" fitWidth="300.0">
          <image>
             <Image url="@../images/jeuxOlympique.png" />
          </image>
       </ImageView>
-      <Button fx:id="seConnecter" mnemonicParsing="false" text="Se connecter" style="-fx-background-color: #007AFF; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10 20 10 20;" />
-      <Button fx:id="sinscrire" mnemonicParsing="false" text="S'inscrire" style="-fx-background-color: #D3D3D3; -fx-text-fill: black; -fx-font-size: 16px; -fx-padding: 10 20 10 20;" />
+      <Button fx:id="seConnecter" mnemonicParsing="false" style="-fx-background-color: #007AFF; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10 20 10 20;" text="Se connecter" />
+      <Button fx:id="sinscrire" mnemonicParsing="false" style="-fx-background-color: #D3D3D3; -fx-text-fill: black; -fx-font-size: 16px; -fx-padding: 10 20 10 20;" text="S'inscrire" />
    </children>
 </VBox>
