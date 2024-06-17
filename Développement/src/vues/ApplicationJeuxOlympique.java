@@ -2,6 +2,8 @@ package src.vues;
 
 import java.sql.SQLException;
 
+import org.junit.runner.Request;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -34,6 +36,9 @@ public class ApplicationJeuxOlympique extends Application {
         this.requete = new Requete();
         System.out.println(this.requete.idMaxUtilisateur());
         System.out.println(this.requete.connexion("admin", "admin"));
+        this.requete.inscription("niksan", "niksan@niksan.niksan.niksan", "niksan");
+        this.requete.inscription("matthias", "matthias@matthias.matthias", "matthias");
+        this.requete.inscription("alexy", "alexy@alexy.alexy", "alexy");
         // try {
         //     System.out.println("Tentative de connexion à la base de donnée");
         //     this.requete.connecter();
@@ -118,8 +123,19 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneClassement;
     }
 
+    public String getIdentifiant() {
+        TextField identifiant = (TextField) sceneConnexion.lookup("#champID");
+        return identifiant.getText();
+    }
 
-    
+    public String getMotDePasse() {
+        PasswordField motDePasse = (PasswordField) sceneConnexion.lookup("#champMDP");
+        return motDePasse.getText();
+    }
+
+    public Requete getRequete() {
+        return requete;
+    }
 
     public static void main(String[] args) {
         launch(args);
