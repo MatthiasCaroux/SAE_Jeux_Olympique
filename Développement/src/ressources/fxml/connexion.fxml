@@ -41,12 +41,12 @@
                         <RowConstraints percentHeight="33" />
                     </rowConstraints>
                     <children>
-                        <TextField promptText="Identifiant" style="-fx-background-radius: 5; -fx-padding: 10;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <TextField fx:id="ID" promptText="Identifiant" style="-fx-background-radius: 5; -fx-padding: 10;" GridPane.columnIndex="0" GridPane.rowIndex="0">
                             <GridPane.margin>
                                 <Insets left="20.0" right="20.0" />
                             </GridPane.margin>
                         </TextField>
-                        <PasswordField promptText="Mot de passe" style="-fx-background-radius: 5; -fx-padding: 10;" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <PasswordField fx:id="MDP" promptText="Mot de passe" style="-fx-background-radius: 5; -fx-padding: 10;" GridPane.columnIndex="0" GridPane.rowIndex="1">
                             <GridPane.margin>
                                 <Insets left="20.0" right="20.0" />
                             </GridPane.margin>

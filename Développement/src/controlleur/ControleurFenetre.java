@@ -29,11 +29,10 @@ public class ControleurFenetre implements EventHandler<ActionEvent>{
             System.out.println("Lançons la fenetre d'inscription");
         }
         else if (event.getSource() == this.applicationJeuxOlympique.getSceneConnexion().lookup("#entrer")) {
-            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneClassement(), titre, "entrer");
-
-            // if (this.applicationJeuxOlympique.getRequete().connexion(this.applicationJeuxOlympique.getIdentifiant(), this.applicationJeuxOlympique.getMotDePasse())){
-            //     this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneClassement(), "Fenetre de classement");
-
+            // this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneClassement(), titre, "entrer");
+            if (this.applicationJeuxOlympique.getRequete().connexion(this.applicationJeuxOlympique.getIdentifiantConnexion(), this.applicationJeuxOlympique.getMotDePasseConnexion())){
+                this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneClassement(), titre, "entrer");
+            }
             System.out.println("Lançons la fenetre de classement");
         }
         else if(event.getSource() == this.applicationJeuxOlympique.getSceneInscription().lookup("#boutonRetour")){

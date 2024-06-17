@@ -148,13 +148,13 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneClassement;
     }
 
-    public String getIdentifiant() {
-        TextField identifiant = (TextField) sceneConnexion.lookup("#champID");
+    public String getIdentifiantConnexion() {
+        TextField identifiant = (TextField) sceneConnexion.lookup("#ID");
         return identifiant.getText();
     }
 
-    public String getMotDePasse() {
-        PasswordField motDePasse = (PasswordField) sceneConnexion.lookup("#champMDP");
+    public String getMotDePasseConnexion() {
+        PasswordField motDePasse = (PasswordField) sceneConnexion.lookup("#MDP");
         return motDePasse.getText();
     }
 
