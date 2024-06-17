@@ -1,8 +1,28 @@
+DROP TABLE IF EXISTS POSSEDE;
+DROP TABLE IF EXISTS PARTICIPE_JO;
+DROP TABLE IF EXISTS PARTICIPE_INDIV;
+DROP TABLE IF EXISTS PARTICIPE_COLLEC;
+DROP TABLE IF EXISTS JEUXOLYMPIQUE;
+DROP TABLE IF EXISTS FAIT_PARTIE;
+DROP TABLE IF EXISTS EQUIPE;
+DROP TABLE IF EXISTS ATHLETE;
+DROP TABLE IF EXISTS PAYS;
+DROP TABLE IF EXISTS UTILISATEUR;
+
+CREATE TABLE PAYS (
+  id_Pays     INT PRIMARY KEY,
+  nom_P       VARCHAR(100),
+  M_or          INT DEFAULT 0,
+  M_argent      INT DEFAULT 0,
+  M_bronze      INT DEFAULT 0,
+  score_Total INT DEFAULT 0
+);
+
 CREATE TABLE ATHLETE (
-  id_Athlete INT AUTO_INCREMENT PRIMARY KEY,
+  id_Athlete INT PRIMARY KEY,
   nom_A      VARCHAR(100),
   prenom_A   VARCHAR(100),
-  force      INT,
+  la_force   INT,
   endurance  INT,
   agilite    INT,
   id_Pays    INT NOT NULL,
@@ -10,7 +30,7 @@ CREATE TABLE ATHLETE (
 );
 
 CREATE TABLE EQUIPE (
-  id_Equipe INT AUTO_INCREMENT PRIMARY KEY,
+  id_Equipe INT PRIMARY KEY,
   nom_E     VARCHAR(100),
   id_Pays   INT NOT NULL,
   FOREIGN KEY (id_Pays) REFERENCES PAYS (id_Pays)
@@ -27,7 +47,7 @@ CREATE TABLE FAIT_PARTIE (
 );
 
 CREATE TABLE JEUXOLYMPIQUE (
-  id_JO INT AUTO_INCREMENT PRIMARY KEY,
+  id_JO INT PRIMARY KEY,
   annee YEAR,
   lieu  VARCHAR(100)
 );
@@ -56,15 +76,6 @@ CREATE TABLE PARTICIPE_JO (
   FOREIGN KEY (id_Pays) REFERENCES PAYS (id_Pays)
 );
 
-CREATE TABLE PAYS (
-  id_Pays     INT AUTO_INCREMENT PRIMARY KEY,
-  nom_P       VARCHAR(100),
-  or          INT DEFAULT 0,
-  argent      INT DEFAULT 0,
-  bronze      INT DEFAULT 0,
-  score_Total INT DEFAULT 0
-);
-
 CREATE TABLE POSSEDE (
   id_Epreuve   INT NOT NULL,
   type_Epreuve VARCHAR(100) NOT NULL,
@@ -88,10 +99,5 @@ INSERT INTO UTILISATEUR VALUES ('1', 'admin', 'admin@admin.com', 'admin', 'A');
 INSERT INTO UTILISATEUR VALUES ('2', 'user', 'user@user.com', 'user', 'A');
 
 -- requetes
-<<<<<<< HEAD
-select * from UTILISATEUR where identifiant = 'admin' and mdp = 'admin';
-=======
 select * from UTILISATEUR where identifiant = 'admin' and mdp = 'admin';
 
-
->>>>>>> main

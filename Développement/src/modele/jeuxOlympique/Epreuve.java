@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import src.modele.exceptions.*;
 import src.modele.comparator.*;
 
@@ -202,23 +204,24 @@ public abstract class Epreuve{
      * @return le score du participant
      */
     public double calculeScore(Participant participant){
+        Random rand = new Random();
         switch (this.getSport()) {
             case Handball:
-                return (participant.getAgilité()*0.3 + participant.getEndurance()*0.4 + participant.getForce()*0.3);
+                return (participant.getAgilité()*0.3 + participant.getEndurance()*0.4 + participant.getForce()*0.3) + rand.nextInt(16);
             case Volley:
-                return (participant.getAgilité()*0.3 + participant.getEndurance()*0.5 + participant.getForce()*0.2);
+                return (participant.getAgilité()*0.3 + participant.getEndurance()*0.5 + participant.getForce()*0.2) + rand.nextInt(16);
             case NatationBrasse:
-                return (participant.getAgilité()*0.1 + participant.getEndurance()*0.6 + participant.getForce()*0.3);
+                return (participant.getAgilité()*0.1 + participant.getEndurance()*0.6 + participant.getForce()*0.3) + rand.nextDouble() * 7;
             case NatationRelais:
-                return (participant.getAgilité()*0.1 + participant.getEndurance()*0.4 + participant.getForce()*0.5);
+                return (participant.getAgilité()*0.1 + participant.getEndurance()*0.4 + participant.getForce()*0.5) + rand.nextDouble() * 8;
             case Escrimefleuret:
-                return (participant.getAgilité()*0.4 + participant.getEndurance()*0.2 + participant.getForce()*0.4);
+                return (participant.getAgilité()*0.4 + participant.getEndurance()*0.2 + participant.getForce()*0.4) + rand.nextInt(25);
             case EscrimeÉpée:
-                return (participant.getAgilité()*0.4 + participant.getEndurance()*0.1 + participant.getForce()*0.5);
+                return (participant.getAgilité()*0.4 + participant.getEndurance()*0.1 + participant.getForce()*0.5) + rand.nextInt(25);
             case AthlétismeHaie:
-                return (participant.getAgilité()*0.4 + participant.getEndurance()*0.6 + participant.getForce()*0.0);
+                return (participant.getAgilité()*0.4 + participant.getEndurance()*0.6 + participant.getForce()*0.0) + rand.nextDouble() * 6;
             case AthlétismeRelais:
-                return (participant.getAgilité()*0.4 + participant.getEndurance()*0.6 + participant.getForce()*0.0);
+                return (participant.getAgilité()*0.4 + participant.getEndurance()*0.6 + participant.getForce()*0.0) + rand.nextDouble() * 7;
             default:
                 return 0;
         }
