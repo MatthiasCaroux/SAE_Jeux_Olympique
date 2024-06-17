@@ -88,6 +88,10 @@ INSERT INTO UTILISATEUR VALUES ('1', 'admin', 'admin@admin.com', 'admin', 'A');
 INSERT INTO UTILISATEUR VALUES ('2', 'user', 'user@user.com', 'user', 'A');
 
 -- requetes
+<<<<<<< HEAD
+select * from UTILISATEUR where identifiant = 'admin' and mdp = 'admin';
+=======
 select * from UTILISATEUR where identifiant = 'admin' and mdp = 'admin';
 
 
+>>>>>>> main

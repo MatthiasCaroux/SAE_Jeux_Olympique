@@ -98,6 +98,12 @@ public class ApplicationJeuxOlympique extends Application {
         boutonRetourConnexion.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
         // System.out.println(boutonConnexion.getText(), boutonSinscrire.getText(), boutonClassement.getText(), boutonRetour.getText(), boutonRetourConnexion.getText());
 
+        Button boutonInscription = (Button) sceneInscription.lookup("#estInscrit");
+        boutonInscription.setOnAction(new ControleurInscription(this));
+
+
+
+
     }
 
     public void changerFenetre(Scene scene, String titre, String bouton){
@@ -162,11 +168,13 @@ public class ApplicationJeuxOlympique extends Application {
 
     public String getMotDePasseInscription() {
         PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDP");
+        System.out.println(motDePasse.getText());
         return motDePasse.getText();
     }
 
     public String getMotDePasseConfirmationInscription() {
-        PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDPConfirmation");
+        PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDPConfirme");
+        // System.out.println(motDePasse.getText());
         return motDePasse.getText();
     }
 
