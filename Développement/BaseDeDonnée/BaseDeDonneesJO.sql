@@ -69,6 +69,17 @@ CREATE TABLE PAYS (
   score_P VARCHAR(42)
 );
 
+CREATE TABLE UTILISATEUR (
+  PRIMARY KEY (id_Utilisateur),
+  id_Utilisateur VARCHAR(42) NOT NULL,
+  identifiant    VARCHAR(42),
+  email          VARCHAR(42),
+  mdp            VARCHAR(42),
+  rôle           CHAR
+);
+
+
+
 ALTER TABLE ATHLETE ADD FOREIGN KEY (nom_P) REFERENCES PAYS (nom_P);
 
 ALTER TABLE EPREUVE ADD FOREIGN KEY (annee) REFERENCES JEUX_OLYMPIQUE (annee);
@@ -82,3 +93,16 @@ ALTER TABLE FAIT_PARTIE ADD FOREIGN KEY (id_Athlete) REFERENCES ATHLETE (id_Athl
 
 ALTER TABLE PARTICIPE_A ADD FOREIGN KEY (id_Epreuve) REFERENCES EPREUVE (id_Epreuve);
 ALTER TABLE PARTICIPE_A ADD FOREIGN KEY (id_Athlete) REFERENCES ATHLETE (id_Athlete);
+
+
+
+-- insertions
+INSERT INTO UTILISATEUR VALUES ('1', 'admin', 'admin@admin.com', 'admin', 'A');
+INSERT INTO UTILISATEUR VALUES ('2', 'user', 'user@user.com', 'user', 'A');
+
+
+
+
+
+-- requetes
+select * from UTILISATEUR where identifiant = 'admin' and mdp = 'admin';
