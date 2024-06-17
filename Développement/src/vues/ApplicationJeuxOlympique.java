@@ -51,7 +51,7 @@ public class ApplicationJeuxOlympique extends Application {
         
 
         stage.setScene(sceneFenetreAccueil);
-        stage.setTitle("Fenetre d'acceuil");
+        stage.setTitle("Fenetre d'accueil");
         stage.show();
 
         Button boutonConnexion = (Button) sceneFenetreAccueil.lookup("#seConnecter");
@@ -62,6 +62,10 @@ public class ApplicationJeuxOlympique extends Application {
 
         Button boutonClassement = (Button) sceneConnexion.lookup("#entrer");
         boutonClassement.setOnAction(new ControleurFenetre(this, sceneClassement, "Fenetre de classement"));
+
+        Button boutonRetour = (Button) sceneInscription.lookup("#boutonRetour");
+        boutonRetour.setOnAction(new ControleurFenetre(this, sceneFenetreAccueil, "Fenetre Accueil"));
+
     }
 
     public void changerFenetre(Scene scene, String titre){
@@ -74,6 +78,9 @@ public class ApplicationJeuxOlympique extends Application {
         }
         else if (titre.equals("Fenetre de classement")) {
             stage = (Stage) sceneConnexion.getWindow();
+        }
+        else if (titre.equals("Fenetre Accueil")) {
+            stage = (Stage) sceneInscription.getWindow();
         }
         stage.setScene(scene);
         stage.setTitle(titre);

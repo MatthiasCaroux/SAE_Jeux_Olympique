@@ -27,5 +27,9 @@ public class ControleurFenetre implements EventHandler<ActionEvent>{
             this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneClassement(), "Fenetre de classement");
             System.out.println("Lançons la fenetre de classement");
         }
+        else if(event.getSource() == this.applicationJeuxOlympique.getSceneInscription().lookup("#boutonRetour")){
+            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneFenetreAccueil(), "Fenetre Accueil");
+            System.out.println("Retour à la fenetre d'Accueil'");
+        }
     }
 }
