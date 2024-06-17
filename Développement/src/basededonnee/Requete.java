@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import src.basededonnee.exception.*;
+
 public class Requete {
     
     private ConnexionBD connexionBD;
@@ -70,6 +72,7 @@ public class Requete {
                 requete.executeUpdate();
             } else {
                 System.out.println("Utilisateur déjà existant");
+                throw new UtilisateurDejaExistantException();
             }
         } catch (Exception e) {
             System.out.println("Erreur de connexion à la base de donnée");
