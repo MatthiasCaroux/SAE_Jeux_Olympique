@@ -1,31 +1,52 @@
 package src.vues;
 
+import java.sql.SQLException;
+
+import org.junit.runner.Request;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.fxml.FXMLLoader;
+
+
 import src.controlleur.*;
+import src.basededonnee.*;
 
 public class ApplicationJeuxOlympique extends Application {
-    Scene sceneFenetreAccueil;
-    Scene sceneConnexion;
-    Scene sceneInscription;
-    Scene sceneClassement;
-    Pane fenetreCourante;
-    VBox fenetreAccueil;
-    BorderPane fenetreConnexion;
-    BorderPane fenetreInscription;
-    BorderPane fenetreClassement;
-    FXMLLoader loader;
-    FXMLLoader loaderConnexion;
-    FXMLLoader loaderInscription;
-    FXMLLoader loaderClassement;
+    private Requete requete;
+    private Scene sceneFenetreAccueil;
+    private Scene sceneConnexion;
+    private Scene sceneInscription;
+    private Scene sceneClassement;
+    private VBox fenetreAccueil;
+    private BorderPane fenetreConnexion;
+    private BorderPane fenetreInscription;
+    private BorderPane fenetreClassement;
+    private FXMLLoader loader;
+    private FXMLLoader loaderConnexion;
+    private FXMLLoader loaderInscription;
+    private FXMLLoader loaderClassement;
   
     @Override
-    public void init(){
+    public void init() throws ClassNotFoundException, SQLException{
         System.out.println("Initialisation de l'application");
+        this.requete = new Requete();
+        System.out.println(this.requete.idMaxUtilisateur());
+        System.out.println(this.requete.connexion("admin", "admin"));
+        this.requete.inscription("niksan", "niksan@niksan.niksan.niksan", "niksan");
+        this.requete.inscription("matthias", "matthias@matthias.matthias", "matthias");
+        this.requete.inscription("alexy", "alexy@alexy.alexy", "alexy");
+        // try {
+        //     System.out.println("Tentative de connexion à la base de donnée");
+        //     this.requete.connecter();
+        //     System.out.println("Connexion reussi !");
+        // } catch (Exception e) {
+        //     System.out.println("Erreur de connexion à la base de donnée");
+        // }
+        // this.connexionBD.connecter();
     }
     
     @Override
@@ -109,8 +130,19 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneClassement;
     }
 
+    public String getIdentifiant() {
+        TextField identifiant = (TextField) sceneConnexion.lookup("#champID");
+        return identifiant.getText();
+    }
 
-    
+    public String getMotDePasse() {
+        PasswordField motDePasse = (PasswordField) sceneConnexion.lookup("#champMDP");
+        return motDePasse.getText();
+    }
+
+    public Requete getRequete() {
+        return requete;
+    }
 
     public static void main(String[] args) {
         launch(args);

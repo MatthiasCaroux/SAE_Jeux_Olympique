@@ -3,15 +3,16 @@
         "Développement"
     ],
     "java.project.referencedLibraries": [
-        "./Développement/lib/javafx.controls.jar",
-        "./Développement/lib/javafx.base.jar",
-        "./Développement/lib/javafx.web.jar",
-        "./Développement/lib/hamcrest-core-1.3.jar",
-        "./Développement/lib/junit-4.13.2.jar",
-        "./Développement/lib/javafx.graphics.jar",
-        "./Développement/lib/javafx.fxml.jar",
-        "./Développement/lib/javafx.media.jar",
-        "./Développement/lib/javafx.swing.jar"
+        "Développement/lib/hamcrest-core-1.3.jar",
+        "Développement/lib/javafx.base.jar",
+        "Développement/lib/javafx.controls.jar",
+        "Développement/lib/javafx.fxml.jar",
+        "Développement/lib/javafx.graphics.jar",
+        "Développement/lib/javafx.media.jar",
+        "Développement/lib/javafx.swing.jar",
+        "Développement/lib/javafx.web.jar",
+        "Développement/lib/junit-4.13.2.jar", 
+        "/usr/share/java/mariadb-java-client.jar",
     ],
     "java.dependency.packagePresentation": "hierarchical"
 }
