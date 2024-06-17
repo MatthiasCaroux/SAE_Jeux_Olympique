@@ -39,14 +39,6 @@ public class ApplicationJeuxOlympique extends Application {
         this.requete.inscription("niksan", "niksan@niksan.niksan.niksan", "niksan");
         this.requete.inscription("matthias", "matthias@matthias.matthias", "matthias");
         this.requete.inscription("alexy", "alexy@alexy.alexy", "alexy");
-        // try {
-        //     System.out.println("Tentative de connexion à la base de donnée");
-        //     this.requete.connecter();
-        //     System.out.println("Connexion reussi !");
-        // } catch (Exception e) {
-        //     System.out.println("Erreur de connexion à la base de donnée");
-        // }
-        // this.connexionBD.connecter();
 
         System.out.println("Initialisation de l'application");
 
