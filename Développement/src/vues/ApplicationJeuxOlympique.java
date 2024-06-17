@@ -25,13 +25,13 @@ public class ApplicationJeuxOlympique extends Application {
     private BorderPane fenetreConnexion;
     private BorderPane fenetreInscription;
     private BorderPane fenetreClassement;
-    private FXMLLoader loader;
+    private FXMLLoader loaderAccueil;
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
     private FXMLLoader loaderClassement;
   
     @Override
-    public void init() throws ClassNotFoundException, SQLException{
+    public void init() throws ClassNotFoundException, SQLException, Exception{
         System.out.println("Initialisation de l'application");
         this.requete = new Requete();
         System.out.println(this.requete.idMaxUtilisateur());
@@ -47,13 +47,27 @@ public class ApplicationJeuxOlympique extends Application {
         //     System.out.println("Erreur de connexion à la base de donnée");
         // }
         // this.connexionBD.connecter();
+
+        System.out.println("Initialisation de l'application");
+
+        loaderAccueil = new FXMLLoader(this.getClass().getResource("/fxml/accueil.fxml"));
+        this.fenetreAccueil = loaderAccueil.load();
+
+        loaderConnexion = new FXMLLoader(this.getClass().getResource("/fxml/connexion.fxml"));
+        this.fenetreConnexion = loaderConnexion.load();
+
+        loaderInscription = new FXMLLoader(this.getClass().getResource("/fxml/inscription.fxml"));
+        this.fenetreInscription = loaderInscription.load();
+
+        loaderClassement = new FXMLLoader(this.getClass().getResource("/fxml/classement.fxml"));
+        this.fenetreClassement = loaderClassement.load();
     }
     
     @Override
     public void start(Stage stage) throws Exception {
         System.out.println("Lancement de l'application");
-        loader = new FXMLLoader(this.getClass().getResource("/fxml/accueil.fxml"));
-        this.fenetreAccueil = loader.load();
+        loaderAccueil = new FXMLLoader(this.getClass().getResource("/fxml/accueil.fxml"));
+        this.fenetreAccueil = loaderAccueil.load();
 
         loaderConnexion = new FXMLLoader(this.getClass().getResource("/fxml/connexion.fxml"));
         this.fenetreConnexion = loaderConnexion.load();
@@ -75,6 +89,7 @@ public class ApplicationJeuxOlympique extends Application {
         stage.setTitle("Fenetre d'accueil");
         stage.show();
 
+
         Button boutonConnexion = (Button) sceneFenetreAccueil.lookup("#seConnecter");
         boutonConnexion.setOnAction(new ControleurFenetre(this, sceneConnexion, "Fenetre de connexion"));
 
@@ -89,6 +104,7 @@ public class ApplicationJeuxOlympique extends Application {
 
         Button boutonRetourConnexion = (Button) sceneConnexion.lookup("#boutonRetourConnexion");
         boutonRetourConnexion.setOnAction(new ControleurFenetre(this, sceneFenetreAccueil, "Fenetre Accueil"));
+        // System.out.println(boutonConnexion.getText(), boutonSinscrire.getText(), boutonClassement.getText(), boutonRetour.getText(), boutonRetourConnexion.getText());
 
     }
 
@@ -107,7 +123,9 @@ public class ApplicationJeuxOlympique extends Application {
             stage = (Stage) sceneInscription.getWindow();
         }
         else if (titre.equals("Fenetre Accueil") && bouton.equals("boutonRetourConnexion")) {
+            System.out.println("on est la ");
             stage = (Stage) sceneConnexion.getWindow();
+            System.out.println(stage + "iwi");
         }
         System.out.println("Changement de fenetre" + scene);
         stage.setScene(scene);
