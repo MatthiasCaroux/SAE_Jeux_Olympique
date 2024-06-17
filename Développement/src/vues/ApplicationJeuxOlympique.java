@@ -148,13 +148,33 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneClassement;
     }
 
-    public String getIdentifiant() {
-        TextField identifiant = (TextField) sceneConnexion.lookup("#champID");
+    public String getIdentifiantConnexion() {
+        TextField identifiant = (TextField) sceneConnexion.lookup("#ID");
         return identifiant.getText();
     }
 
-    public String getMotDePasse() {
-        PasswordField motDePasse = (PasswordField) sceneConnexion.lookup("#champMDP");
+    public String getMotDePasseConnexion() {
+        PasswordField motDePasse = (PasswordField) sceneConnexion.lookup("#MDP");
+        return motDePasse.getText();
+    }
+
+    public String getIdentifiantInscription() {
+        TextField identifiant = (TextField) sceneInscription.lookup("#champID");
+        return identifiant.getText();
+    }
+
+    public String getEmailInscription() {
+        TextField email = (TextField) sceneInscription.lookup("#champEmail");
+        return email.getText();
+    }
+
+    public String getMotDePasseInscription() {
+        PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDP");
+        return motDePasse.getText();
+    }
+
+    public String getMotDePasseConfirmationInscription() {
+        PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDPConfirmation");
         return motDePasse.getText();
     }
 
