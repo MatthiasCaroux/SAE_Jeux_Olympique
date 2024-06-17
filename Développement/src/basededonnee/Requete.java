@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import src.basededonnee.exception.*;
+
 public class Requete {
     
     private ConnexionBD connexionBD;
@@ -62,7 +64,7 @@ public class Requete {
     public void inscription(String identifiant, String mail, String motDePasse) {
         try {
             if (! this.dansUtilisateur(identifiant, mail, motDePasse)) {
-                PreparedStatement requete = this.connexionBD.prepareStatement("Insert into UTILISATEUR values (?, ?, ?, ?, 'U')");
+                PreparedStatement requete = this.connexionBD.prepareStatement("Insert into UTILISATEUR values (?, ?, ?, ?, 'C')");
                 requete.setInt(1, this.idMaxUtilisateur() + 1);
                 requete.setString(2, identifiant);
                 requete.setString(3, mail);
@@ -70,6 +72,7 @@ public class Requete {
                 requete.executeUpdate();
             } else {
                 System.out.println("Utilisateur déjà existant");
+                throw new UtilisateurDejaExistantException();
             }
         } catch (Exception e) {
             System.out.println("Erreur de connexion à la base de donnée");

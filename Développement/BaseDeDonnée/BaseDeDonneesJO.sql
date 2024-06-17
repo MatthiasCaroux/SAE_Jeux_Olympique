@@ -5,6 +5,7 @@ DROP TABLE FAIT_PARTIE;
 DROP TABLE FAIT;
 DROP TABLE EQUIPE;
 DROP TABLE ATHLETE;
+DROP TABLE UTILISATEUR;
 
 CREATE TABLE ATHLETE (
   PRIMARY KEY (id_Athlete),
@@ -75,7 +76,8 @@ CREATE TABLE UTILISATEUR (
   identifiant    VARCHAR(42),
   email          VARCHAR(42),
   mdp            VARCHAR(42),
-  rôle           CHAR
+  rôle           CHAR, 
+  CHECK (rôle IN ('A', 'C', 'O'))
 );
 
 
