@@ -1,72 +1,76 @@
-DROP TABLE PAYS;
-DROP TABLE PARTICIPE_A;
-DROP TABLE JEUX_OLYMPIQUE;
-DROP TABLE FAIT_PARTIE;
-DROP TABLE FAIT;
-DROP TABLE EQUIPE;
-DROP TABLE ATHLETE;
-
 CREATE TABLE ATHLETE (
-  PRIMARY KEY (id_Athlete),
-  id_Athlete VARCHAR(42) NOT NULL,
-  nom        VARCHAR(42),
-  prenom     VARCHAR(42),
-  sexe       VARCHAR(42),
-  force      VARCHAR(42),
-  endurance  VARCHAR(42),
-  agilite    VARCHAR(42),
-  score      VARCHAR(42),
-  nom_P      VARCHAR(42) NOT NULL
-);
-
-CREATE TABLE EPREUVE (
-  PRIMARY KEY (id_Epreuve),
-  id_Epreuve   VARCHAR(42) NOT NULL,
-  sport        VARCHAR(42),
-  sexe         VARCHAR(42),
-  lieu_Epreuve VARCHAR(42),
-  annee        VARCHAR(42) NOT NULL
+  id_Athlete INT AUTO_INCREMENT PRIMARY KEY,
+  nom_A      VARCHAR(100),
+  prenom_A   VARCHAR(100),
+  force      INT,
+  endurance  INT,
+  agilite    INT,
+  id_Pays    INT NOT NULL,
+  FOREIGN KEY (id_Pays) REFERENCES PAYS (id_Pays)
 );
 
 CREATE TABLE EQUIPE (
-  PRIMARY KEY (id_Equipe),
-  id_Equipe   VARCHAR(42) NOT NULL,
-  nom_E       VARCHAR(42),
-  nb_Athletes VARCHAR(42),
-  force_E     VARCHAR(42),
-  agilite_E   VARCHAR(42),
-  endurance_E VARCHAR(42),
-  nom_P       VARCHAR(42) NOT NULL
-);
-
-CREATE TABLE FAIT (
-  PRIMARY KEY (id_Equipe, id_Epreuve),
-  id_Equipe  VARCHAR(42) NOT NULL,
-  id_Epreuve VARCHAR(42) NOT NULL
+  id_Equipe INT AUTO_INCREMENT PRIMARY KEY,
+  nom_E     VARCHAR(100),
+  id_Pays   INT NOT NULL,
+  FOREIGN KEY (id_Pays) REFERENCES PAYS (id_Pays)
 );
 
 CREATE TABLE FAIT_PARTIE (
-  PRIMARY KEY (id_Athlete, id_Equipe),
-  id_Athlete VARCHAR(42) NOT NULL,
-  id_Equipe  VARCHAR(42) NOT NULL
+  id_Equipe  INT NOT NULL,
+  id_Athlete INT NOT NULL,
+  sexe       CHAR(1),
+  CHECK (sexe IN ('M', 'F')),
+  PRIMARY KEY (id_Equipe, id_Athlete),
+  FOREIGN KEY (id_Athlete) REFERENCES ATHLETE (id_Athlete),
+  FOREIGN KEY (id_Equipe) REFERENCES EQUIPE (id_Equipe)
 );
 
-CREATE TABLE JEUX_OLYMPIQUE (
-  PRIMARY KEY (annee),
-  annee VARCHAR(42) NOT NULL,
-  lieu  VARCHAR(42)
+CREATE TABLE JEUXOLYMPIQUE (
+  id_JO INT AUTO_INCREMENT PRIMARY KEY,
+  annee YEAR,
+  lieu  VARCHAR(100)
 );
 
-CREATE TABLE PARTICIPE_A (
-  PRIMARY KEY (id_Athlete, id_Epreuve),
-  id_Athlete VARCHAR(42) NOT NULL,
-  id_Epreuve VARCHAR(42) NOT NULL
+CREATE TABLE PARTICIPE_COLLEC (
+  id_Equipe    INT NOT NULL,
+  id_Epreuve   INT NOT NULL,
+  type_Epreuve VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id_Equipe, id_Epreuve, type_Epreuve),
+  FOREIGN KEY (id_Equipe) REFERENCES EQUIPE (id_Equipe)
+);
+
+CREATE TABLE PARTICIPE_INDIV (
+  id_Athlete   INT NOT NULL,
+  id_Epreuve   INT NOT NULL,
+  type_Epreuve VARCHAR(100) NOT NULL,
+  PRIMARY KEY (id_Athlete, id_Epreuve, type_Epreuve),
+  FOREIGN KEY (id_Athlete) REFERENCES ATHLETE (id_Athlete)
+);
+
+CREATE TABLE PARTICIPE_JO (
+  id_Pays INT NOT NULL,
+  id_JO   INT NOT NULL,
+  PRIMARY KEY (id_Pays, id_JO),
+  FOREIGN KEY (id_JO) REFERENCES JEUXOLYMPIQUE (id_JO),
+  FOREIGN KEY (id_Pays) REFERENCES PAYS (id_Pays)
 );
 
 CREATE TABLE PAYS (
-  PRIMARY KEY (nom_P),
-  nom_P   VARCHAR(42) NOT NULL,
-  score_P VARCHAR(42)
+  id_Pays     INT AUTO_INCREMENT PRIMARY KEY,
+  nom_P       VARCHAR(100),
+  or          INT DEFAULT 0,
+  argent      INT DEFAULT 0,
+  bronze      INT DEFAULT 0,
+  score_Total INT DEFAULT 0
+);
+
+CREATE TABLE POSSEDE (
+  id_Epreuve   INT NOT NULL,
+  type_Epreuve VARCHAR(100) NOT NULL,
+  id_JO        INT NOT NULL,
+  PRIMARY KEY (id_Epreuve, type_Epreuve, id_JO),
+  FOREIGN KEY (id_JO) REFERENCES JEUXOLYMPIQUE (id_JO)
 );
 
 CREATE TABLE UTILISATEUR (
@@ -75,34 +79,13 @@ CREATE TABLE UTILISATEUR (
   identifiant    VARCHAR(42),
   email          VARCHAR(42),
   mdp            VARCHAR(42),
-  rôle           CHAR
+  rôle           CHAR, 
+  CHECK (rôle IN ('A', 'C', 'O'))
 );
-
-
-
-ALTER TABLE ATHLETE ADD FOREIGN KEY (nom_P) REFERENCES PAYS (nom_P);
-
-ALTER TABLE EPREUVE ADD FOREIGN KEY (annee) REFERENCES JEUX_OLYMPIQUE (annee);
-
-ALTER TABLE Equipe ADD FOREIGN KEY (nom_P) REFERENCES PAYS (nom_P);
-
-ALTER TABLE FAIT ADD FOREIGN KEY (id_Epreuve) REFERENCES EPREUVE (id_Epreuve);
-ALTER TABLE FAIT ADD FOREIGN KEY (id_Equipe) REFERENCES EQUIPE (id_Equipe);
-ALTER TABLE FAIT_PARTIE ADD FOREIGN KEY (id_Equipe) REFERENCES EQUIPE (id_Equipe);
-ALTER TABLE FAIT_PARTIE ADD FOREIGN KEY (id_Athlete) REFERENCES ATHLETE (id_Athlete);
-
-ALTER TABLE PARTICIPE_A ADD FOREIGN KEY (id_Epreuve) REFERENCES EPREUVE (id_Epreuve);
-ALTER TABLE PARTICIPE_A ADD FOREIGN KEY (id_Athlete) REFERENCES ATHLETE (id_Athlete);
-
-
 
 -- insertions
 INSERT INTO UTILISATEUR VALUES ('1', 'admin', 'admin@admin.com', 'admin', 'A');
 INSERT INTO UTILISATEUR VALUES ('2', 'user', 'user@user.com', 'user', 'A');
-
-
-
-
 
 -- requetes
 select * from UTILISATEUR where identifiant = 'admin' and mdp = 'admin';

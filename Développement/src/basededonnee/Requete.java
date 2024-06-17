@@ -62,7 +62,7 @@ public class Requete {
     public void inscription(String identifiant, String mail, String motDePasse) {
         try {
             if (! this.dansUtilisateur(identifiant, mail, motDePasse)) {
-                PreparedStatement requete = this.connexionBD.prepareStatement("Insert into UTILISATEUR values (?, ?, ?, ?, 'U')");
+                PreparedStatement requete = this.connexionBD.prepareStatement("Insert into UTILISATEUR values (?, ?, ?, ?, 'C')");
                 requete.setInt(1, this.idMaxUtilisateur() + 1);
                 requete.setString(2, identifiant);
                 requete.setString(3, mail);
