@@ -41,15 +41,11 @@ public class Pays {
     public String getNomPays() {
         return this.nomPays;
     }
-<<<<<<< HEAD
-    
-=======
 
     /**
      * Méthode permettant de récupérer le score total du pays
      * @return le score total du pays
      */
->>>>>>> 1b1cfaa533de1fce480266a37ed371a4f7fe4fb4
     public int getScoreTotal() {
         return this.scoreTotal;
     }
