@@ -9,14 +9,11 @@ import javafx.scene.Scene;
 public class ControleurFenetre implements EventHandler<ActionEvent>{
 
     private ApplicationJeuxOlympique applicationJeuxOlympique;
-    private Scene scene;
     private String titre;
 
-    public ControleurFenetre(ApplicationJeuxOlympique applicationJeuxOlympique, Scene scene, String titre){
+    public ControleurFenetre(ApplicationJeuxOlympique applicationJeuxOlympique, String titre){
         this.applicationJeuxOlympique = applicationJeuxOlympique;
-        this.scene = scene;
         this.titre = titre;
-        System.out.println(applicationJeuxOlympique + " " +  scene  +  titre);
     }
 
     public void handle(ActionEvent event) {

@@ -91,19 +91,19 @@ public class ApplicationJeuxOlympique extends Application {
 
 
         Button boutonConnexion = (Button) sceneFenetreAccueil.lookup("#seConnecter");
-        boutonConnexion.setOnAction(new ControleurFenetre(this, sceneConnexion, "Fenetre de connexion"));
+        boutonConnexion.setOnAction(new ControleurFenetre(this, "Fenetre de connexion"));
 
         Button boutonSinscrire = (Button) sceneFenetreAccueil.lookup("#sinscrire");
-        boutonSinscrire.setOnAction(new ControleurFenetre(this, sceneInscription, "Fenetre d'inscription"));
+        boutonSinscrire.setOnAction(new ControleurFenetre(this, "Fenetre d'inscription"));
 
         Button boutonClassement = (Button) sceneConnexion.lookup("#entrer");
-        boutonClassement.setOnAction(new ControleurFenetre(this, sceneClassement, "Fenetre de classement"));
+        boutonClassement.setOnAction(new ControleurFenetre(this, "Fenetre de classement"));
 
         Button boutonRetour = (Button) sceneInscription.lookup("#boutonRetour");
-        boutonRetour.setOnAction(new ControleurFenetre(this, sceneFenetreAccueil, "Fenetre Accueil"));
+        boutonRetour.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
 
         Button boutonRetourConnexion = (Button) sceneConnexion.lookup("#boutonRetourConnexion");
-        boutonRetourConnexion.setOnAction(new ControleurFenetre(this, sceneFenetreAccueil, "Fenetre Accueil"));
+        boutonRetourConnexion.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
         // System.out.println(boutonConnexion.getText(), boutonSinscrire.getText(), boutonClassement.getText(), boutonRetour.getText(), boutonRetourConnexion.getText());
 
     }
