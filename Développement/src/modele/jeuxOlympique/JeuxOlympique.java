@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import src.modele.exceptions.*;
 import src.modele.comparator.*;
+import src.basededonnee.*;
 
 /**
  * Classe représentant les jeux olympiques
