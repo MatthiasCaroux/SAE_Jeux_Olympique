@@ -98,6 +98,10 @@ CREATE TABLE UTILISATEUR (
 INSERT INTO UTILISATEUR VALUES ('1', 'admin', 'admin@admin.com', 'admin', 'A');
 INSERT INTO UTILISATEUR VALUES ('2', 'user', 'user@user.com', 'user', 'A');
 
+INSERT INTO UTILISATEUR VALUES ('3', 'journaliste', 'journaliste@gmail.com', 'journaliste', 'C');
+
+INSERT INTO UTILISATEUR VALUES ('4', 'organisateur', 'organisateur@gmail.com', 'organisateur', 'O');
+
 -- requetes
 select * from UTILISATEUR where identifiant = 'admin' and mdp = 'admin';
 

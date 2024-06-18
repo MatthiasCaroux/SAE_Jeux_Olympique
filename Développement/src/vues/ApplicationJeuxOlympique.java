@@ -1,5 +1,6 @@
 package src.vues;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.junit.runner.Request;
@@ -56,62 +57,73 @@ public class ApplicationJeuxOlympique extends Application {
     }
     
     @Override
-    public void start(Stage stage) throws Exception {
-        System.out.println("Lancement de l'application");
-        loaderAccueil = new FXMLLoader(this.getClass().getResource("/fxml/accueil.fxml"));
-        this.fenetreAccueil = loaderAccueil.load();
+    public void start(Stage stage) {
+        try {
+            System.out.println("Lancement de l'application");
 
-        loaderConnexion = new FXMLLoader(this.getClass().getResource("/fxml/connexion.fxml"));
-        this.fenetreConnexion = loaderConnexion.load();
+            // Chargement des fichiers FXML
+            System.out.println("Chargement du fichier FXML de l'accueil");
+            loaderAccueil = new FXMLLoader(this.getClass().getResource("/fxml/accueil.fxml"));
+            this.fenetreAccueil = loaderAccueil.load();
 
-        loaderInscription = new FXMLLoader(this.getClass().getResource("/fxml/inscription.fxml"));
-        this.fenetreInscription = loaderInscription.load();
+            System.out.println("Chargement du fichier FXML de la connexion");
+            loaderConnexion = new FXMLLoader(this.getClass().getResource("/fxml/connexion.fxml"));
+            this.fenetreConnexion = loaderConnexion.load();
 
-        loaderClassement = new FXMLLoader(this.getClass().getResource("/fxml/classement.fxml"));
-        this.fenetreClassement = loaderClassement.load();
+            System.out.println("Chargement du fichier FXML de l'inscription");
+            loaderInscription = new FXMLLoader(this.getClass().getResource("/fxml/inscription.fxml"));
+            this.fenetreInscription = loaderInscription.load();
 
+            System.out.println("Chargement du fichier FXML du classement");
+            loaderClassement = new FXMLLoader(this.getClass().getResource("/fxml/classement.fxml"));
+            this.fenetreClassement = loaderClassement.load();
 
-        sceneFenetreAccueil = new Scene(fenetreAccueil);
-        sceneConnexion = new Scene(fenetreConnexion);
-        sceneInscription = new Scene(fenetreInscription);
-        sceneClassement = new Scene(fenetreClassement);
-        
+            // Création des scènes
+            System.out.println("Création des scènes");
+            sceneFenetreAccueil = new Scene(fenetreAccueil);
+            sceneConnexion = new Scene(fenetreConnexion);
+            sceneInscription = new Scene(fenetreInscription);
+            sceneClassement = new Scene(fenetreClassement);
 
-        stage.setScene(sceneFenetreAccueil);
-        stage.setTitle("Fenetre d'accueil");
-        stage.show();
+            // Configuration des boutons et de leurs actions
+            System.out.println("Configuration des actions des boutons");
+            Button boutonConnexion = (Button) sceneFenetreAccueil.lookup("#seConnecter");
+            boutonConnexion.setOnAction(new ControleurFenetre(this, "Fenetre de connexion"));
 
+            Button boutonSinscrire = (Button) sceneFenetreAccueil.lookup("#sinscrire");
+            boutonSinscrire.setOnAction(new ControleurFenetre(this, "Fenetre d'inscription"));
 
-        Button boutonConnexion = (Button) sceneFenetreAccueil.lookup("#seConnecter");
-        boutonConnexion.setOnAction(new ControleurFenetre(this, "Fenetre de connexion"));
+            Button boutonClassement = (Button) sceneConnexion.lookup("#entrer");
+            boutonClassement.setOnAction(new ControleurFenetre(this, "Fenetre de classement"));
 
-        Button boutonSinscrire = (Button) sceneFenetreAccueil.lookup("#sinscrire");
-        boutonSinscrire.setOnAction(new ControleurFenetre(this, "Fenetre d'inscription"));
+            Button boutonRetour = (Button) sceneInscription.lookup("#boutonRetour");
+            boutonRetour.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
 
-        Button boutonClassement = (Button) sceneConnexion.lookup("#entrer");
-        boutonClassement.setOnAction(new ControleurFenetre(this, "Fenetre de classement"));
+            Button boutonRetourConnexion = (Button) sceneConnexion.lookup("#boutonRetourConnexion");
+            boutonRetourConnexion.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
 
-        Button boutonRetour = (Button) sceneInscription.lookup("#boutonRetour");
-        boutonRetour.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
+            Button boutonInscription = (Button) sceneInscription.lookup("#estInscrit");
+            if (boutonInscription == null) {
+                System.out.println("Erreur : Bouton 'estInscrit' non trouvé");
+            } else {
+                System.out.println("Bouton 'estInscrit' trouvé");
+                boutonInscription.setOnAction(new ControleurInscription(this));
+                System.out.println("Action pour 'estInscrit' configurée");
+            }
 
-        Button boutonRetourConnexion = (Button) sceneConnexion.lookup("#boutonRetourConnexion");
-        boutonRetourConnexion.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
-<<<<<<< HEAD
-=======
-        // System.out.println(boutonConnexion.getText(), boutonSinscrire.getText(), boutonClassement.getText(), boutonRetour.getText(), boutonRetourConnexion.getText());
+            stage.setScene(sceneFenetreAccueil);
+            stage.setTitle("Fenetre d'accueil");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors du démarrage de l'application : " + e.getMessage());
+        }
+}
 
-        Button boutonInscription = (Button) sceneInscription.lookup("#estInscrit");
-        boutonInscription.setOnAction(new ControleurInscription(this));
-
-
-
-
->>>>>>> main
-    }
 
     public void changerFenetre(Scene scene, String titre, String bouton){
         Stage stage = null;
-        if (titre.equals("Fenetre de connexion")) {
+        if (titre.equals("Fenetre de connexion")) {//la ou je veux aller
             stage = (Stage) sceneFenetreAccueil.getWindow();
         }
         else if (titre.equals("Fenetre d'inscription")) {
