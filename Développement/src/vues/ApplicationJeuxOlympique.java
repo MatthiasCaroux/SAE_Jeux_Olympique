@@ -96,17 +96,11 @@ public class ApplicationJeuxOlympique extends Application {
 
         Button boutonRetourConnexion = (Button) sceneConnexion.lookup("#boutonRetourConnexion");
         boutonRetourConnexion.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
-<<<<<<< HEAD
-=======
+
         // System.out.println(boutonConnexion.getText(), boutonSinscrire.getText(), boutonClassement.getText(), boutonRetour.getText(), boutonRetourConnexion.getText());
 
         Button boutonInscription = (Button) sceneInscription.lookup("#estInscrit");
         boutonInscription.setOnAction(new ControleurInscription(this));
-
-
-
-
->>>>>>> main
     }
 
     public void changerFenetre(Scene scene, String titre, String bouton){
