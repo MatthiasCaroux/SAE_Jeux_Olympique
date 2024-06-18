@@ -30,6 +30,7 @@ public class ApplicationJeuxOlympique extends Application {
     private BorderPane fenetreConnexion;
     private BorderPane fenetreInscription;
     private BorderPane fenetreClassement;
+    private BorderPane fenetreAccueilAdmin;
     private FXMLLoader loaderAccueil;
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
@@ -87,6 +88,7 @@ public class ApplicationJeuxOlympique extends Application {
         sceneConnexion = new Scene(fenetreConnexion);
         sceneInscription = new Scene(fenetreInscription);
         sceneClassement = new Scene(fenetreClassement);
+        // sceneAccueilAdmin = new Scene(fenetreAccueilAdmin); // Il faut charger la scène avec le FXMLLoader
         // System.out.println("7");
     }
     
@@ -130,6 +132,12 @@ public class ApplicationJeuxOlympique extends Application {
 
         Button boutonGestionUtilisateur = (Button) sceneAccueilAdmin.lookup("#gestionUtilisateur");
         boutonGestionUtilisateur.setOnAction(new ControleurFenetre(this, "Gestion des utilisateurs"));
+
+        Button choixMonProfil = (Button) this.getSceneAccueilAdmin().lookup("#choixMonProfil");
+        // // choixMonProfil.setOnAction(new ControleurProfil(this, "Profil"));
+
+        Button choixDeconnexion = (Button) this.getSceneAccueilAdmin().lookup("#choixDeconnexion");
+        // // choixDeconnexion.setOnAction(new ControleurProfil(this, "Deconnexion"));
     }
 
     public void changerFenetre(Scene scene, String titre, String bouton) {
@@ -253,7 +261,13 @@ public class ApplicationJeuxOlympique extends Application {
 
 
 
-
+        //     this.requete.inscription("niksan", "niksan@gmail.com", "niksan");
+        //     this.requete.inscription("matthias", "matthias@gmail.com", "matthias");
+        //     this.requete.inscription("alexy", "alexy@gmail.com", "alexy");
+        //     this.requete.inscription("carrel", "carrel@gmail.com", "carrel");
+        // } catch (Exception e) {
+        //     // System.err.println(e.getMessage());
+        //     System.out.p
 
 
 
