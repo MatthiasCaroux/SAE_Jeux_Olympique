@@ -85,13 +85,12 @@ CREATE TABLE POSSEDE (
 );
 
 CREATE TABLE UTILISATEUR (
-  PRIMARY KEY (id_Utilisateur),
-  id_Utilisateur VARCHAR(42) NOT NULL,
-  identifiant    VARCHAR(42),
-  email          VARCHAR(42),
+  identifiant    VARCHAR(42) NOT NULL,
+  email          VARCHAR(42) NOT NULL,
   mdp            VARCHAR(42),
   rôle           CHAR, 
-  CHECK (rôle IN ('A', 'C', 'O'))
+  CHECK (rôle IN ('A', 'C', 'O')), 
+  PRIMARY KEY (identifiant, email)
 );
 
 -- insertions
