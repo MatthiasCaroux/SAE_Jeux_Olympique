@@ -66,20 +66,6 @@ public class ControleurInscription implements EventHandler<ActionEvent>{
                             alert.showAndWait();
                         }
                     }
-                    // // Test pour voir si l'inscription a bien été faite
-                    // if (this.applicationJeuxOlympique.getRequete().dansUtilisateur(identifiant, email, motDePasse)){
-                    //     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    //     alert.setTitle("Inscription réussie");
-                    //     alert.setHeaderText("Votre inscription a bien été prise en compte");
-                    //     alert.showAndWait();
-                    //     this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneFenetreAccueil(), "Fenetre d'inscription", "boutonRetour");// On revient à la fenêtre d'accueil
-                    // }
-                    // else{
-                    //     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    //     alert.setTitle("Il y a eu un problème lors de l'inscription");
-                    //     alert.setHeaderText("Votre inscription n'a pas été prise en compte");
-                    //     alert.showAndWait();
-                    // }
                     this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneFenetreAccueil(), "Fenetre d'inscription", "boutonRetour");// On revient à la fenêtre d'accueil
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
