@@ -161,6 +161,9 @@ public class ApplicationJeuxOlympique extends Application {
     public Scene getSceneGestionUtilisateur(){
         VBox vBox = (VBox) sceneGestionUtilisateur.lookup("#vboxPrincipal");
         GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        
 
 
 
