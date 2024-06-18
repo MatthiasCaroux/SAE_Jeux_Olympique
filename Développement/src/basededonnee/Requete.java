@@ -2,7 +2,10 @@ package src.basededonnee;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import src.basededonnee.exception.*;
 import src.modele.jeuxOlympique.*;
@@ -20,14 +23,26 @@ public class Requete {
         }
     }
 
+    public String getColumName(String nomTable) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from " + nomTable);
+            ResultSet resultat = requete.executeQuery();
+            ResultSetMetaData metaData = resultat.getMetaData();
+            return metaData.getColumnName(1);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public int idMaxTable(String nomTable) throws SQLException, PasDeIdDansUtilisateurException {
         if (nomTable.equals("UTILISATEUR")) {
             throw new PasDeIdDansUtilisateurException();
         }
         try {
-            PreparedStatement requete = this.connexionBD.prepareStatement("Select max(id_Utilisateur) as max from " + nomTable);
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select max(" + this.getColumName(nomTable) + ") as max from " + nomTable);
             ResultSet resultat = requete.executeQuery();
             resultat.next();
+            System.out.println("moiuyerg moiuerz gmoiusghyog");
             return resultat.getInt("max");
         } catch (Exception e) {
             return 0;
@@ -187,6 +202,25 @@ public class Requete {
         }
     }
 
+    // TO DO IMPORTANT
+    // public List<Athlete> getAthletes() {
+    //     try {
+    //         PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE NATURAL JOIN PAYS");
+    //         ResultSet resultat = requete.executeQuery();
+    //         List<Athlete> athletes = new ArrayList<>();
+    //         while (resultat.next()) {
+    //             char sexeChar = (resultat.getCharacterStream("sexe")+"").charAt(0);
+    //             if (sexeChar == 'M') {
+    //                 athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), Epreuve.Sexe.M, resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite"));
+    //             } else {
+    //                 athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), resultat.getString("sexe").charAt(0), resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite"));
+    //             }
+    //         }
+    //     } catch (Exception e) {
+    //         // TODO: handle exception
+    //     }
+    // }
+
 
     public void supprimerAthlete(int idAthlete) {
         try {
@@ -242,10 +276,13 @@ public class Requete {
 
     public void ajouterPays(String nomPays) {
         try {
-            PreparedStatement requete = this.connexionBD.prepareStatement("Insert into PAYS values (?, ?)");
+            PreparedStatement requete = this.connexionBD.prepareStatement("INSERT INTO PAYS (id_Pays, nom_P) VALUES (?, ?)");
             requete.setInt(1, this.idMaxTable("PAYS") + 1);
+            System.out.println("Pays ajouté");
             requete.setString(2, nomPays);
+            System.out.println("Pays ajouté");
             requete.executeUpdate();
+            System.out.println("Pays ajouté");
         } catch (Exception e) {
             System.out.println("Erreur de connexion à la base de donnée");
         }
@@ -282,6 +319,8 @@ public class Requete {
             throw new PaysInexistantException(nomPays);
         } 
     }
+
+    
 
     // Incorrecte
     // public void ajouterAthleteDansEpreuve(String nomEpreuve, String typeSport, String sexe) {

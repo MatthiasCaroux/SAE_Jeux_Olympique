@@ -2,6 +2,7 @@ package src.vues;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -12,8 +13,10 @@ import javafx.fxml.FXMLLoader;
 
 import src.controlleur.*;
 import src.basededonnee.*;
+import src.modele.jeuxOlympique.*;
 
 public class ApplicationJeuxOlympique extends Application {
+    private JeuxOlympique modele;
     private Requete requete;
     private Stage primaryStage;  // Ajouter l'attribut stage
     private Scene sceneFenetreAccueil;
@@ -34,12 +37,13 @@ public class ApplicationJeuxOlympique extends Application {
     private FXMLLoader loaderAccueilAdmin;
     private FXMLLoader loaderAccueilOrganisateur;
     private FXMLLoader loaderGestionUtilisateur;
+    // private 
   
     @Override
     public void init() throws ClassNotFoundException, SQLException, IOException {
+        this.modele = new JeuxOlympique(2024, "Paris", "Jeux Olympique de Paris 2024");
         this.requete = new Requete();
-        // System.out.println(this.requete.idMaxTable("UTILISATEUR"));
-        // System.out.println(this.requete.connexion("admin", "admin"));
+
         // try {
         //     this.requete.inscription("niksan", "niksan@gmail.com", "niksan");
         //     this.requete.inscription("matthias", "matthias@gmail.com", "matthias");
@@ -158,20 +162,31 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneAccueilOrganisateur;
     }
 
-    public Scene getSceneGestionUtilisateur(){
-        VBox vBox = (VBox) sceneGestionUtilisateur.lookup("#vboxPrincipal");
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        
+    // public Scene getSceneGestionUtilisateur(){
+    //     VBox vBox = (VBox) sceneGestionUtilisateur.lookup("#vboxPrincipal");
+    //     GridPane gridPane = new GridPane();
+    //     gridPane.setHgap(10);
+    //     gridPane.setVgap(10);
+    //     List<Athlete> athletes = requete.getAthletes();
+    //     while (athletes.hasNext()) {
+    //         for (int i = 0; i < 5; i++){
+    //             Athlete athlete = athletes.next();
+    //             gridPane.add(new Label(athlete.getId()), 0, i);
+    //             gridPane.add(new Label(athlete.getNom()), 1, i);
+    //             gridPane.add(new Label(athlete.getPrenom()), 2, i);
+    //             gridPane.add(new Label(athlete.getSexe()), 3, i);
+    //             gridPane.add(new Label(athlete.getNationalite()), 4, i);
+    //         }
+            
+    //     }
 
 
 
 
 
 
-        return null;
-    }
+    //     return null;
+    // }
 
     public String getIdentifiantConnexion() {
         TextField identifiant = (TextField) sceneConnexion.lookup("#ID");
@@ -207,6 +222,59 @@ public class ApplicationJeuxOlympique extends Application {
     public Requete getRequete() {
         return requete;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void ajouterPaysALaBase(){
+        for (Pays pays : this.modele.getLesPays()){
+            try {
+                this.requete.ajouterPays(pays.getNomPays());
+            } catch (Exception e) {
+                System.out.println("le pays");
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static void main(String[] args) {
         System.out.println("Lancement de l'application JavaFX");

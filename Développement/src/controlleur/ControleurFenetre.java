@@ -47,7 +47,7 @@ public class ControleurFenetre implements EventHandler<ActionEvent> {
         } else if (event.getSource() == this.applicationJeuxOlympique.getSceneConnexion().lookup("#boutonRetourConnexion")) {
             this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneFenetreAccueil(), titre, "boutonRetourConnexion");
         } else if (event.getSource() == this.applicationJeuxOlympique.getSceneAccueilAdmin().lookup("#gestionUtilisateur")){
-            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneGestionUtilisateur(), titre, "gestionUtilisateur");
+            // this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneGestionUtilisateur(), titre, "gestionUtilisateur");
         }
     }
 }
