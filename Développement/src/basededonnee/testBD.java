@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import src.modele.jeuxOlympique.Athlete;
 import src.modele.jeuxOlympique.Epreuve;
+import src.modele.jeuxOlympique.EpreuveCollective;
+import src.modele.jeuxOlympique.EpreuveIndividuelle;
+import src.modele.jeuxOlympique.Equipe;
 import src.modele.jeuxOlympique.Pays;
 
 public class testBD {
@@ -70,15 +73,44 @@ public class testBD {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
+        // try {
+        //     Requete requete = new Requete();
+        //     System.out.println(requete.connexion("niksan", "niksan"));
+        //     System.out.println("ça marche");
+        //     System.out.println(requete.getRoleUtilisateur("admin", "admin"));
+        //     requete.inscription("test2", "test@gmail.com", "test");
+        //     System.out.println("jeusisdfouh iuhjesus");
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        //     System.out.println("Heleo");
+        //     System.err.println(e.getMessage());
+        // }
         try {
             Requete requete = new Requete();
-
-            requete.inscription("test2", "test@gmail.com", "test");
-            System.out.println("jeusisdfouh iuhjesus");
+            // requete.ajouterPays("France");
+            requete.ajouterPays("Allemagne");
+            requete.ajouterPays("Italie");
+            requete.ajouterAthlete("test", "prenomTest", 84, 69, 91, 'M', requete.getIdPays("France"));
+            System.out.println(requete.idMaxTable("PAYS"));
         } catch (Exception e) {
             // TODO: handle exception
-            System.out.println("Heleo");
-            System.err.println(e.getMessage());
         }
+        // try {
+        //     Requete requete = new Requete();
+        //     requete.ajouterAthlete("Caroux", "Matthias", 99, 12, 69, 'M', requete.getIdPays("France"));
+        //     Pays france = new Pays("France");
+        //     requete.ajouterAthlete(new Athlete("Nagarajah", "Niksan", Epreuve.Sexe.M, france, 75, 75, 75));
+        //     requete.ajouteEpreuve(new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.M));
+        //     requete.ajouteEpreve(new EpreuveCollective(Epreuve.TypeSport.Handball, Epreuve.Sexe.M));
+        //     Equipe equipe = new Equipe("Les Bleus", france, Epreuve.Sexe.M);
+        //     equipe.ajouterMembre(new Athlete("Nagarajah", "Niksan", Epreuve.Sexe.M, france, 75, 75, 75));
+        //     equipe.ajouterMembre("Caroux", "Matthias", requete.getIdPays("France"));
+        //     requete.ajouterEquipe(equipe);
+        //     requete.ajouterEquipeDansEpreuve(equipe, requete.getIdEpreuve("Handball", "M"));
+        //     requete.ajouterAthleteDansEpreuve(requete.getIdAthlete("Nagarajah", "Niksan"), requete.getIdEpreuve("EscrimeÉpée", "M"));
+
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        // }
     }
 }
