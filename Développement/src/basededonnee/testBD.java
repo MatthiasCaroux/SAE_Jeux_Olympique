@@ -70,15 +70,26 @@ public class testBD {
     }
 
     public static void main(String[] args) throws ClassNotFoundException {
+        // try {
+        //     Requete requete = new Requete();
+        //     System.out.println(requete.connexion("niksan", "niksan"));
+        //     System.out.println("ça marche");
+        //     System.out.println(requete.getRoleUtilisateur("admin", "admin"));
+        //     requete.inscription("test2", "test@gmail.com", "test");
+        //     System.out.println("jeusisdfouh iuhjesus");
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        //     System.out.println("Heleo");
+        //     System.err.println(e.getMessage());
+        // }
         try {
             Requete requete = new Requete();
-
-            requete.inscription("test2", "test@gmail.com", "test");
-            System.out.println("jeusisdfouh iuhjesus");
+            requete.ajouterPays("France");
+            requete.ajouterPays("Allemagne");
+            requete.ajouterPays("Italie");
+            requete.ajouterAthlete("test", "prenomTest", 84, 69, 91, 'M', requete.getIdPays("France"));
         } catch (Exception e) {
             // TODO: handle exception
-            System.out.println("Heleo");
-            System.err.println(e.getMessage());
         }
     }
 }

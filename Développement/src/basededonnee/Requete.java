@@ -88,7 +88,7 @@ public class Requete {
 
     public char getRoleUtilisateur(String identifiant, String motDePasse) {
         try {
-            PreparedStatement requete = this.connexionBD.prepareStatement("Select role from UTILISATEUR where identifiant = ? and mdp = ?");
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select rôle from UTILISATEUR where identifiant = ? and mdp = ?");
             requete.setString(1, identifiant);
             requete.setString(2, motDePasse);
             ResultSet resultat = requete.executeQuery();
@@ -251,7 +251,7 @@ public class Requete {
         }
     }   
 
-    public boolean dansPays(String nomPays) {
+    public boolean dansPays(String nomPays) throws PaysInexistantException {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Select * from PAYS where nom_P = ?");
             requete.setString(1, nomPays);
@@ -262,9 +262,25 @@ public class Requete {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
-            return false;
+            throw new PaysInexistantException(nomPays);
         }
+    }
+
+    public int getIdPays(String nomPays) throws SQLException, PaysInexistantException {
+        try {
+            if (this.dansPays(nomPays)) {
+                PreparedStatement requete = this.connexionBD.prepareStatement("Select id_Pays from PAYS where nom_P = ?");
+                requete.setString(1, nomPays);
+                ResultSet resultat = requete.executeQuery();
+                resultat.next();
+                System.out.println(resultat.getInt("id_Pays"));
+                return resultat.getInt("id_Pays");
+            } else {
+                throw new PaysInexistantException(nomPays);
+            }
+        } catch (PaysInexistantException e) {
+            throw new PaysInexistantException(nomPays);
+        } 
     }
 
     // Incorrecte

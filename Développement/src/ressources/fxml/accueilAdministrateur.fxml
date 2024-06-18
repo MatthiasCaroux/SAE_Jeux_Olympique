@@ -71,7 +71,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="81.0" prefWidth="164.0" style="-fx-background-color: #f1f1f1;" text="Gestion des utilisateurs">
+                        <Button fx:id="gestionUtilisateur" mnemonicParsing="false" prefHeight="81.0" prefWidth="164.0" style="-fx-background-color: #f1f1f1;" text="Gestion des utilisateurs">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
