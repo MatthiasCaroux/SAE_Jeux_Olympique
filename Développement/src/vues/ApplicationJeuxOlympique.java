@@ -96,6 +96,8 @@ public class ApplicationJeuxOlympique extends Application {
 
         Button boutonRetourConnexion = (Button) sceneConnexion.lookup("#boutonRetourConnexion");
         boutonRetourConnexion.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
+<<<<<<< HEAD
+=======
         // System.out.println(boutonConnexion.getText(), boutonSinscrire.getText(), boutonClassement.getText(), boutonRetour.getText(), boutonRetourConnexion.getText());
 
         Button boutonInscription = (Button) sceneInscription.lookup("#estInscrit");
@@ -104,6 +106,7 @@ public class ApplicationJeuxOlympique extends Application {
 
 
 
+>>>>>>> main
     }
 
     public void changerFenetre(Scene scene, String titre, String bouton){
@@ -121,9 +124,10 @@ public class ApplicationJeuxOlympique extends Application {
             stage = (Stage) sceneInscription.getWindow();
         }
         else if (titre.equals("Fenetre Accueil") && bouton.equals("boutonRetourConnexion")) {
-            System.out.println("on est la ");
             stage = (Stage) sceneConnexion.getWindow();
-            System.out.println(stage + "iwi");
+        }
+        else if (titre.equals("Fenetre Accueil") && bouton.equals("boutonInscrire")) {
+            stage = (Stage) sceneFenetreAccueil.getWindow();
         }
         System.out.println("Changement de fenetre" + scene);
         stage.setScene(scene);

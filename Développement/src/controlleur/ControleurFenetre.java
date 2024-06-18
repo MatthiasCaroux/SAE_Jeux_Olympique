@@ -22,7 +22,7 @@ public class ControleurFenetre implements EventHandler<ActionEvent>{
         }
         else if (event.getSource() == this.applicationJeuxOlympique.getSceneFenetreAccueil().lookup("#sinscrire")) {
             this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneInscription(), titre, "sinscrire");
-            System.out.println("Lançons la fenetre d'inscription");
+            System.out.println("Retour à la fenetre d'inscription");
         }
         else if (event.getSource() == this.applicationJeuxOlympique.getSceneConnexion().lookup("#entrer")) {
             // this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneClassement(), titre, "entrer");
@@ -36,7 +36,6 @@ public class ControleurFenetre implements EventHandler<ActionEvent>{
             System.out.println("Retour à la fenetre d'Accueil");
         }
         else if (event.getSource() == this.applicationJeuxOlympique.getSceneConnexion().lookup("#boutonRetourConnexion")) {
-            System.out.println("coucouc");
             this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneFenetreAccueil(), titre, "boutonRetourConnexion");
             System.out.println("Retour à la fenetre d'Accueil");
         }
