@@ -68,4 +68,17 @@ public class testBD {
             System.out.println("Erreur de connexion à la base de donnée");
         }
     }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        try {
+            Requete requete = new Requete();
+
+            requete.inscription("test2", "test@gmail.com", "test");
+            System.out.println("jeusisdfouh iuhjesus");
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println("Heleo");
+            System.err.println(e.getMessage());
+        }
+    }
 }

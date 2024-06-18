@@ -27,13 +27,13 @@ public class ControleurFenetre implements EventHandler<ActionEvent> {
             if (this.applicationJeuxOlympique.getRequete().dansUtilisateur(identifiant, motDePasse)){//regarde si l'utilisateur est dans la base
                 switch (this.applicationJeuxOlympique.getRequete().getRoleUtilisateur(identifiant, motDePasse)){
                     case 'A':
-                        this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneAdmin(), titre, "entrer");                        
+                        this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneAccueilAdmin(), titre, "entrer");                        
                         break;
                     case 'C':
                         this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneClassement(), titre, "entrer");
                         break;
                     case 'O':
-                        this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneOrganisateur(), titre, "entrer");
+                        // this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneOrganisateur(), titre, "entrer");
                         break;                
                     default:
                         this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneClassement(), titre, "entrer");

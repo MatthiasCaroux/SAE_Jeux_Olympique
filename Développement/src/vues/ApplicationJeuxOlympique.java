@@ -20,6 +20,8 @@ public class ApplicationJeuxOlympique extends Application {
     private Scene sceneConnexion;
     private Scene sceneInscription;
     private Scene sceneClassement;
+    private Scene sceneAccueilAdmin;
+    private Scene sceneAccueilOrganisateur;
     private VBox fenetreAccueil;
     private BorderPane fenetreConnexion;
     private BorderPane fenetreInscription;
@@ -28,40 +30,61 @@ public class ApplicationJeuxOlympique extends Application {
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
     private FXMLLoader loaderClassement;
+    private FXMLLoader loaderAccueilAdmin;
+    private FXMLLoader loaderAccueilOrganisateur;
   
     @Override
     public void init() throws ClassNotFoundException, SQLException, IOException {
-        System.out.println("Initialisation de l'application");
         this.requete = new Requete();
         // System.out.println(this.requete.idMaxTable("UTILISATEUR"));
         // System.out.println(this.requete.connexion("admin", "admin"));
+        // this.requete.inscription("niksan", "niksan@gmail.com", "niksan");
+        // this.requete.inscription("matthias", "matthias@gmail.com", "matthias");
+        // this.requete.inscription("alexy", "alexy@gmail.com", "alexy");
+        // this.requete.inscription("carrel", "carrel@gmail.com", "carrel");
 
         System.out.println("Initialisation de l'application");
 
-        loadScenes();
+        this.loadScenes();
+        System.out.println("Chargement des scènes terminé");
     }
 
     private void loadScenes() throws IOException {
         loaderAccueil = new FXMLLoader(this.getClass().getResource("/fxml/accueil.fxml"));
         this.fenetreAccueil = loaderAccueil.load();
+        System.out.println("1");
 
         loaderConnexion = new FXMLLoader(this.getClass().getResource("/fxml/connexion.fxml"));
         this.fenetreConnexion = loaderConnexion.load();
+        System.out.println("2");
 
         loaderInscription = new FXMLLoader(this.getClass().getResource("/fxml/inscription.fxml"));
         this.fenetreInscription = loaderInscription.load();
+        System.out.println("3");
 
         loaderClassement = new FXMLLoader(this.getClass().getResource("/fxml/classement.fxml"));
         this.fenetreClassement = loaderClassement.load();
+        System.out.println("4");
+
+        loaderAccueilAdmin = new FXMLLoader(this.getClass().getResource("/fxml/accueilAdministrateur.fxml"));
+        this.sceneAccueilAdmin = new Scene(loaderAccueilAdmin.load());
+        System.out.println("5");
+
+        // loaderAccueilOrganisateur = new FXMLLoader(this.getClass().getResource("/fxml/accueilOrganisateur.fxml"));
+        // this.sceneAccueilOrganisateur = new Scene(loaderAccueilOrganisateur.load());
+        // System.out.println("6");
+
 
         sceneFenetreAccueil = new Scene(fenetreAccueil);
         sceneConnexion = new Scene(fenetreConnexion);
         sceneInscription = new Scene(fenetreInscription);
         sceneClassement = new Scene(fenetreClassement);
+        // System.out.println("7");
     }
     
     @Override
     public void start(Stage primaryStage) {
+        System.out.println("Je suis dans la méthode start");
         this.primaryStage = primaryStage;  // Initialiser l'attribut stage
         try {
             System.out.println("Lancement de l'application");
@@ -118,6 +141,14 @@ public class ApplicationJeuxOlympique extends Application {
 
     public Scene getSceneClassement() {
         return sceneClassement;
+    }
+
+    public Scene getSceneAccueilAdmin(){
+        return sceneAccueilAdmin;
+    }
+
+    public Scene getSceneAccueilOrganisateur(){
+        return sceneAccueilOrganisateur;
     }
 
     public String getIdentifiantConnexion() {

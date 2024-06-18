@@ -96,18 +96,17 @@ public class Requete {
             return resultat.getString("rôle").charAt(0);
         } catch (Exception e) {
             System.out.println("Erreur de connexion à la base de donnée");
-            return 'E';
+            return 'C';
         }
     }
 
-    public void inscription(String identifiant, String mail, String motDePasse) {
+    public void inscription(String identifiant, String mail, String motDePasse) throws BaseDeDonneeInaccessibleException {
         try {
-            if (! this.dansUtilisateur(identifiant, mail, motDePasse)) {
-                PreparedStatement requete = this.connexionBD.prepareStatement("Insert into UTILISATEUR values (?, ?, ?, ?, 'C')");
-                requete.setInt(1, this.idMaxTable("UTILISATEUR") + 1);
-                requete.setString(2, identifiant);
-                requete.setString(3, mail);
-                requete.setString(4, motDePasse);
+            if (! this.dansUtilisateur(identifiant, mail)) {
+                PreparedStatement requete = this.connexionBD.prepareStatement("Insert into UTILISATEUR values ( ?, ?, ?, 'C')");
+                requete.setString(1, identifiant);
+                requete.setString(2, mail);
+                requete.setString(3, motDePasse);
                 requete.executeUpdate();
             } else {
                 System.out.println("Utilisateur déjà existant");
@@ -115,6 +114,7 @@ public class Requete {
             }
         } catch (Exception e) {
             System.out.println("Erreur de connexion à la base de donnée");
+            throw new BaseDeDonneeInaccessibleException();
         }
     }
 
