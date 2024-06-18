@@ -121,6 +121,31 @@ public class Requete {
         }
     }
 
+    public int getIdAthlete(String nom, String prenom) throws AthleteInexistantException {//throws AthleteInexistantException {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select id_Athlete from ATHLETE where nom = ? and prenom = ?");
+            requete.setString(1, nom);
+            requete.setString(2, prenom);
+            ResultSet resultat = requete.executeQuery();
+            resultat.next();
+            return resultat.getInt("id_Athlete");
+        } catch (Exception e) {
+            throw new AthleteInexistantException(nom, prenom);
+            // System.out.println("Erreur de connexion à la base de donnée"); // Attention
+            // return 0;
+        }
+    }
+
+    public void deleteAthlete(int idAthlete) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("delete from ATHLETE where id_Athlete = ?");
+            requete.setInt(1, idAthlete);
+            requete.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Erreur de connexion à la base de donnée");
+        }
+    }
+
     // TO DO
     // public Athlete getAthlete(int idAthlete) {
     //     try {
