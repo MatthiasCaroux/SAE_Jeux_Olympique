@@ -45,17 +45,11 @@
                             <GridPane.margin>
                                 <Insets left="20.0" right="20.0" />
                             </GridPane.margin>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
                         </TextField>
                         <PasswordField fx:id="MDP" promptText="Mot de passe" style="-fx-background-radius: 5; -fx-padding: 10;" GridPane.columnIndex="0" GridPane.rowIndex="1">
                             <GridPane.margin>
                                 <Insets left="20.0" right="20.0" />
                             </GridPane.margin>
-                     <cursor>
-                        <Cursor fx:constant="TEXT" />
-                     </cursor>
                         </PasswordField>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="323.0" spacing="17.0" GridPane.rowIndex="2">
                      <children>

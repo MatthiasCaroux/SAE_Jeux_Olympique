@@ -34,19 +34,11 @@ public class ApplicationJeuxOlympique extends Application {
     public void init() throws ClassNotFoundException, SQLException, Exception{
         System.out.println("Initialisation de l'application");
         this.requete = new Requete();
-        System.out.println(this.requete.idMaxUtilisateur());
+        System.out.println(this.requete.idMaxUtilisateur("UTILISATEUR"));
         System.out.println(this.requete.connexion("admin", "admin"));
         this.requete.inscription("niksan", "niksan@niksan.niksan.niksan", "niksan");
         this.requete.inscription("matthias", "matthias@matthias.matthias", "matthias");
         this.requete.inscription("alexy", "alexy@alexy.alexy", "alexy");
-        // try {
-        //     System.out.println("Tentative de connexion à la base de donnée");
-        //     this.requete.connecter();
-        //     System.out.println("Connexion reussi !");
-        // } catch (Exception e) {
-        //     System.out.println("Erreur de connexion à la base de donnée");
-        // }
-        // this.connexionBD.connecter();
 
         System.out.println("Initialisation de l'application");
 
@@ -104,6 +96,17 @@ public class ApplicationJeuxOlympique extends Application {
 
         Button boutonRetourConnexion = (Button) sceneConnexion.lookup("#boutonRetourConnexion");
         boutonRetourConnexion.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
+<<<<<<< HEAD
+=======
+        // System.out.println(boutonConnexion.getText(), boutonSinscrire.getText(), boutonClassement.getText(), boutonRetour.getText(), boutonRetourConnexion.getText());
+
+        Button boutonInscription = (Button) sceneInscription.lookup("#estInscrit");
+        boutonInscription.setOnAction(new ControleurInscription(this));
+
+
+
+
+>>>>>>> main
     }
 
     public void changerFenetre(Scene scene, String titre, String bouton){
@@ -169,11 +172,13 @@ public class ApplicationJeuxOlympique extends Application {
 
     public String getMotDePasseInscription() {
         PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDP");
+        System.out.println(motDePasse.getText());
         return motDePasse.getText();
     }
 
     public String getMotDePasseConfirmationInscription() {
-        PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDPConfirmation");
+        PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDPConfirme");
+        // System.out.println(motDePasse.getText());
         return motDePasse.getText();
     }
 

@@ -3,7 +3,6 @@ import src.vues.*;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 
 
 public class ControleurFenetre implements EventHandler<ActionEvent>{
