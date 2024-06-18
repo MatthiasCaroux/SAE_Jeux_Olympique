@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.sound.sampled.Control;
+
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -30,6 +33,7 @@ public class ApplicationJeuxOlympique extends Application {
     private BorderPane fenetreConnexion;
     private BorderPane fenetreInscription;
     private BorderPane fenetreClassement;
+    private BorderPane fenetreAccueilAdmin;
     private FXMLLoader loaderAccueil;
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
@@ -87,6 +91,7 @@ public class ApplicationJeuxOlympique extends Application {
         sceneConnexion = new Scene(fenetreConnexion);
         sceneInscription = new Scene(fenetreInscription);
         sceneClassement = new Scene(fenetreClassement);
+        sceneAccueilAdmin = new Scene(fenetreAccueilAdmin);
         // System.out.println("7");
     }
     
@@ -130,8 +135,14 @@ public class ApplicationJeuxOlympique extends Application {
 
         Button boutonGestionUtilisateur = (Button) sceneAccueilAdmin.lookup("#gestionUtilisateur");
         boutonGestionUtilisateur.setOnAction(new ControleurFenetre(this, "Gestion des utilisateurs"));
-    }
 
+        Button choixMonProfil = (Button) fenetreAccueilAdmin.lookup("#choixMonProfil");
+        choixMonProfil.setOnAction(new ControleurProfil(this, "Profil"));
+
+        Button choixDeconnexion = (Button) fenetreAccueilAdmin.lookup("#choixDeconnexion");
+        choixDeconnexion.setOnAction(new ControleurProfil(this, "Deconnexion"));
+    }
+    
     public void changerFenetre(Scene scene, String titre, String bouton) {
         System.out.println("Changement de fenetre : " + scene);
         primaryStage.setScene(scene);
@@ -223,21 +234,6 @@ public class ApplicationJeuxOlympique extends Application {
         return requete;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void ajouterPaysALaBase(){
         for (Pays pays : this.modele.getLesPays()){
             try {
@@ -249,35 +245,12 @@ public class ApplicationJeuxOlympique extends Application {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public Scene getSceneProfil() {
+        return sceneAccueilAdmin;
+    }
 
     public static void main(String[] args) {
         System.out.println("Lancement de l'application JavaFX");
         launch(args);
-    }  
+    }
 }

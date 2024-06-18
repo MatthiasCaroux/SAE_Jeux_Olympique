@@ -44,7 +44,7 @@
                               </Button>
                            </buttons>
                         </ButtonBar>
-                        <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Jeux Olympique">
+                        <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Jeux Olympique" underline="true">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -80,10 +80,6 @@
                            </cursor>
                         </Button>
                         <MenuButton mnemonicParsing="false" style="-fx-background-color: #f1f1f1;" text="Menu">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Mon profil" />
-                            <MenuItem mnemonicParsing="false" text="Déconnexion" />
-                          </items>
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="29.0">
                                  <image>
@@ -94,6 +90,18 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <items>
+                              <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <Button fx:id="choixMonProfil" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Mon profil" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <Button fx:id="choixDeconnexion" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Déconnexion" />
+                                 </graphic>
+                              </MenuItem>
+                           </items>
                         </MenuButton>
                      </children>
                      <padding>
