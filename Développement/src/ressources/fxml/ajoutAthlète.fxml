@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <left>
+        <VBox alignment="CENTER" prefHeight="635.0" prefWidth="363.0" spacing="35.0" style="-fx-background-color: #0085C7;" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Ajout d'un Athlète" textFill="WHITE">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                </Label>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0">
+               <children>
+                        <TextField fx:id="IDAthlete" promptText="ID Athlète" style="-fx-background-radius: 5; -fx-padding: 10;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                        </TextField>
+                  <TextField fx:id="nomAthlete" promptText="Nom" style="-fx-background-radius: 5; -fx-padding: 10;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="prenomAthlete" layoutX="10.0" layoutY="46.0" promptText="Prénom" style="-fx-background-radius: 5; -fx-padding: 10;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="forceAthlete" layoutX="10.0" layoutY="46.0" promptText="Force" style="-fx-background-radius: 5; -fx-padding: 10;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="enduranceAthlete" layoutX="10.0" layoutY="82.0" promptText="Endurance" style="-fx-background-radius: 5; -fx-padding: 10;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="agiliteAthlete" layoutX="10.0" layoutY="154.0" promptText="Agilité" style="-fx-background-radius: 5; -fx-padding: 10;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Label style="-fx-text-fill: white;" text="Choix du pays : ">
+                           <HBox.margin>
+                              <Insets bottom="30.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <MenuButton mnemonicParsing="true">
+                          <items>
+                            <MenuItem fx:id="itemAllemagne" text="Allemagne" />
+                            <MenuItem fx:id="itemAustralie" text="Australie" />
+                            <MenuItem fx:id="itemBresil" text="Brésil" />
+                            <MenuItem fx:id="itemChine" text="Chine" />
+                            <MenuItem fx:id="itemFrance" text="France" />
+                            <MenuItem fx:id="itemJapon" text="Japon" />
+                            <MenuItem fx:id="itemKenya" text="Kenya" />
+                            <MenuItem fx:id="itemMaroc" text="Maroc" />
+                            <MenuItem fx:id="itemTurquie" text="Turquie" />
+                            <MenuItem fx:id="itemUSA" text="USA" />
+                          </items>
+                           <padding>
+                              <Insets left="60.0" />
+                           </padding>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </MenuButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" spacing="25.0">
+                     <children>
+                              <Button fx:id="boutonAjouter" style="-fx-background-color: white; -fx-text-fill: black; -fx-background-radius: 5;" text="Ajouter">
+                                  <padding>
+                                      <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                                  </padding>
+                                  <cursor>
+                                      <Cursor fx:constant="HAND" />
+                                  </cursor>
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                              </Button>
+                        <Button fx:id="boutonAnnuler" alignment="CENTER" contentDisplay="RIGHT" prefHeight="38.0" prefWidth="101.0" style="-fx-background-color: #bf1010; -fx-text-fill: white; -fx-background-radius: 5;" text="Annuler" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <padding>
+                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="40.0" right="40.0" />
+               </VBox.margin>
+            </VBox>
+            </children>
+        </VBox>
+    </left>
+    <center>
+        <HBox alignment="CENTER" style="-fx-background-color: #F0F0F0; -fx-background-radius: 20;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/jeuxOlympique2024.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </HBox>
+    </center>
+</BorderPane>

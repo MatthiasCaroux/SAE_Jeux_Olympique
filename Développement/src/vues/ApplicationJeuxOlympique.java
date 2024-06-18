@@ -103,13 +103,7 @@ public class ApplicationJeuxOlympique extends Application {
             boutonRetourConnexion.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
 
             Button boutonInscription = (Button) sceneInscription.lookup("#estInscrit");
-            if (boutonInscription == null) {
-                System.out.println("Erreur : Bouton 'estInscrit' non trouvé");
-            } else {
-                System.out.println("Bouton 'estInscrit' trouvé");
-                boutonInscription.setOnAction(new ControleurInscription(this));
-                System.out.println("Action pour 'estInscrit' configurée");
-            }
+            boutonInscription.setOnAction(new ControleurInscription(this));
 
             stage.setScene(sceneFenetreAccueil);
             stage.setTitle("Fenetre d'accueil");
@@ -118,7 +112,7 @@ public class ApplicationJeuxOlympique extends Application {
             e.printStackTrace();
             System.out.println("Erreur lors du démarrage de l'application : " + e.getMessage());
         }
-}
+    }
 
 
     public void changerFenetre(Scene scene, String titre, String bouton){
