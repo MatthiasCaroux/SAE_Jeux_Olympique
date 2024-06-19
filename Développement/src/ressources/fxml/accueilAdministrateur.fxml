@@ -3,10 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -25,26 +25,22 @@
                <children>
                   <HBox alignment="CENTER" spacing="15.0" style="-fx-background-color: #f1f1f1;">
                      <children>
-                        <ButtonBar>
-                           <buttons>
-                              <Button mnemonicParsing="false" style="-fx-background-color: #f1f1f1;">
-                                 <graphic>
-                                          <ImageView fitHeight="72.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #f1f1f1;">
-                                              <image>
-                                                  <Image url="@../images/jeuxOlympique.png" />
-                                              </image>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                          </ImageView>
-                                 </graphic>
+                        <Button mnemonicParsing="false" style="-fx-background-color: #f1f1f1;">
+                           <graphic>
+                                    <ImageView fitHeight="72.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #f1f1f1;">
+                                        <image>
+                                            <Image url="@../images/jeuxOlympique.png" />
+                                        </image>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                              </Button>
-                           </buttons>
-                        </ButtonBar>
-                        <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Jeux Olympique">
+                                    </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Jeux Olympique" underline="true">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -81,8 +77,14 @@
                         </Button>
                         <MenuButton mnemonicParsing="false" style="-fx-background-color: #f1f1f1;" text="Menu">
                           <items>
-                            <MenuItem mnemonicParsing="false" text="Mon profil" />
-                            <MenuItem mnemonicParsing="false" text="Déconnexion" />
+                            <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <Button fx:id="choixProfil" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Mon Profil" />
+                                 </graphic></MenuItem>
+                            <MenuItem mnemonicParsing="false">
+                                 <graphic>
+                                    <Button fx:id="choixDeconnexion" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Déconnexion" />
+                                 </graphic></MenuItem>
                           </items>
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="29.0">
@@ -108,42 +110,231 @@
 
     <!-- Contenu principal avec le classement des pays -->
     <center>
-        <VBox spacing="20.0" style="-fx-background-color: white;">
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-         <children>
-            <Label text="Accueil">
-               <font>
-                  <Font size="30.0" />
-               </font>
-               <padding>
-                  <Insets left="50.0" top="15.0" />
-               </padding>
-            </Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+      <ScrollPane hbarPolicy="NEVER" BorderPane.alignment="CENTER">
+         <content>
+              <VBox alignment="CENTER" prefHeight="915.0" prefWidth="983.0" spacing="20.0" style="-fx-background-color: white;">
+                  <padding>
+                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  </padding>
                <children>
-                  <ImageView fitHeight="144.0" fitWidth="291.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Paris.jpeg" />
-                     </image>
-                  </ImageView>
-                  <TextFlow lineSpacing="5.0" prefHeight="144.0" prefWidth="595.0">
+                  <Label text="Actus JO 2024">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                     <padding>
+                        <Insets left="50.0" top="15.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="250.0" prefWidth="191.0" spacing="20.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prévue pour se dérouler du 26 juillet au 11 août 2024, cette compétition rassemblera des athlètes du monde entier qui concourront dans une variété de disciplines sportives. Paris 2024 mettra l'accent sur la durabilité et l'innovation, avec des infrastructures sportives modernes et éco-responsables. Parmi les lieux emblématiques qui seront utilisés, on trouve le Stade de France pour les cérémonies d'ouverture et de clôture, ainsi que des sites historiques tels que la Tour Eiffel et le Château de Versailles, transformés en cadres spectaculaires pour certaines compétitions." wrappingWidth="310.24267578125" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="382.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/Athlétisme.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Usain Bolt, l'athlète jamaïcain légendaire et recordman mondial sur les distances de sprint, a récemment été honoré lors des cérémonies d'ouverture des Jeux Olympiques de Paris 2024">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                 </padding>
+                              </TextFlow>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="91.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/natation.jpeg" />
+                                 </image>
+                              </ImageView>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Florent Manaudou, le nageur français spécialiste des épreuves de sprint, a récemment remporté la médaille d'or au 50 mètres nage libre lors des Jeux Olympique.">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                 </padding>
+                              </TextFlow>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="202500.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/volley.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="L'équipe masculine brésilienne de volleyball a remporté la médaille d'or aux Jeux Olympiques d'été de Paris 2024, après une performance dominante tout au long du tournoi. Les Brésiliens ont vaincu l'équipe de France en finale avec un jeu impressionnant.">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                 </padding>
+                              </TextFlow>
+                           </children>
+                        </VBox>
                      </children>
-                  </TextFlow>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" layoutX="30.0" layoutY="195.0" prefHeight="250.0" prefWidth="1000.0" spacing="20.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="285.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/escrime.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" L'escrimeuse française Ysaora Thibus a décroché la médaille d'or en fleuret féminin aux Championnats du Monde d'Escrime 2023 à Milan, devenant ainsi la première Française à remporter ce titre depuis plus de 20 ans.">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                 </padding>
+                              </TextFlow>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="91.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="380.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/cyclisme.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Le cycliste néerlandais Mathieu van der Poel a remporté le titre de champion du monde de cyclisme sur route aux Championnats du Monde de Glasgow en août 2023, confirmant son statut de l'un des meilleurs cyclistes polyvalents.">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                 </padding>
+                              </TextFlow>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="203800.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/triathlon.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Au Triathlon des Jeux Olympiques de Paris 2024, la française Cassandre Beaugrand a impressionné en remportant la médaille d'or dans une course palpitante. Sa performance a été exceptionnelle.">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                 </padding>
+                              </TextFlow>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" layoutX="30.0" layoutY="381.0" prefHeight="250.0" prefWidth="1000.0" spacing="20.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/boxe.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" Aux Jeux Olympiques de Tokyo 2024, le boxeur cubain Arlen López a remporté la médaille d'or dans la catégorie poids mi-lourds (81 kg).">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                 </padding>
+                              </TextFlow>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="91.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="382.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/basket.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lors des Jeux Olympiques de Paris 2024, l'équipe masculine américaine de basketball a remporté la médaille d'or après une performance exceptionnelle tout au long du tournoi.">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                 </padding>
+                              </TextFlow>
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="382.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/judo.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextFlow prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Le judoka français Teddy Riner a remporté son onzième titre mondial aux Championnats du Monde de Judo 2023 à Doha, confirmant son statut de légende dans le monde du judo.">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                                 </padding>
+                              </TextFlow>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
-               <padding>
-                  <Insets left="25.0" top="15.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER" layoutX="30.0" layoutY="101.0" prefHeight="263.0" prefWidth="960.0" spacing="50.0">
-               <padding>
-                  <Insets left="25.0" top="15.0" />
-               </padding>
-            </HBox>
-         </children>
-        </VBox>
+              </VBox>
+         </content>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </ScrollPane>
     </center>
 </BorderPane>

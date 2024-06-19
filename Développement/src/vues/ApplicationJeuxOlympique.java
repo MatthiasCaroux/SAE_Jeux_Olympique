@@ -8,6 +8,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.fxml.FXMLLoader;
 
@@ -26,11 +28,6 @@ public class ApplicationJeuxOlympique extends Application {
     private Scene sceneAccueilAdmin;
     private Scene sceneAccueilOrganisateur;
     private Scene sceneGestionUtilisateur;
-    private VBox fenetreAccueil;
-    private BorderPane fenetreConnexion;
-    private BorderPane fenetreInscription;
-    private BorderPane fenetreClassement;
-    private BorderPane fenetreAccueilAdmin;
     private FXMLLoader loaderAccueil;
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
@@ -45,16 +42,6 @@ public class ApplicationJeuxOlympique extends Application {
         this.modele = new JeuxOlympique(2024, "Paris", "Jeux Olympique de Paris 2024");
         this.requete = new Requete();
 
-        // try {
-        //     this.requete.inscription("niksan", "niksan@gmail.com", "niksan");
-        //     this.requete.inscription("matthias", "matthias@gmail.com", "matthias");
-        //     this.requete.inscription("alexy", "alexy@gmail.com", "alexy");
-        //     this.requete.inscription("carrel", "carrel@gmail.com", "carrel");
-        // } catch (Exception e) {
-        //     // System.err.println(e.getMessage());
-        //     System.out.println("Rien à dire");
-        // }
-
         System.out.println("Initialisation de l'application");
 
         this.loadScenes();
@@ -63,33 +50,26 @@ public class ApplicationJeuxOlympique extends Application {
 
     private void loadScenes() throws IOException {
         loaderAccueil = new FXMLLoader(this.getClass().getResource("/fxml/accueil.fxml"));
-        this.fenetreAccueil = loaderAccueil.load();
+        this.sceneFenetreAccueil = new Scene(loaderAccueil.load());
 
         loaderConnexion = new FXMLLoader(this.getClass().getResource("/fxml/connexion.fxml"));
-        this.fenetreConnexion = loaderConnexion.load();
+        this.sceneConnexion = new Scene(loaderConnexion.load());
 
         loaderInscription = new FXMLLoader(this.getClass().getResource("/fxml/inscription.fxml"));
-        this.fenetreInscription = loaderInscription.load();
+        this.sceneInscription = new Scene(loaderInscription.load());
 
         loaderClassement = new FXMLLoader(this.getClass().getResource("/fxml/classement.fxml"));
-        this.fenetreClassement = loaderClassement.load();
+        this.sceneClassement = new Scene(loaderClassement.load());
 
         loaderAccueilAdmin = new FXMLLoader(this.getClass().getResource("/fxml/accueilAdministrateur.fxml"));
         this.sceneAccueilAdmin = new Scene(loaderAccueilAdmin.load());
 
         // loaderAccueilOrganisateur = new FXMLLoader(this.getClass().getResource("/fxml/accueilOrganisateur.fxml"));
         // this.sceneAccueilOrganisateur = new Scene(loaderAccueilOrganisateur.load());
-        // System.out.println("6");
+        // System.out.println("Chargement des scènes ");
 
         loaderGestionUtilisateur = new FXMLLoader(this.getClass().getResource("/fxml/gestionUtilisateur.fxml"));
         this.sceneGestionUtilisateur = new Scene(loaderGestionUtilisateur.load());
-
-        sceneFenetreAccueil = new Scene(fenetreAccueil);
-        sceneConnexion = new Scene(fenetreConnexion);
-        sceneInscription = new Scene(fenetreInscription);
-        sceneClassement = new Scene(fenetreClassement);
-        // sceneAccueilAdmin = new Scene(fenetreAccueilAdmin); // Il faut charger la scène avec le FXMLLoader
-        // System.out.println("7");
     }
     
     @Override
@@ -133,10 +113,16 @@ public class ApplicationJeuxOlympique extends Application {
         Button boutonGestionUtilisateur = (Button) sceneAccueilAdmin.lookup("#gestionUtilisateur");
         boutonGestionUtilisateur.setOnAction(new ControleurFenetre(this, "Gestion des utilisateurs"));
 
-        Button choixMonProfil = (Button) this.getSceneAccueilAdmin().lookup("#choixMonProfil");
+        Button boutonJeuxOlympique = (Button) getSceneGestionUtilisateur().lookup("#retourAccueilAdmin");
+        boutonJeuxOlympique.setOnAction(new ControleurFenetre(this, "Fenetre d'accueil"));
+
+        Button boutonDeconnexion = (Button) getSceneAccueilAdmin().lookup("#choixDeconnexion");
+        // boutonDeconnexion.setOnAction(new ControleurFenetre(this, "Deconnexion"));
+
+        // Button choixMonProfil = (Button) this.getSceneAccueilAdmin().lookup("#choixMonProfil");
         // // choixMonProfil.setOnAction(new ControleurProfil(this, "Profil"));
 
-        Button choixDeconnexion = (Button) this.getSceneAccueilAdmin().lookup("#choixDeconnexion");
+        // Button choixDeconnexion = (Button) this.getSceneAccueilAdmin().lookup("#choixDeconnexion");
         // // choixDeconnexion.setOnAction(new ControleurProfil(this, "Deconnexion"));
     }
 
@@ -170,6 +156,88 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneAccueilOrganisateur;
     }
 
+    public Scene getSceneGestionUtilisateur() {
+        VBox vBox = (VBox) sceneGestionUtilisateur.lookup("#vboxPrincipal");
+        vBox.getChildren().clear();
+        vBox.setAlignment(javafx.geometry.Pos.CENTER);
+        vBox.setSpacing(20);
+        vBox.setPadding(new javafx.geometry.Insets(20, 50, 20, 50));
+    
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+    
+        try {
+            List<String> utilisateur = this.requete.getNomUtilisateur();
+            for (String user : utilisateur) {
+                comboBox.getItems().add(user);
+            }
+            comboBox.setValue(utilisateur.get(0));
+    
+            vBox.getChildren().add(comboBox);
+    
+            VBox vb2 = new VBox();
+            vb2.setAlignment(javafx.geometry.Pos.CENTER);
+            vb2.setSpacing(20);
+    
+            HBox hb = new HBox();
+            ImageView iv = new ImageView(new Image("images/ath.png"));
+            iv.setFitHeight(100);
+            iv.setFitWidth(100);
+            Label label = new Label(comboBox.getValue());
+            label.setStyle("-fx-font-size: 40px;");
+            hb.setAlignment(javafx.geometry.Pos.CENTER);
+            hb.getChildren().addAll(iv, label);
+            hb.setSpacing(20);
+            vb2.getChildren().add(hb);
+    
+            VBox bleu = new VBox();
+            bleu.setAlignment(javafx.geometry.Pos.CENTER);
+            bleu.setSpacing(40);
+            bleu.setStyle("-fx-background-color: #0085C7; -fx-background-radius: 15; -fx-padding: 20px;");
+    
+            Label changerRole = new Label("CHANGER DE RÔLE");
+            changerRole.setStyle("-fx-text-fill: white; -fx-font-size: 35px; -fx-font-weight: bold;");
+    
+            HBox boutonsRole = new HBox();
+            boutonsRole.setSpacing(20);
+            boutonsRole.setAlignment(javafx.geometry.Pos.CENTER);
+    
+            Button administrateur = createRoleButton("Administrateur", 'A', comboBox);
+            Button journaliste = createRoleButton("Journaliste", 'C', comboBox);
+            Button organisateur = createRoleButton("Organisateur", 'O', comboBox);
+    
+            boutonsRole.getChildren().addAll(administrateur, journaliste, organisateur);
+    
+            Button supprimer = new Button("SUPPRIMER L'UTILISATEUR");
+            supprimer.setOnAction(new ControleurSupprimerUtilisateur(this, comboBox));
+            supprimer.setStyle("-fx-background-color: #BF1010; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;");
+            supprimer.setOnMouseEntered(e -> supprimer.setStyle("-fx-background-color: #D32F2F; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+            supprimer.setOnMouseExited(e -> supprimer.setStyle("-fx-background-color: #BF1010; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+    
+            bleu.getChildren().addAll(changerRole, boutonsRole, supprimer);
+            vb2.getChildren().add(bleu);
+            vBox.getChildren().add(vb2);
+    
+            comboBox.setOnAction(e -> label.setText(comboBox.getValue()));
+    
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la récupération des utilisateurs");
+            System.err.println(e.getMessage());
+        }
+    
+        return sceneGestionUtilisateur;
+    }
+    
+    private Button createRoleButton(String roleName, char roleCode, ComboBox<String> comboBox) {
+        Button button = new Button(roleName);
+        button.setOnAction(new ControleurChangerRole(this, roleCode, comboBox));
+        String style = "-fx-background-color: #E0E0E0; -fx-text-fill: black; -fx-font-size: 25px; -fx-background-radius: 25; -fx-padding: 10px;";
+        button.setStyle(style);
+        button.setPrefWidth(300);
+        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: #B0BEC5; -fx-text-fill: black; -fx-font-size: 25px; -fx-background-radius: 25; -fx-padding: 10px;"));
+        button.setOnMouseExited(e -> button.setStyle(style));
+        return button;
+    }
     // public Scene getSceneGestionUtilisateur(){
     //     VBox vBox = (VBox) sceneGestionUtilisateur.lookup("#vboxPrincipal");
     //     GridPane gridPane = new GridPane();

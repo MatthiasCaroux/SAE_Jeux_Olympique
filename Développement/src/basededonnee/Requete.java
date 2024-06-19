@@ -287,6 +287,26 @@ public class Requete {
             throw new BaseDeDonneeInaccessibleException();
         }
     }
+    // public List<Athlete> getAthletes() throws BaseDeDonneeInaccessibleException {
+    //     try {
+    //         PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE NATURAL JOIN PAYS");
+    //         ResultSet resultat = requete.executeQuery();
+    //         List<Athlete> athletes = new ArrayList<>();
+    //         while (resultat.next()) {
+    //             System.out.println(resultat.getString("sexe"));
+    //             char sexeChar = resultat.getString("sexe").charAt(0);
+    //             System.out.println(sexeChar);
+    //             if (sexeChar == 'M') {
+    //                 athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), Epreuve.Sexe.M, new Pays(resultat.getString("nom_P")), resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
+    //             } else {
+    //                 athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), Epreuve.Sexe.F, new Pays(resultat.getString("nom_P")), resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
+    //             }
+    //         }
+    //         return athletes;
+    //     } catch (Exception e) {
+    //         throw new BaseDeDonneeInaccessibleException();
+    //     }
+    // }
 
     public void supprimerAthlete(int idAthlete) throws AthleteInexistantException {
         try {
@@ -387,6 +407,7 @@ public class Requete {
         }
     }
 
+    // public void ajouterPays(String nomPays) throws BaseDeDonneeInaccessibleException {
     public void ajouterPays(String nomPays) throws BaseDeDonneeInaccessibleException {
         try {
             if (this.dansPays(nomPays)) {
@@ -398,6 +419,7 @@ public class Requete {
             requete.executeUpdate();
         } catch (Exception e) {
             throw new BaseDeDonneeInaccessibleException();
+            // throw new BaseDeDonneeInaccessibleException();
         }
     }   
 
