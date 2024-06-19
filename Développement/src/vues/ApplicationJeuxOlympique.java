@@ -53,9 +53,9 @@ public class ApplicationJeuxOlympique extends Application {
         try {
             this.requete = new Requete();
         } catch (Exception e) {
+            // TODO: handle exception
             System.err.println(e.getMessage());
         }
-        
 
         System.out.println("Initialisation de l'application");
 

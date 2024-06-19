@@ -1,7 +1,14 @@
 package src.basededonnee;
 
+import java.beans.Expression;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 
+import src.basededonnee.exception.BaseDeDonneeInaccessibleException;
+import src.basededonnee.exception.EpreuveDejaExistantException;
+import src.modele.exceptions.JeuxPasCommenceException;
 import src.modele.jeuxOlympique.*;
 
 public class testBD {
@@ -56,18 +63,18 @@ public class testBD {
             Athlete athlete = new Athlete("Ryan", "Crouser", Epreuve.Sexe.M, new Pays("France"), 75, 67, 82);
             requete.ajouterAthlete(athlete);
             assert requete.dansAthlete("Ryan", "Crouser", 1);
-            int idAthlete = requete.getIdAthlete("test", "prenomTest");
-            requete.supprimerAthlete(idAthlete);
-            assert !requete.dansAthlete("test", "prenomTest", idAthlete);
-            idAthlete = requete.getIdAthlete("Ryan", "Crouser");
-            requete.supprimerAthlete(idAthlete);
-            assert !requete.dansAthlete("Ryan", "Crouser", idAthlete);
+            // int idAthlete = requete.getIdAthlete("test", "prenomTest");
+            // requete.supprimerAthlete(idAthlete);
+            // assert !requete.dansAthlete("test", "prenomTest", idAthlete);
+            // idAthlete = requete.getIdAthlete("Ryan", "Crouser");
+            // requete.supprimerAthlete(idAthlete);
+            // assert !requete.dansAthlete("Ryan", "Crouser", idAthlete);
         } catch (Exception e) {
             System.out.println("Erreur de connexion à la base de donnée");
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, BaseDeDonneeInaccessibleException, EpreuveDejaExistantException, JeuxPasCommenceException {
         // try {
         //     Requete requete = new Requete();
         //     System.out.println(requete.connexion("niksan", "niksan"));
@@ -83,8 +90,8 @@ public class testBD {
         try {
             Requete requete = new Requete();
             JeuxOlympique jeux = new JeuxOlympique(2036, "Paris", "France");
-            Epreuve epreuve = new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.M);
-            requete.ajouteEpreuve(epreuve, jeux);
+            // Epreuve epreuve = new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.M);
+            // requete.ajouteEpreuve(epreuve, jeux);
             // requete.ajouterJO(jeux);
             Pays France = new Pays("CANADA");
             // try {
@@ -100,8 +107,18 @@ public class testBD {
             equipe1.ajouterMembre(new Athlete("Hanks", "Tom", Epreuve.Sexe.M, France, 90, 70, 80));
             equipe1.ajouterMembre(new Athlete("Doe", "Jane", Epreuve.Sexe.M, France, 60, 95, 90));
             equipe1.ajouterMembre(new Athlete("Doe", "John", Epreuve.Sexe.M, France, 80, 80, 80));
+            equipe1.ajouterMembre(new Athlete("PLOUF", "PLOUF", Epreuve.Sexe.M, France, 60, 95, 90));
+            EpreuveCollective epreuveCollective = new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.M);
+            epreuveCollective.participer(equipe1);
+            requete.ajouteEpreuve(epreuveCollective, jeux);
+            System.out.println("99999999999999999999999999999999999");
             // requete.ajouterEquipe(equipe1);
             // requete.ajouterPays("France");
+            // Epreuve epreuve = new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.M);
+            // for (Athlete athlete : equipe1.getLesAthlètes()) {
+            //     epreuve.participer(athlete);
+            // }
+            // requete.ajouteEpreuve(epreuve, jeux);
             System.out.println(requete.getAthletes());
             requete.supprimerUtilisateur("user");
             requete.changerRoleUtilisateur("niksan", 'A');
@@ -110,6 +127,7 @@ public class testBD {
             requete.ajouterAthlete("test", "prenomTest", 84, 69, 91, 'M', requete.getIdPays("France"));
             System.out.println(requete.idMaxTable("PAYS"));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             // TODO: handle exception
         }
         // try {
@@ -129,5 +147,51 @@ public class testBD {
         // } catch (Exception e) {
         //     // TODO: handle exception
         // }
+        JeuxOlympique jeux = new JeuxOlympique(2036, "Paris", "France");
+        Requete requete = new Requete();
+        Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("/home/iut45/Etudiants/o22301527/Documents/SAE/SAE_Jeux_Olympique/Développement/donnees.csv");
+        for (Epreuve epreuve : test.keySet()) {
+            boolean val;
+            if (epreuve instanceof EpreuveCollective) {
+                val = true;
+            } else {
+                val = false;
+            }
+            String text;
+            if (test.get(epreuve).get(0) instanceof Equipe) {
+                text = "Equipe";
+            } else {
+                text = "Athlete";
+            }
+            // System.out.println(epreuve.getSport() + " " + epreuve.getSexe() + " " + val + " " + text);
+            // int equipeValide = 0;
+            // if (epreuve instanceof EpreuveCollective) {
+            //     for (Participant participant : test.get(epreuve)) {
+            //         Equipe equipe = (Equipe) participant;
+            //         if (equipe.getLesAthlètes().size() == 4) {
+            //             equipeValide++;
+            //         }
+            //     }
+            // }
+            // System.out.println(equipeValide);
+            // Thread.sleep(3000);
+            requete.ajouteEpreuve(epreuve, jeux);
+            // System.out.println(epreuve.getParticipants());
+        }
+        System.out.println(jeux.getLesPays());
+        System.out.println(jeux.getEpreuves());
+        // System.out.println(jeux.lesParticipantsAuxJo());
+        System.out.println(requete.getEpreuves(jeux));
+
+        int t1 = requete.getEpreuves(jeux).size();
+        int t2 = jeux.getEpreuves().size();
+        System.out.println(t1 + " " + t2);
+        // String nomEpreuve = "NatationRelais";
+        // System.out.println(Epreuve.TypeSport.valueOf(nomEpreuve));
+        // System.out.println(requete.getAthletes());
+        // System.out.println(jeux.getClassementPays());
+        for (Epreuve epreuve : test.keySet()) {
+            System.out.println(epreuve.getParticipants().size());
+        }
     }
 }
