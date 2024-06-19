@@ -2,11 +2,12 @@ DROP TABLE IF EXISTS POSSEDE;
 DROP TABLE IF EXISTS PARTICIPE_JO;
 DROP TABLE IF EXISTS PARTICIPE_INDIV;
 DROP TABLE IF EXISTS PARTICIPE_COLLEC;
-DROP TABLE IF EXISTS JEUXOLYMPIQUE;
 DROP TABLE IF EXISTS FAIT_PARTIE;
 DROP TABLE IF EXISTS EQUIPE;
 DROP TABLE IF EXISTS ATHLETE;
 DROP TABLE IF EXISTS PAYS;
+DROP TABLE IF EXISTS EPREUVE;
+DROP TABLE IF EXISTS JEUXOLYMPIQUE;
 -- DROP TABLE IF EXISTS UTILISATEUR;
 
 CREATE TABLE PAYS (
@@ -22,6 +23,8 @@ CREATE TABLE ATHLETE (
   id_Athlete INT PRIMARY KEY,
   nom_A      VARCHAR(100),
   prenom_A   VARCHAR(100),
+  sexe_A     CHAR(1),
+  CHECK (sexe_A IN ('M', 'F')),
   la_force   INT,
   endurance  INT,
   agilite    INT,
@@ -99,7 +102,7 @@ CREATE TABLE UTILISATEUR (
   mdp            VARCHAR(42),
   rôle           CHAR, 
   CHECK (rôle IN ('A', 'C', 'O')), 
-  PRIMARY KEY (identifiant, email)
+  PRIMARY KEY (identifiant)
 );
 
 -- insertions
@@ -110,14 +113,19 @@ INSERT INTO UTILISATEUR (identifiant, email, mdp, rôle) VALUES
 ('journaliste', 'journaliste@gmail.com', 'journaliste', 'C'), 
 ('organisateur', 'organisateur@gmail.com', 'organisateur', 'O');
 
+-- INSERT INTO UTILISATEUR (identifiant, email, mdp, rôle) VALUES ('journaliste', 'journaliste@gmail.com', 'journaliste', 'C');
+
+
+
+
 -- Insertion des pays
 INSERT INTO PAYS (id_Pays, nom_P) VALUES (1, 'France'), (2, 'USA'), (3, 'China');
 
 -- Insertion des athlètes
-INSERT INTO ATHLETE (id_Athlete, nom_A, prenom_A, la_force, endurance, agilite, id_Pays) VALUES 
-(1, 'Dupont', 'Jean', 80, 75, 90, 1), 
-(2, 'Smith', 'John', 85, 80, 85, 2), 
-(3, 'Wang', 'Li', 78, 82, 88, 3);
+INSERT INTO ATHLETE (id_Athlete, nom_A, prenom_A, sexe_A, la_force, endurance, agilite, id_Pays) VALUES 
+(1, 'Dupont', 'Jean', 'M', 80, 75, 90, 1), 
+(2, 'Smith', 'John','M', 85, 80, 85, 2), 
+(3, 'Wang', 'Li','M', 78, 82, 88, 3);
 
 -- Insertion des équipes
 INSERT INTO EQUIPE (id_Equipe, nom_E, id_Pays) VALUES 

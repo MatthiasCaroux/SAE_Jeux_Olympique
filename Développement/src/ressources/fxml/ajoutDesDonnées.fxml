@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -10,38 +13,86 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="635.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
     <!-- Menu supérieur avec le logo et les onglets -->
     <top>
-        <VBox alignment="CENTER">
-            <children>
-            <VBox>
-               <children>
-                  <HBox alignment="CENTER" spacing="100.0">
-                     <children>
-                              <ImageView fitHeight="72.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                      <Image url="@../images/jeuxOlympique.png" />
-                                  </image>
-                              </ImageView>
-                              <Label prefHeight="20.0" prefWidth="128.0" style="-fx-font-size: 16px;" text="Jeux Olympique" />
-                              <Label style="-fx-font-size: 16px;" text="Ajout des sonnées" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" spacing="50.0">
-                     <children>
-                              <Label style="-fx-font-size: 16px;" text="Modifications des données" />
-                              <Label alignment="CENTER" lineSpacing="50.0" style="-fx-font-size: 16px;" text="Gestion des utilisateurs" textAlignment="CENTER" />
-                     </children>
-                     <padding>
-                        <Insets bottom="20.0" top="20.0" />
-                     </padding>
-                  </HBox>
-               </children>
-            </VBox>
-            </children>
-        </VBox>
-    </top>
+      <HBox alignment="CENTER" spacing="30.0" style="-fx-background-color: #f1f1f1;" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" style="-fx-background-color: #f1f1f1;">
+               <graphic>
+                  <ImageView fitHeight="72.0" fitWidth="174.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #f1f1f1;">
+                     <image>
+                        <Image url="@../images/jeuxOlympique.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Jeux Olympique">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="131.0" style="-fx-background-color: #f1f1f1;" text="Ajout des données" underline="true">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="80.0" prefWidth="183.0" style="-fx-background-color: #f1f1f1;" text="Modifications des données">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="81.0" prefWidth="164.0" style="-fx-background-color: #f1f1f1;" text="Gestion des utilisateurs" textOverrun="CLIP">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <MenuButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="38.0" prefWidth="120.0" style="-fx-background-color: #f1f1f1;" text="Profil">
+              <items>
+                <MenuItem mnemonicParsing="false">
+                     <graphic>
+                        <Button fx:id="choixMonProfil" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Mon Profil" />
+                     </graphic>
+                  </MenuItem>
+                <MenuItem mnemonicParsing="false">
+                     <graphic>
+                        <Button fx:id="choixDeconnexion" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Déconnexion" />
+                     </graphic>
+                  </MenuItem>
+              </items>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../images/deconnexion.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
+         </children>
+      </HBox>
+   </top>
 
     <!-- Contenu principal avec le classement des pays -->
     <center>
@@ -49,62 +100,62 @@
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Que voulez vous ajouter ?" textAlignment="CENTER">
-               <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER" prefHeight="463.0" prefWidth="1174.0" spacing="100.0">
-               <children>
-                  <VBox alignment="CENTER" spacing="20.0">
-                     <children>
-                        <Button fx:id="ajouterUnAthletes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" wrapText="true">
-                           <graphic>
-                              <ImageView fitHeight="200.0" fitWidth="200.0">
-                                 <image>
-                                    <Image url="@../images/homme.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label prefHeight="16.0" prefWidth="57.0" text="Athletes" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" spacing="20.0">
-                     <children>
-                        <Button fx:id="ajouterUneEquipe" alignment="CENTER" contentDisplay="CENTER" lineSpacing="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" textOverrun="CLIP">
-                           <font>
-                              <Font name="Khmer OS System" size="13.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="200.0" fitWidth="200.0">
-                                 <image>
-                                    <Image url="@../images/equipe.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label prefHeight="16.0" prefWidth="47.0" text="Equipe" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" spacing="20.0">
-                     <children>
-                        <Button fx:id="ajouterUneEpreuve" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0">
-                           <graphic>
-                              <ImageView fitHeight="200.0" fitWidth="200.0">
-                                 <image>
-                                    <Image url="@../images/resultat.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label text="Epreuve" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" text="Que voulez vous ajouter ?" textAlignment="CENTER">
+                    <font>
+                        <Font size="48.0" />
+                    </font>
+                </Label>
+                <HBox alignment="CENTER" prefHeight="463.0" prefWidth="1174.0" spacing="100.0">
+                    <children>
+                        <VBox alignment="CENTER" spacing="20.0">
+                            <children>
+                                <Button fx:id="ajouterUnAthletes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" wrapText="true">
+                                    <graphic>
+                                        <ImageView fitHeight="200.0" fitWidth="200.0">
+                                            <image>
+                                                <Image url="@../images/homme.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Label prefHeight="16.0" prefWidth="57.0" text="Athletes" />
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="20.0">
+                            <children>
+                                <Button fx:id="ajouterUneEquipe" alignment="CENTER" contentDisplay="CENTER" lineSpacing="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0" textAlignment="CENTER" textOverrun="CLIP">
+                                    <font>
+                                        <Font name="Khmer OS System" size="13.0" />
+                                    </font>
+                                    <graphic>
+                                        <ImageView fitHeight="200.0" fitWidth="200.0">
+                                            <image>
+                                                <Image url="@../images/equipe.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Label prefHeight="16.0" prefWidth="47.0" text="Equipe" />
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="20.0">
+                            <children>
+                                <Button fx:id="ajouterUneEpreuve" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="200.0" prefWidth="200.0">
+                                    <graphic>
+                                        <ImageView fitHeight="200.0" fitWidth="200.0">
+                                            <image>
+                                                <Image url="@../images/resultat.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Label text="Epreuve" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
         </VBox>
     </center>
 </BorderPane>

@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
@@ -19,83 +18,79 @@
         <VBox fx:id="vboxPrincipal" spacing="20.0" style="-fx-background-color: white;" />
     </center>
    <top>
-      <HBox alignment="CENTER" style="-fx-background-color: #f1f1f1;" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" spacing="30.0" style="-fx-background-color: #f1f1f1;" BorderPane.alignment="CENTER">
          <children>
-            <ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="81.0" prefWidth="1116.0">
-               <buttons>
-                  <Button mnemonicParsing="false" style="-fx-background-color: #f1f1f1;">
-                     <graphic>
-                              <ImageView fitHeight="72.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #f1f1f1;">
-                                  <image>
-                                      <Image url="@../images/jeuxOlympique.png" />
-                                  </image>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                              </ImageView>
-                     </graphic>
+            <Button mnemonicParsing="false" style="-fx-background-color: #f1f1f1;">
+               <graphic>
+                        <ImageView fitHeight="72.0" fitWidth="174.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #f1f1f1;">
+                            <image>
+                                <Image url="@../images/jeuxOlympique.png" />
+                            </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                  </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Jeux Olympique">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="131.0" style="-fx-background-color: #f1f1f1;" text="Ajout des données">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="80.0" prefWidth="183.0" style="-fx-background-color: #f1f1f1;" text="Modifications des données">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="81.0" prefWidth="164.0" style="-fx-background-color: #f1f1f1;" text="Gestion des utilisateurs" underline="true">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <MenuButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #f1f1f1;" text="Profil">
-                    <items>
-                      <MenuItem mnemonicParsing="false">
-                           <graphic>
-                              <Button fx:id="choixMonProfil" mnemonicParsing="false" style="-fx-background-color: white;" text="Mon Profil" />
-                           </graphic>
-                        </MenuItem>
-                      <MenuItem mnemonicParsing="false">
-                           <graphic>
-                              <Button fx:id="choixDeconnexion" mnemonicParsing="false" style="-fx-background-color: white;" text="Déconnexion" />
-                           </graphic>
-                        </MenuItem>
-                    </items>
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="29.0">
-                           <image>
-                              <Image url="@../images/deconnexion.png" />
-                           </image>
                         </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="retourAccueilAdmin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Jeux Olympique">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="131.0" style="-fx-background-color: #f1f1f1;" text="Ajout des données">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="80.0" prefWidth="183.0" style="-fx-background-color: #f1f1f1;" text="Modifications des données">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="81.0" prefWidth="164.0" style="-fx-background-color: #f1f1f1;" text="Gestion des utilisateurs" textOverrun="CLIP" underline="true">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <MenuButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="38.0" prefWidth="120.0" style="-fx-background-color: #f1f1f1;" text="Profil">
+              <items>
+                <MenuItem mnemonicParsing="false">
+                     <graphic>
+                        <Button fx:id="choixMonProfil" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Mon Profil" />
                      </graphic>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </MenuButton>
-               </buttons>
-            </ButtonBar>
+                  </MenuItem>
+                <MenuItem mnemonicParsing="false">
+                     <graphic>
+                        <Button fx:id="choixDeconnexion" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Déconnexion" />
+                     </graphic>
+                  </MenuItem>
+              </items>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@../images/deconnexion.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </MenuButton>
          </children>
       </HBox>
    </top>

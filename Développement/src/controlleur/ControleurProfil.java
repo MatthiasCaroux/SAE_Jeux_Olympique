@@ -34,7 +34,7 @@ public class ControleurProfil implements EventHandler<ActionEvent>{
 
     private Alert handleChoixDeconnexion(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Etes-vous sûr de vouloir vous déconnecter ?");
-        alert.setTitle("Partie Perdue");
+        alert.setTitle("Déconnexion");
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.setMinWidth(400);
         dialogPane.setMinHeight(200);

@@ -42,14 +42,13 @@ public class Requete {
             PreparedStatement requete = this.connexionBD.prepareStatement("Select max(" + this.getColumName(nomTable) + ") as max from " + nomTable);
             ResultSet resultat = requete.executeQuery();
             resultat.next();
-            System.out.println("moiuyerg moiuerz gmoiusghyog");
             return resultat.getInt("max");
         } catch (Exception e) {
             return 0;
         }
     }
 
-    public boolean connexion(String identifiant, String motDePasse) {
+    public boolean connexion(String identifiant, String motDePasse) throws BaseDeDonneeInaccessibleException {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Select * from UTILISATEUR where identifiant = ? and mdp = ?");
             requete.setString(1, identifiant);
@@ -61,8 +60,7 @@ public class Requete {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
-            return false;
+            throw new BaseDeDonneeInaccessibleException();
         }
     }
 
@@ -101,8 +99,25 @@ public class Requete {
         }
     }
 
-    public char getRoleUtilisateur(String identifiant, String motDePasse) {
+    public List<String> getNomUtilisateur() throws BaseDeDonneeInaccessibleException {
         try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select identifiant from UTILISATEUR");
+            ResultSet resultat = requete.executeQuery();
+            List<String> noms = new ArrayList<>();
+            while (resultat.next()) {
+                noms.add(resultat.getString("identifiant"));
+            }
+            return noms;
+        } catch (Exception e) {
+            throw new BaseDeDonneeInaccessibleException();
+        }
+    }
+
+    public char getRoleUtilisateur(String identifiant, String motDePasse) throws BaseDeDonneeInaccessibleException {
+        try {
+            if (! this.dansUtilisateur(identifiant, motDePasse)) {
+                throw new UtilisateurInexistantException(identifiant);
+            }
             PreparedStatement requete = this.connexionBD.prepareStatement("Select rôle from UTILISATEUR where identifiant = ? and mdp = ?");
             requete.setString(1, identifiant);
             requete.setString(2, motDePasse);
@@ -110,8 +125,18 @@ public class Requete {
             resultat.next();
             return resultat.getString("rôle").charAt(0);
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
-            return 'C';
+            throw new BaseDeDonneeInaccessibleException();
+        }
+    }
+
+    public void changerRoleUtilisateur(String identifiant, char role) throws BaseDeDonneeInaccessibleException {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Update UTILISATEUR set rôle = ? where identifiant = ?");
+            requete.setString(1, role+"");
+            requete.setString(2, identifiant);
+            requete.executeUpdate();
+        } catch (Exception e) {
+            throw new BaseDeDonneeInaccessibleException();
         }
     }
 
@@ -128,17 +153,25 @@ public class Requete {
                 throw new UtilisateurDejaExistantException();
             }
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
             throw new BaseDeDonneeInaccessibleException();
         }
     }
 
-    // public void supprimerUtilisateur() {
-    //     PreparedStatement requete = this?connexionBD.prepareStatement("delete from UTILISATEUR where mdp = ?");
-    // }
-
-    public void ajouterAthlete(String nom, String prenom, int force, int endurance, int agilite, char sexe, int idPays) {
+    public void supprimerUtilisateur(String identifiant) throws UtilisateurInexistantException {
         try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("delete from UTILISATEUR where identifiant = ?");
+            requete.setString(1, identifiant);
+            requete.executeUpdate();
+        } catch (Exception e) {
+            throw new UtilisateurInexistantException(identifiant);
+        }
+    }
+
+    public void ajouterAthlete(String nom, String prenom, int force, int endurance, int agilite, char sexe, int idPays) throws BaseDeDonneeInaccessibleException {
+        try {
+            if (this.dansAthlete(nom, prenom, idPays)) {
+                throw new AthleteDejaExistantException(nom, prenom);
+            }
             PreparedStatement requete = this.connexionBD.prepareStatement("Insert into ATHLETE values (?, ?, ?, ?, ?, ?, ?)");
             requete.setInt(1, this.idMaxTable("ATHLETE") + 1);
             requete.setString(2, nom);
@@ -149,12 +182,15 @@ public class Requete {
             requete.setString(7, sexe+""); // Attention
             requete.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
+            throw new BaseDeDonneeInaccessibleException();
         }
     }
 
-    public void ajouterAthlete(Athlete athlete) {
+    public void ajouterAthlete(Athlete athlete) throws BaseDeDonneeInaccessibleException {
         try {
+            if (this.dansAthlete(athlete.getNom(), athlete.getPrenom(), getIdPays(athlete.getPays().getNomPays()))) {
+                throw new AthleteDejaExistantException(athlete.getNom(), athlete.getPrenom());
+            }
             PreparedStatement requete = this.connexionBD.prepareStatement("Insert into ATHLETE values (?, ?, ?, ?, ?, ?, ?)");
             requete.setInt(1, this.idMaxTable("ATHLETE") + 1);
             requete.setString(2, athlete.getNom());
@@ -165,11 +201,11 @@ public class Requete {
             requete.setString(7, athlete.getSexe()+""); // Attention
             requete.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
+            throw new BaseDeDonneeInaccessibleException();
         }
     }
 
-    public boolean dansAthlete(String nom, String prenom, int idPays) {
+    public boolean dansAthlete(String nom, String prenom, int idPays) throws BaseDeDonneeInaccessibleException {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE where nom = ? and prenom = ? and id_Pays = ?");
             requete.setString(1, nom);
@@ -182,8 +218,7 @@ public class Requete {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
-            return false;
+            throw new BaseDeDonneeInaccessibleException();
         }
     }
 
@@ -202,54 +237,38 @@ public class Requete {
         }
     }
 
-    // TO DO IMPORTANT
-    // public List<Athlete> getAthletes() {
-    //     try {
-    //         PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE NATURAL JOIN PAYS");
-    //         ResultSet resultat = requete.executeQuery();
-    //         List<Athlete> athletes = new ArrayList<>();
-    //         while (resultat.next()) {
-    //             char sexeChar = (resultat.getCharacterStream("sexe")+"").charAt(0);
-    //             if (sexeChar == 'M') {
-    //                 athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), Epreuve.Sexe.M, resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite"));
-    //             } else {
-    //                 athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), resultat.getString("sexe").charAt(0), resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite"));
-    //             }
-    //         }
-    //     } catch (Exception e) {
-    //         // TODO: handle exception
-    //     }
-    // }
+    public List<Athlete> getAthletes() throws BaseDeDonneeInaccessibleException {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE NATURAL JOIN PAYS");
+            ResultSet resultat = requete.executeQuery();
+            List<Athlete> athletes = new ArrayList<>();
+            while (resultat.next()) {
+                System.out.println(resultat.getString("sexe"));
+                char sexeChar = resultat.getString("sexe").charAt(0);
+                System.out.println(sexeChar);
+                if (sexeChar == 'M') {
+                    athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), Epreuve.Sexe.M, new Pays(resultat.getString("nom_P")), resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
+                } else {
+                    athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), Epreuve.Sexe.F, new Pays(resultat.getString("nom_P")), resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
+                }
+            }
+            return athletes;
+        } catch (Exception e) {
+            throw new BaseDeDonneeInaccessibleException();
+        }
+    }
 
-
-    public void supprimerAthlete(int idAthlete) {
+    public void supprimerAthlete(int idAthlete) throws AthleteInexistantException {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("delete from ATHLETE where id_Athlete = ?");
             requete.setInt(1, idAthlete);
             requete.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
+            throw new AthleteInexistantException(idAthlete);
         }
     }
 
-    // TO DO
-    // public Athlete getAthlete(int idAthlete) {
-    //     try {
-    //         PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE where id_Athlete = ?");
-    //         requete.setInt(1, idAthlete);
-    //         ResultSet resultat = requete.executeQuery();
-    //         resultat.next();
-    //         char sexeChar = (resultat.getCharacterStream("sexe")+"").charAt(0);
-    //         if (sexeChar == 'M') {
-    //             return new Athlete(resultat.getString("nom"), resultat.getString("prenom"), Epreuve.Sexe.M, resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite"));
-    //         }
-    //         return new Athlete(resultat.getString("nom"), resultat.getString("prenom"), resultat.getString("sexe").charAt(0), resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite"));
-    //     } catch (Exception e) {
-    //         System.out.println("Erreur de connexion à la base de donnée");
-    //         return null;
-    //     }
-    // }
-
+    /// TO DO CICICICICICICIICICICICI
     public void ajouterEquipe(String nomEquipe, int idPays) {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Insert into EQUIPE values (?, ?, ?)");
@@ -274,17 +293,17 @@ public class Requete {
         }
     }
 
-    public void ajouterPays(String nomPays) {
+    public void ajouterPays(String nomPays) throws BaseDeDonneeInaccessibleException {
         try {
+            if (this.dansPays(nomPays)) {
+                throw new PaysDejaExistantException(nomPays);
+            }
             PreparedStatement requete = this.connexionBD.prepareStatement("INSERT INTO PAYS (id_Pays, nom_P) VALUES (?, ?)");
             requete.setInt(1, this.idMaxTable("PAYS") + 1);
-            System.out.println("Pays ajouté");
             requete.setString(2, nomPays);
-            System.out.println("Pays ajouté");
             requete.executeUpdate();
-            System.out.println("Pays ajouté");
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
+            throw new BaseDeDonneeInaccessibleException();
         }
     }   
 
