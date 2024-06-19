@@ -193,5 +193,8 @@ public class testBD {
         for (Epreuve epreuve : test.keySet()) {
             System.out.println(epreuve.getParticipants().size());
         }
+
+        // A tester 
+        requete.rechercherAthlete("a");
     }
 }

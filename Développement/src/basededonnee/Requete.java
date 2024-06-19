@@ -6,7 +6,9 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import src.basededonnee.exception.*;
 import src.modele.jeuxOlympique.*;
@@ -628,6 +630,8 @@ public class Requete {
         } 
     }
 
+
+    // TODO: A tester ; pb de nbr d'épreuves et pas encore ajouter les participants
     public List<Epreuve> getEpreuves(JeuxOlympique jeuxOlympique) {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Select * from EPREUVE where id_JO = ?");
@@ -662,5 +666,89 @@ public class Requete {
         }
     }
 
+    // To do : A tester
+    public List<Athlete> getAthletesDansEpreuvesIndiv(Epreuve epreuve, JeuxOlympique jeuxOlympique) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from PARTICIPE_INDIV where id_Epreuve = ? and type_Epreuve = ?");
+            requete.setInt(1, this.getIdEpreuve(epreuve));
+            requete.setString(2, epreuve.getSport().toString());
+            ResultSet resultat = requete.executeQuery();
+            List<Athlete> athletes = new ArrayList<>();
+            while (resultat.next()) {
+                PreparedStatement requeteAthlete = this.connexionBD.prepareStatement("Select * from ATHLETE where id_Athlete = ?");
+                requeteAthlete.setInt(1, resultat.getInt("id_Athlete"));
+                ResultSet resultatAthlete = requeteAthlete.executeQuery();
+                resultatAthlete.next();
+                athletes.add(new Athlete(resultatAthlete.getString("nom_A"), resultatAthlete.getString("prenom_A"), Epreuve.Sexe.valueOf(resultatAthlete.getString("sexe_A")), new Pays(resultatAthlete.getString("id_Pays")), resultatAthlete.getInt("la_force"), resultatAthlete.getInt("endurance"), resultatAthlete.getInt("agilite")));
+            }
+            return athletes;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    // To do : A tester
+    public List<Equipe> getEquipesDansEpreuves(Epreuve epreuve, JeuxOlympique jeuxOlympique) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from PARTICIPE_COLLEC where id_Epreuve = ? and type_Epreuve = ?");
+            requete.setInt(1, this.getIdEpreuve(epreuve));
+            requete.setString(2, epreuve.getSport().toString());
+            ResultSet resultat = requete.executeQuery();
+            List<Equipe> equipes = new ArrayList<>();
+            Equipe equipe;
+            while (resultat.next()) {
+                PreparedStatement requeteEquipe = this.connexionBD.prepareStatement("Select * from EQUIPE where id_Equipe = ?");
+                requeteEquipe.setInt(1, resultat.getInt("id_Equipe"));
+                ResultSet resultatEquipe = requeteEquipe.executeQuery();
+                resultatEquipe.next();
+                equipe = new Equipe(resultatEquipe.getString("nom_E"), new Pays(resultatEquipe.getString("id_Pays")), epreuve.getSexe());
+                equipes.add(equipe);
+                for (Athlete athlete : this.getAthletesDansEquipe(equipe)) {
+                    equipe.ajouterMembre(athlete);;
+                }
+            }
+            return equipes;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }   
+
+    // To do : A tester
+    public List<Athlete> getAthletesDansEquipe(Equipe equipe) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from FAIT_PARTIE where id_Equipe = ?");
+            requete.setInt(1, this.getIdEquipe(equipe));
+            ResultSet resultat = requete.executeQuery();
+            List<Athlete> athletes = new ArrayList<>();
+            while (resultat.next()) {
+                PreparedStatement requeteAthlete = this.connexionBD.prepareStatement("Select * from ATHLETE where id_Athlete = ?");
+                requeteAthlete.setInt(1, resultat.getInt("id_Athlete"));
+                ResultSet resultatAthlete = requeteAthlete.executeQuery();
+                resultatAthlete.next();
+                athletes.add(new Athlete(resultatAthlete.getString("nom_A"), resultatAthlete.getString("prenom_A"), Epreuve.Sexe.valueOf(resultatAthlete.getString("sexe_A")), new Pays(resultatAthlete.getString("id_Pays")), resultatAthlete.getInt("la_force"), resultatAthlete.getInt("endurance"), resultatAthlete.getInt("agilite")));
+            }
+            return athletes;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
     // public List<Epreuve>
+
+    public List<Athlete> rechercherAthlete(String chaineDeCarac) {
+        try {
+            List<Athlete> lesAthetes = new ArrayList<>();
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE where nom_A like ? or prenom_A like ?");
+            requete.setString(1, "%" + chaineDeCarac + "%");
+            requete.setString(2, "%" + chaineDeCarac + "%");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                lesAthetes.add(new Athlete(resultat.getString("nom_A"), resultat.getString("prenom_A"), Epreuve.Sexe.valueOf(resultat.getString("sexe_A")), new Pays(resultat.getString("id_Pays")), resultat.getInt("la_force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
+            }
+            return lesAthetes;
+        } catch (Exception e) {
+            // TODO: handle exception
+            return new ArrayList<>();
+        }
+    }
 }
