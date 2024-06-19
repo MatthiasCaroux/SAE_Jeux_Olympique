@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,9 +18,9 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-        <HBox alignment="CENTER" prefHeight="34.0" prefWidth="855.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 0;" BorderPane.alignment="TOP_LEFT">
+        <HBox alignment="CENTER" prefHeight="34.0" prefWidth="1004.0" style="-fx-background-color: #F0F0F0; -fx-background-radius: 0;" BorderPane.alignment="TOP_LEFT">
             <children>
-                <ImageView fitHeight="119.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="83.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/jeuxOlympique2024.png" />
                     </image>
@@ -40,7 +42,7 @@
                   <Insets top="10.0" />
                </padding>
                 </Label>
-            <VBox alignment="CENTER" prefHeight="347.0" prefWidth="1209.0" spacing="15.0">
+            <VBox alignment="CENTER" prefHeight="347.0" prefWidth="994.0" spacing="15.0">
                <children>
                         <TextField fx:id="IDAthlete" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="250.0" promptText="ID Athlète" style="-fx-background-radius: 5; -fx-padding: 10;">
                      <cursor>
@@ -75,6 +77,30 @@
                         <Cursor fx:constant="TEXT" />
                      </cursor>
                   </TextField>
+                  <VBox alignment="CENTER" prefHeight="0.0" prefWidth="583.0">
+                     <children>
+                        <ToggleButtonGroup prefHeight="18.0" prefWidth="787.0" selectionType="SINGLE">
+                           <toggles>
+                              <RadioButton mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Femme" textFill="WHITE">
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="Homme" textFill="WHITE">
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </RadioButton>
+                           </toggles>
+                           <padding>
+                              <Insets left="400.0" />
+                           </padding>
+                        </ToggleButtonGroup>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="CROSSHAIR" />
+                     </cursor>
+                  </VBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                      <children>
                         <Label style="-fx-text-fill: white;" text="Choix du pays : ">

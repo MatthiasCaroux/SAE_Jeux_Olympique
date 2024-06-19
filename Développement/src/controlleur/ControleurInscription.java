@@ -58,7 +58,7 @@ public class ControleurInscription implements EventHandler<ActionEvent>{
                             alert.setTitle("Inscription réussie");
                             alert.setHeaderText("Votre inscription a bien été prise en compte");
                             alert.showAndWait();
-                            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneFenetreAccueil(), "Fenetre d'inscription", "boutonRetour");// On revient à la fenêtre d'accueil
+                            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneFenetreAccueil(), "Fenetre d'inscription");// On revient à la fenêtre d'accueil
                         } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Il y a eu un problème lors de l'inscription");
@@ -66,7 +66,7 @@ public class ControleurInscription implements EventHandler<ActionEvent>{
                             alert.showAndWait();
                         }
                     }
-                    this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneFenetreAccueil(), "Fenetre d'inscription", "boutonRetour");// On revient à la fenêtre d'accueil
+                    this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneFenetreAccueil(), "Fenetre d'inscription");// On revient à la fenêtre d'accueil
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Il y a eu un problème lors de l'inscription");
