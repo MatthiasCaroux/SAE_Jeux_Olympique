@@ -2,12 +2,7 @@ package src.basededonnee;
 
 import org.junit.Test;
 
-import src.modele.jeuxOlympique.Athlete;
-import src.modele.jeuxOlympique.Epreuve;
-import src.modele.jeuxOlympique.EpreuveCollective;
-import src.modele.jeuxOlympique.EpreuveIndividuelle;
-import src.modele.jeuxOlympique.Equipe;
-import src.modele.jeuxOlympique.Pays;
+import src.modele.jeuxOlympique.*;
 
 public class testBD {
 
@@ -87,7 +82,29 @@ public class testBD {
         // }
         try {
             Requete requete = new Requete();
+            JeuxOlympique jeux = new JeuxOlympique(2036, "Paris", "France");
+            Epreuve epreuve = new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.M);
+            requete.ajouteEpreuve(epreuve, jeux);
+            // requete.ajouterJO(jeux);
+            Pays France = new Pays("CANADA");
+            // try {
+            //     // requete.ajouterPays("CANADA");
+            //     requete.ajouterAthlete(new Athlete("TOM", "POL", Epreuve.Sexe.M, France, 0, 0, 0));
+            //     System.out.println("Athlète ajouté");
+            // } catch (Exception e) {
+            //     System.out.println(e.getMessage());
+            //     // Pass, l'athlète existe déjà
+            // }
+            System.out.println("9874563210000.0");
+            Equipe equipe1 = new Equipe("Equipe 1", France, Epreuve.Sexe.M);
+            equipe1.ajouterMembre(new Athlete("Hanks", "Tom", Epreuve.Sexe.M, France, 90, 70, 80));
+            equipe1.ajouterMembre(new Athlete("Doe", "Jane", Epreuve.Sexe.M, France, 60, 95, 90));
+            equipe1.ajouterMembre(new Athlete("Doe", "John", Epreuve.Sexe.M, France, 80, 80, 80));
+            // requete.ajouterEquipe(equipe1);
             // requete.ajouterPays("France");
+            System.out.println(requete.getAthletes());
+            requete.supprimerUtilisateur("user");
+            requete.changerRoleUtilisateur("niksan", 'A');
             requete.ajouterPays("Allemagne");
             requete.ajouterPays("Italie");
             requete.ajouterAthlete("test", "prenomTest", 84, 69, 91, 'M', requete.getIdPays("France"));
