@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import src.basededonnee.exception.*;
@@ -189,35 +190,27 @@ public class Requete {
         }
     }
 
-    public void ajouterAthlete(Athlete athlete) throws BaseDeDonneeInaccessibleException {
+    public void ajouterAthlete(Athlete athlete) throws AthleteDejaExistantException {
         try {
-            System.out.println("1");
             if (! this.dansPays(athlete.getPays().getNomPays())) {
                 this.ajouterPays(athlete.getPays().getNomPays());
             }
             if (this.dansAthlete(athlete.getNom(), athlete.getPrenom(), this.getIdPays(athlete.getPays().getNomPays()))) {
-                System.out.println("2");
                 throw new AthleteDejaExistantException(athlete.getNom(), athlete.getPrenom());
             } else {
-                System.out.println("3");
                 if (! this.dansPays(athlete.getPays().getNomPays())) {
                     this.ajouterPays(athlete.getPays().getNomPays());
                 }
-                System.out.println(athlete.getNom() + " " + athlete.getPrenom() + " " + athlete.getSexe() + " " + athlete.getForce() + " " + athlete.getEndurance() + " " + athlete.getAgilité() + " " + this.getIdPays(athlete.getPays().getNomPays()));
-                System.out.println("je suis là");
+                // System.out.println(athlete.getNom() + " " + athlete.getPrenom() + " " + athlete.getSexe() + " " + athlete.getForce() + " " + athlete.getEndurance() + " " + athlete.getAgilité() + " " + this.getIdPays(athlete.getPays().getNomPays()));
                 int idPays = this.getIdPays(athlete.getPays().getNomPays());
-                System.out.println("HLELEOEOK");
                 if (this.dansAthlete(athlete.getNom(), athlete.getPrenom(), getIdPays(athlete.getPays().getNomPays()))) {
-                    System.out.println("je pass par là");
                     throw new AthleteDejaExistantException(athlete.getNom(), athlete.getPrenom());
                 }
-                System.out.println("AU REVOIZSPEIUG PSIDUG");
                 PreparedStatement requete = this.connexionBD.prepareStatement("Insert into ATHLETE values (?, ?, ?, ?, ?, ?, ?, ?)");
                 requete.setInt(1, this.idMaxTable("ATHLETE") + 1);
                 requete.setString(2, athlete.getNom());
                 requete.setString(3, athlete.getPrenom());
                 requete.setString(4, (athlete.getSexe() + "").charAt(0) + "");
-                System.out.println(athlete.getSexe());
                 requete.setInt(5, athlete.getForce());
                 requete.setInt(6, athlete.getEndurance());
                 requete.setInt(7, athlete.getAgilité()); 
@@ -225,15 +218,13 @@ public class Requete {
                 requete.executeUpdate();
             }         
         } catch (Exception e) {
-            System.out.println("5641320.132564564");
-            throw new BaseDeDonneeInaccessibleException();
+            throw new AthleteDejaExistantException(athlete.getNom(), athlete.getPrenom());
         }
     }
 
     public boolean dansAthlete(String nom, String prenom, int idPays) throws BaseDeDonneeInaccessibleException {
         try {
-            System.out.println(idPays);
-            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE where nom = ? and prenom = ? and id_Pays = ?");
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE where nom_A = ? and prenom_A = ? and id_Pays = ?");
             requete.setString(1, nom);
             requete.setString(2, prenom);
             requete.setInt(3, idPays);
@@ -252,11 +243,12 @@ public class Requete {
         }
     }
 
-    public int getIdAthlete(String nom, String prenom) throws AthleteInexistantException {//throws AthleteInexistantException {
+    public int getIdAthlete(String nom, String prenom, char sexe) throws AthleteInexistantException {//throws AthleteInexistantException {
         try {
-            PreparedStatement requete = this.connexionBD.prepareStatement("Select id_Athlete from ATHLETE where nom = ? and prenom = ?");
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select id_Athlete from ATHLETE where nom_A = ? and prenom_A = ? and sexe_A = ?");
             requete.setString(1, nom);
             requete.setString(2, prenom);
+            requete.setString(3, sexe+"");
             ResultSet resultat = requete.executeQuery();
             resultat.next();
             return resultat.getInt("id_Athlete");
@@ -273,14 +265,16 @@ public class Requete {
             ResultSet resultat = requete.executeQuery();
             List<Athlete> athletes = new ArrayList<>();
             while (resultat.next()) {
-                System.out.println(resultat.getString("sexe"));
-                char sexeChar = resultat.getString("sexe").charAt(0);
-                System.out.println(sexeChar);
-                if (sexeChar == 'M') {
-                    athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), Epreuve.Sexe.M, new Pays(resultat.getString("nom_P")), resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
-                } else {
-                    athletes.add(new Athlete(resultat.getString("nom"), resultat.getString("prenom"), Epreuve.Sexe.F, new Pays(resultat.getString("nom_P")), resultat.getInt("force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
-                }
+                char sexeChar = resultat.getString("sexe_A").charAt(0);
+                System.out.println(Epreuve.Sexe.valueOf(sexeChar + ""));
+                athletes.add(new Athlete(resultat.getString("nom_A"), resultat.getString("prenom_A"), Epreuve.Sexe.valueOf(sexeChar + ""), new Pays(resultat.getString("nom_P")), resultat.getInt("la_force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
+                // if (sexeChar == 'M') {
+                //     athletes.add(new Athlete(resultat.getString("nom_A"), resultat.getString("prenom_A"), Epreuve.Sexe.valueOf(sexeChar + ""), new Pays(resultat.getString("nom_P")), resultat.getInt("la_force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
+                //     System.out.println("Je suis là");
+                // } else {
+                //     athletes.add(new Athlete(resultat.getString("nom_A"), resultat.getString("prenom_A"), Epreuve.Sexe.valueOf(sexeChar + ""), new Pays(resultat.getString("nom_P")), resultat.getInt("la_force"), resultat.getInt("endurance"), resultat.getInt("agilite")));
+                //     System.out.println("Je suis là");
+                // }
             }
             return athletes;
         } catch (Exception e) {
@@ -367,15 +361,11 @@ public class Requete {
             }
             int idEquipe = this.getIdEquipe(equipe);
             for (Athlete athlete : equipe.getLesAthlètes()) {
-                System.out.println(athlete.getNom() + " " + athlete.getPrenom() + " " + athlete.getSexe());
+                // System.out.println(athlete.getNom() + " " + athlete.getPrenom() + " " + athlete.getSexe());
                 try {
-                    System.out.println("BONJOUR");
                     this.ajouterAthlete(athlete);
-                    System.out.println("1");
-                    this.getIdAthlete(athlete.getNom(), athlete.getPrenom());
-                    System.out.println("2");
-                    this.ajouterAthleteDansEquipe(this.getIdAthlete(athlete.getNom(), athlete.getPrenom()), idEquipe, athlete.getSexe().toString().charAt(0));
-                    System.out.println("3");
+                    this.getIdAthlete(athlete.getNom(), athlete.getPrenom(), athlete.getSexe().toString().charAt(0));
+                    this.ajouterAthleteDansEquipe(this.getIdAthlete(athlete.getNom(), athlete.getPrenom(), athlete.getSexe().toString().charAt(0)), idEquipe, athlete.getSexe().toString().charAt(0));
                 } catch (Exception e) {
                     // TODO: handle exception
                     // Pass, l'athlète est déjà dans la base de donnée
@@ -395,15 +385,18 @@ public class Requete {
         // }
     }
 
-    public void ajouterAthleteDansEquipe(int idAthlete, int idEquipe, char sexe) {
+    public void ajouterAthleteDansEquipe(int idAthlete, int idEquipe, char sexe) throws BaseDeDonneeInaccessibleException {
         try {
+            System.out.println(idAthlete + " " + idEquipe + " " + sexe);
             PreparedStatement requete = this.connexionBD.prepareStatement("Insert into FAIT_PARTIE values (?, ?, ?)");
-            requete.setInt(1, idAthlete);
-            requete.setInt(2, idEquipe);
+            requete.setInt(1, idEquipe);
+            requete.setInt(2, idAthlete);
             requete.setString(3, sexe+""); // Attention
             requete.executeUpdate();
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             System.out.println("Erreur de connexion à la base de donnée");
+            throw new BaseDeDonneeInaccessibleException();
         }
     }
 
@@ -460,7 +453,6 @@ public class Requete {
                 requete.setString(1, nomPays);
                 ResultSet resultat = requete.executeQuery();
                 resultat.next();
-                System.out.println(resultat.getInt("id_Pays"));
                 return resultat.getInt("id_Pays");
             } else {
                 throw new PaysInexistantException(nomPays);
@@ -487,7 +479,6 @@ public class Requete {
 
     public void ajouterJO(JeuxOlympique jeuxOlympique) throws BaseDeDonneeInaccessibleException {
         try {
-            System.out.println("1");
             if (this.dansJO(jeuxOlympique)) {
                 throw new JeuxOlympiqueDejaExistantException(jeuxOlympique.getAnnee());
             }
@@ -513,27 +504,163 @@ public class Requete {
         }
     }
 
-    public void ajouteEpreuve(Epreuve epreuve, JeuxOlympique jeuxOlympique) {
+    public boolean dansEpreuve(Epreuve epreuve) {
         try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from EPREUVE where type_Epreuve = ? and sexe_Epreuve = ?");
+            requete.setString(1, epreuve.getSport().toString());
+            requete.setString(2, epreuve.getSexe().toString().charAt(0) + "");
+            ResultSet resultat = requete.executeQuery();
+            if (resultat.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public int getIdEpreuve(Epreuve epreuve) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select id_Epreuve from EPREUVE where type_Epreuve = ? and sexe_Epreuve = ?");
+            requete.setString(1, epreuve.getSport().toString());
+            requete.setString(2, epreuve.getSexe().toString().charAt(0) + "");
+            ResultSet resultat = requete.executeQuery();
+            resultat.next();
+            return resultat.getInt("id_Epreuve");
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public void ajouterAthleteDansEpreuveIndiv(EpreuveIndividuelle epreuve, JeuxOlympique jeuxOlympique) throws BaseDeDonneeInaccessibleException {
+        try {
+            if (!this.dansEpreuve(epreuve)) {
+                this.ajouteEpreuve(epreuve, jeuxOlympique);
+            } 
+
+            int idEpreuve = this.getIdEpreuve(epreuve);
+            for (Participant participant : epreuve.getParticipants()) {
+                Athlete athlete = (Athlete) participant;
+                try {
+                    this.ajouterAthlete(athlete);
+                } catch (Exception e) {
+                    // Pass, l'athlète est déjà dans la base de donnée
+                }
+                
+                try {
+                    PreparedStatement requete = this.connexionBD.prepareStatement("Insert into PARTICIPE_INDIV (id_Athlete, id_Epreuve, type_Epreuve) values (?, ?, ?)");
+                    requete.setInt(1, this.getIdAthlete(athlete.getNom(), athlete.getPrenom(), athlete.getSexe().toString().charAt(0)));
+                    requete.setInt(2, idEpreuve);
+                    requete.setString(3, epreuve.getSport().toString());
+                    requete.executeUpdate();
+                } catch (Exception e) {
+                    // Pass, l'athlète participe déjà à l'épreuve
+                }
+            }
+        } catch (Exception e) {
+            throw new BaseDeDonneeInaccessibleException();
+        }
+    }
+
+    public void ajouterEquipeDansEpreuveEquipe (EpreuveCollective epreuve, JeuxOlympique jeuxOlympique) throws BaseDeDonneeInaccessibleException {
+        try {
+            if (!this.dansEpreuve(epreuve)) {
+                this.ajouteEpreuve(epreuve, jeuxOlympique);
+            }
+            int idEpreuve = this.getIdEpreuve(epreuve);
+            for (Participant participant : epreuve.getParticipants()) {
+                Equipe equipe = (Equipe) participant;
+                try {
+                    this.ajouterEquipe(equipe);
+                } catch (Exception e) {
+                    // Pass, l'équipe est déjà dans la base de donnée
+                }
+                try {
+                    PreparedStatement requete = this.connexionBD.prepareStatement("Insert into PARTICIPE_COLLEC (id_Equipe, id_Epreuve, type_Epreuve) values (?, ?, ?)");
+                    requete.setInt(1, this.getIdEquipe(equipe));
+                    requete.setInt(2, idEpreuve);
+                    requete.setString(3, epreuve.getSport().toString());
+                    requete.executeUpdate();
+                } catch (Exception e) {
+                    // Pass, l'équipe participe déjà à l'épreuve
+                }
+            }
+        } catch (Exception e) {
+            throw new BaseDeDonneeInaccessibleException();
+        }
+    }
+    
+
+    public void ajouteEpreuve(Epreuve epreuve, JeuxOlympique jeuxOlympique) throws EpreuveDejaExistantException {
+        try {
+            System.out.println("Je suis là");
             if (! this.dansJO(jeuxOlympique)) {
                 this.ajouterJO(jeuxOlympique);
             }
-            PreparedStatement requete = this.connexionBD.prepareStatement("Insert into EPREUVE values (?, ?, ?, ?)");
-            requete.setInt(1, this.idMaxTable("EPREUVE") + 1);
-            requete.setString(2, epreuve.getSport().toString());
-            requete.setInt(3, epreuve.getSexe().toString().charAt(0));
-            requete.setInt(4, this.getIdJO(jeuxOlympique));
-            // requete.setInt(3, epreuve.getNbAthletes());
-            // requete.setInt(4, epreuve.getNbEquipes());
-            // requete.setInt(5, epreuve.getNbAthletesParEquipe());
-            System.out.println(this.idMaxTable("EPREUVE") + 1);
-            System.out.println(epreuve.getSport().toString());
-            System.out.println(epreuve.getSexe().toString().charAt(0));
-            System.out.println(this.getIdJO(jeuxOlympique));
-            System.out.println("7410");
-            requete.executeUpdate();
+            System.out.println("Je sors !");
+            // if (this.dansEpreuve(epreuve)) {
+            //     throw new EpreuveDejaExistantException(epreuve.getSport().toString(), epreuve.getSexe().toString().charAt(0));
+            // }
+            System.out.println("Je suis là");
+            System.out.println(epreuve.getParticipants().size());
+            if (! this.dansEpreuve(epreuve)) {// && epreuve.getParticipants().size() > 0) {
+                PreparedStatement requete = this.connexionBD.prepareStatement("insert into EPREUVE (id_Epreuve, type_Epreuve, sexe_Epreuve, id_JO) values (?, ?, ?, ?)");
+                requete.setInt(1, this.idMaxTable("EPREUVE") + 1);
+                requete.setString(2, epreuve.getSport().toString());
+                requete.setString(3, epreuve.getSexe().toString().charAt(0) + "");
+                requete.setInt(4, this.getIdJO(jeuxOlympique));
+                // requete.setInt(3, epreuve.getNbAthletes());
+                // requete.setInt(4, epreuve.getNbEquipes());
+                // requete.setInt(5, epreuve.getNbAthletesParEquipe());
+                requete.executeUpdate();
+            }
+            if (epreuve instanceof EpreuveIndividuelle) {
+                this.ajouterAthleteDansEpreuveIndiv((EpreuveIndividuelle) epreuve, jeuxOlympique);
+            } else {
+                this.ajouterEquipeDansEpreuveEquipe((EpreuveCollective) epreuve, jeuxOlympique);
+                // if (epreuve.getParticipants().size() > 0) {
+                //     this.ajouterEquipeDansEpreuveEquipe((EpreuveCollective) epreuve, jeuxOlympique);
+                // }
+            }
         } catch (Exception e) {
-            System.out.println("Erreur de connexion à la base de donnée");
+            throw new EpreuveDejaExistantException(epreuve.getSport().toString(), epreuve.getSexe().toString().charAt(0));
         } 
     }
+
+    public List<Epreuve> getEpreuves(JeuxOlympique jeuxOlympique) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from EPREUVE where id_JO = ?");
+            requete.setInt(1, this.getIdJO(jeuxOlympique));
+            ResultSet resultat = requete.executeQuery();
+            List<Epreuve> epreuves = new ArrayList<>();
+            while (resultat.next()) {
+                List<String> epreuveCollectives = Arrays.asList("NatationRelais", "Handball", "Volley", "AthlétismeRelais");
+                if (epreuveCollectives.contains(resultat.getString("type_Epreuve"))) {
+                    epreuves.add(new EpreuveCollective(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve"))));
+                } else {
+                    epreuves.add(new EpreuveIndividuelle(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve"))));
+                }
+                // Epreuve epreuve = new Epreuve(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve")));
+                // if (resultat.getString("type_Epreuve").equals("EscrimeÉpée")) {
+                //     if (resultat.getString("sexe_Epreuve").charAt(0) == 'M') {
+                //         epreuves.add(new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.M));
+                //     } else {
+                //         epreuves.add(new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.F));
+                //     }
+                // } else {
+                //     if (resultat.getString("sexe_Epreuve").charAt(0) == 'M') {
+                //         epreuves.add(new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.M));
+                //     } else {
+                //         epreuves.add(new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.F));
+                //     }
+                // }
+            }
+            return epreuves;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    // public List<Epreuve>
 }

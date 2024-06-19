@@ -61,6 +61,7 @@ CREATE TABLE EPREUVE (
   sexe_Epreuve CHAR(1),
   CHECK (sexe_Epreuve IN ('M', 'F')),
   id_JO INT NOT NULL,
+  a_ete_joue BOOLEAN DEFAULT FALSE,
   FOREIGN KEY (id_JO) REFERENCES JEUXOLYMPIQUE (id_JO) ON DELETE CASCADE
 );
 
@@ -90,13 +91,13 @@ CREATE TABLE PARTICIPE_JO (
   FOREIGN KEY (id_Pays) REFERENCES PAYS (id_Pays) ON DELETE CASCADE
 );
 
-CREATE TABLE POSSEDE (
-  id_Epreuve   INT NOT NULL,
-  type_Epreuve VARCHAR(100) NOT NULL,
-  id_JO        INT NOT NULL,
-  PRIMARY KEY (id_Epreuve, type_Epreuve, id_JO),
-  FOREIGN KEY (id_JO) REFERENCES JEUXOLYMPIQUE (id_JO) ON DELETE CASCADE
-);
+-- CREATE TABLE POSSEDE (
+--   id_Epreuve   INT NOT NULL,
+--   type_Epreuve VARCHAR(100) NOT NULL,
+--   id_JO        INT NOT NULL,
+--   PRIMARY KEY (id_Epreuve, type_Epreuve, id_JO),
+--   FOREIGN KEY (id_JO) REFERENCES JEUXOLYMPIQUE (id_JO) ON DELETE CASCADE
+-- );
 
 CREATE TABLE UTILISATEUR (
   identifiant    VARCHAR(42) NOT NULL,
@@ -148,13 +149,13 @@ INSERT INTO JEUXOLYMPIQUE (id_JO, annee, lieu) VALUES
 (3, 2032, 'Brisbane');
 
 -- Insertion des épreuves
-INSERT INTO EPREUVE (id_Epreuve, type_Epreuve, id_JO) VALUES 
-(101, 'Football', 1), 
-(102, 'Basketball', 2), 
-(103, 'Volleyball', 3), 
-(201, '100m', 1), 
-(202, '200m', 2), 
-(203, '400m', 3);
+INSERT INTO EPREUVE (id_Epreuve, type_Epreuve, sexe_Epreuve, id_JO) VALUES 
+(101, 'Football', 'M', 1), 
+(102, 'Basketball', 'M', 2), 
+(103, 'Volleyball', 'M', 3), 
+(201, '100m', 'M', 1), 
+(202, '200m', 'M', 2), 
+(203, '400m', 'M', 3);
 
 -- Insertion des participations aux épreuves collectives
 INSERT INTO PARTICIPE_COLLEC (id_Equipe, id_Epreuve, type_Epreuve) VALUES 
@@ -174,14 +175,14 @@ INSERT INTO PARTICIPE_JO (id_Pays, id_JO) VALUES
 (2, 2), 
 (3, 3);
 
--- Insertion des épreuves dans les JO
-INSERT INTO POSSEDE (id_Epreuve, type_Epreuve, id_JO) VALUES 
-(101, 'Football', 1), 
-(102, 'Basketball', 2), 
-(103, 'Volleyball', 3), 
-(201, '100m', 1), 
-(202, '200m', 2), 
-(203, '400m', 3);
+-- -- Insertion des épreuves dans les JO
+-- INSERT INTO POSSEDE (id_Epreuve, type_Epreuve, id_JO) VALUES 
+-- (101, 'Football', 1), 
+-- (102, 'Basketball', 2), 
+-- (103, 'Volleyball', 3), 
+-- (201, '100m', 1), 
+-- (202, '200m', 2), 
+-- (203, '400m', 3);
 
 -- requetes
 SELECT * FROM UTILISATEUR WHERE identifiant = 'admin' AND mdp = 'admin';

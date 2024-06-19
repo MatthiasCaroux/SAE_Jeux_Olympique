@@ -40,7 +40,12 @@ public class ApplicationJeuxOlympique extends Application {
     @Override
     public void init() throws ClassNotFoundException, SQLException, IOException {
         this.modele = new JeuxOlympique(2024, "Paris", "Jeux Olympique de Paris 2024");
-        this.requete = new Requete();
+        try {
+            this.requete = new Requete();
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.err.println(e.getMessage());
+        }
 
         System.out.println("Initialisation de l'application");
 
