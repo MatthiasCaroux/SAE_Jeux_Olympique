@@ -3,6 +3,7 @@ import src.vues.*;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.TextField;
 
 public class ControleurFenetre implements EventHandler<ActionEvent> {
 
@@ -28,6 +29,10 @@ public class ControleurFenetre implements EventHandler<ActionEvent> {
                 switch (this.applicationJeuxOlympique.getRequete().getRoleUtilisateur(identifiant, motDePasse)){
                     case 'A':
                         System.out.println("role est A");
+                        // TextField tfID = (TextField) this.applicationJeuxOlympique.getSceneConnexion().lookup("ID");
+                        // tfID.setText("");
+                        // TextField tfMDP = (TextField) this.applicationJeuxOlympique.getSceneConnexion().lookup("MDP");
+                        // tfMDP.setText("");
                         this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneAccueilAdmin(), titre, "entrer");                        
                         break;
                     case 'C':
