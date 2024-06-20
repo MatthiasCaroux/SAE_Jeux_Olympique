@@ -8,6 +8,7 @@ import org.junit.Test;
 import src.basededonnee.exception.AthleteInexistantException;
 import src.basededonnee.exception.BaseDeDonneeInaccessibleException;
 import src.basededonnee.exception.EpreuveDejaExistantException;
+import src.basededonnee.exception.EpreuveInexistanteException;
 import src.basededonnee.exception.PaysInexistantException;
 import src.modele.exceptions.EpreuveDejaJoueeException;
 import src.modele.exceptions.EpreuveDejaPresenteException;
@@ -156,6 +157,16 @@ public class testBD {
         for (Epreuve epreuve : test.keySet()) {
             requete.ajouteEpreuve(epreuve, jeux);
         }
+        System.out.println(requete.getEpreuves(jeux) + "£££££££££££££££££££££££££££");
+        System.out.println(jeux.getEpreuves() + "ùùùùùùùùùùùùùùùùùùùùùùùùùùùù");
+        EpreuveCollective epreuveCollective = new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.M);
+        try {
+            System.out.println(requete.getEpreuve(epreuveCollective.getSport(), epreuveCollective.getSexe()));
+        } catch (EpreuveInexistanteException e) {
+            // TODO Auto-generated catch block
+            System.out.println("On m'a catch");
+            e.printStackTrace();
+        }
         // System.out.println("11111" + test);
         // System.out.println("11111" + requete.getEpreuves(jeux));
         // System.out.println("11111" + jeux.getEpreuves());
@@ -218,6 +229,8 @@ public class testBD {
             System.out.println(pays.getMedailles());
             System.out.println(pays.getScoreTotal());
         }
+
+        // System.out.println(requete.getEpreuve(null, null));
         // Athlete a = requete.getAthlete(235);
         // a.setNom("test");
         // a.setPrenom("test");

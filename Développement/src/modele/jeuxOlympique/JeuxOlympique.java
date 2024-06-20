@@ -140,6 +140,7 @@ public class JeuxOlympique {
      * @return
      */
     public Map<Epreuve, List<Participant>> getParticipantsParEpreuve(String cheminVersCSV){
+        System.out.println("-------------------");
         Map<Epreuve, List<Participant>> participantsParEpreuve = new HashMap<>();
         for (Epreuve epreuve : this.epreuves) {
             participantsParEpreuve.put(epreuve, epreuve.getParticipants());
