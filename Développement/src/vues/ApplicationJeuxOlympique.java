@@ -41,6 +41,7 @@ public class ApplicationJeuxOlympique extends Application {
     private Scene sceneAjouterUnAthlete;
     private Scene sceneAjouterEquipe;
     private Scene sceneModificationDonnéeAthlete;
+    private Scene sceneGestionEpreuve;
     private FXMLLoader loaderAccueil;
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
@@ -54,6 +55,7 @@ public class ApplicationJeuxOlympique extends Application {
     private FXMLLoader loaderAthletes;
     private FXMLLoader loaderEquipe;
     private FXMLLoader loaderAjouterUnAthlete;
+    private FXMLLoader loaderGererEpreuve;
     // private 
   
     @Override
@@ -130,6 +132,9 @@ public class ApplicationJeuxOlympique extends Application {
         loaderAjouterUnAthlete = new FXMLLoader(this.getClass().getResource("/fxml/ajouterUnAthlete.fxml"));
         this.sceneAjouterUnAthlete = new Scene(loaderAjouterUnAthlete.load());
 
+        loaderGererEpreuve = new FXMLLoader(this.getClass().getResource("/fxml/gererEpreuves.fxml"));
+        this.sceneGestionEpreuve = new Scene(loaderGererEpreuve.load());
+
     }
     
     @Override
@@ -205,6 +210,7 @@ public class ApplicationJeuxOlympique extends Application {
         configureButton(sceneEquipe, "#Classement", new ControleurClassement(this));
         configureButton(sceneEquipe, "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(sceneModificationDonnée, "#athletes", new ControleurModifierAthlete(this));
+        configureButton(sceneAccueilOrganisateur, "#gererEpreuve", new ControleurGererEpreuve(this));
     }
 
     private void configureButton(Scene scene, String buttonId, EventHandler<ActionEvent> handler) {
@@ -591,6 +597,11 @@ public class ApplicationJeuxOlympique extends Application {
 
     public Scene getSceneAccueilJournaliste(){
         return sceneJournalisteAccueil;
+    }
+
+    public Scene getSceneGestionEpreuve(){
+        System.out.println("3");
+        return sceneGestionEpreuve;
     }
 
     public Scene getSceneGestionUtilisateur() {
