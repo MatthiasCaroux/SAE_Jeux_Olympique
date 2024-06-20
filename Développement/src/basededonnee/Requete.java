@@ -414,7 +414,21 @@ public class Requete {
             throw new BaseDeDonneeInaccessibleException();
             // throw new BaseDeDonneeInaccessibleException();
         }
-    }   
+    }
+
+    public List<Pays> getPays() throws BaseDeDonneeInaccessibleException {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from PAYS");
+            ResultSet resultat = requete.executeQuery();
+            List<Pays> pays = new ArrayList<>();
+            while (resultat.next()) {
+                pays.add(new Pays(resultat.getString("nom_P")));
+            }
+            return pays;
+        } catch (Exception e) {
+            throw new BaseDeDonneeInaccessibleException();
+        }
+    }
 
     public boolean dansPays(String nomPays) throws PaysInexistantException {
         try {
