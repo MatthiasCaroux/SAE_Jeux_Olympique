@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import javafx.event.EventHandler;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -14,7 +16,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -61,7 +62,14 @@ public class ApplicationJeuxOlympique extends Application {
     @Override
     public void init() throws ClassNotFoundException, SQLException, IOException {
         this.modele = new JeuxOlympique(2024, "Paris", "Jeux Olympique de Paris 2024");
-        // this.modele.getParticipantsParEpreuve();
+
+        
+        // for (Epreuve epreuve : map.keySet()) {
+        //     for (Participant participant : map.get(epreuve)) {
+        //         epreuve.ajouterParticipant(participant);
+        //     }
+        // }
+
 
         this.constructionRequete();
         this.loadScenes();
@@ -71,7 +79,14 @@ public class ApplicationJeuxOlympique extends Application {
 
     private void constructionRequete(){
         try {
+            Map<Epreuve, List<Participant>> map = this.modele.getParticipantsParEpreuve("/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/donnees.csv");
             this.requete = new Requete();
+            for (Epreuve epreuve : map.keySet()) {
+                this.requete.ajouteEpreuve(epreuve, modele);
+            }
+            this.requete.getEpreuves(this.modele);
+            System.out.println(this.requete.getEpreuves(this.modele) + "***********");
+            
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -143,10 +158,7 @@ public class ApplicationJeuxOlympique extends Application {
         this.primaryStage = primaryStage;  // Initialiser l'attribut stage
         try {
             System.out.println("Lancement de l'application");
-
-            // Configuration des boutons et de leurs actions
             configureButtonActions();
-
             primaryStage.setScene(sceneFenetreAccueil);
             primaryStage.setTitle("Fenetre d'accueil");
             primaryStage.show();
@@ -211,6 +223,12 @@ public class ApplicationJeuxOlympique extends Application {
         configureButton(sceneEquipe, "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(sceneModificationDonnée, "#athletes", new ControleurModifierAthlete(this));
         configureButton(sceneAccueilOrganisateur, "#gererEpreuve", new ControleurGererEpreuve(this));
+        configureButton(this.getSceneGestionEpreuve(), "#lancerUneEpreuve", new ControleurLancerEpreuve(this));
+        configureButton(this.getSceneGestionEpreuve(), "#lancerToutesLesEpreuves", new ControleurLancerToutesLesEpreuves(this));
+    }
+
+    public JeuxOlympique getModele() {
+        return modele;
     }
 
     private void configureButton(Scene scene, String buttonId, EventHandler<ActionEvent> handler) {
@@ -243,145 +261,161 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneInscription;
     }
 
-        public Scene getSceneClassement() {
-            System.out.println("getSceneClassement");
-            VBox vBoxPricpale = (VBox) sceneClassement.lookup("#vboxPrincipal");
-            VBox vBox = new VBox();
-            ScrollPane scrollPane = new ScrollPane();
-            scrollPane.setContent(vBox);
-            vBox.getChildren().clear();
-            int i = 1;
-            try{
-                System.out.println(this.requete.getPays());
-                for (Pays pays : this.requete.getPays()) {
-                    System.out.println("coucou");
-                    BorderPane borderPane = new BorderPane();
-                    borderPane.setPadding(new Insets(10, 50, 10, 50));
-                    borderPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-color: #0085C7;");
+    public Scene getSceneClassement() {
+        System.out.println("getSceneClassement");
+        VBox vBoxPricpale = (VBox) sceneClassement.lookup("#vboxPrincipal");
+        VBox vBox = new VBox();
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(vBox);
+        vBox.getChildren().clear();
+        int i = 1;
+        try {
+            System.out.println(this.requete.getPays());
+            for (Pays pays : this.requete.getPays()) {
+                System.out.println("coucou");
+                BorderPane borderPane = new BorderPane();
+                borderPane.setPadding(new Insets(10, 50, 10, 50));
+                if (i%2 == 1){
+                    borderPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-color: white;");
 
-                    
-
-                    HBox hb1 = new HBox();
-                    hb1.setAlignment(Pos.CENTER);
-        
-                    Label indice = new Label("" + i);
-                    indice.setMaxWidth(Double.MAX_VALUE);
-                    HBox.setHgrow(indice, Priority.ALWAYS); // Ajuster la taille de l'élément
-        
-                    i++;
-                    ImageView imageview = null;
-                    
-                    switch (pays.getNomPays()) {
-                        case "France":
-                            imageview = new ImageView(new Image("images/drapeaux/fr.png"));
-                            break;
-                        case "Allemagne":
-                            imageview = new ImageView(new Image("images/drapeaux/de.png"));
-                            break;
-                        case "Italie":
-                            imageview = new ImageView(new Image("images/drapeaux/it.png"));
-                            break;
-                        case "Espagne":
-                            imageview = new ImageView(new Image("images/drapeaux/es.png"));
-                            break;
-                        case "Royaume-Uni": 
-                            imageview = new ImageView(new Image("images/drapeaux/uk.png"));
-                            break;
-                        case "USA":
-                            imageview = new ImageView(new Image("images/drapeaux/us.png"));
-                            break;
-                        case "China":
-                            imageview = new ImageView(new Image("images/drapeaux/cn.png"));
-                            break;
-                        case "CANADA":
-                            imageview = new ImageView(new Image("images/drapeaux/ca.png"));
-                            break;
-                        case "Japon":
-                            imageview = new ImageView(new Image("images/drapeaux/jp.png"));
-                            break;
-                        case "Kenya":
-                            imageview = new ImageView(new Image("images/drapeaux/ke.png"));
-                            break;
-                        case "Turquie":
-                            imageview = new ImageView(new Image("images/drapeaux/tr.png"));
-                            break;
-                        case "Congo":
-                            imageview = new ImageView(new Image("images/drapeaux/cd.png"));
-                            break;
-                        case "Brésil":
-                            imageview = new ImageView(new Image("images/drapeaux/br.png"));
-                            break;
-                        case "Maroc":
-                            imageview = new ImageView(new Image("images/drapeaux/ma.png"));
-                            break;
-                        case "Australie":
-                            imageview = new ImageView(new Image("images/drapeaux/au.png"));
-                            break;
-                        default:
-                            break;
-                    }
-
-
+                } else{
+                    borderPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-color: grey;");
+                }
+                borderPane.setMargin(scrollPane, new Insets(0,0,0,20));
+                HBox hb1 = new HBox(10);
+                hb1.setAlignment(Pos.CENTER_LEFT);
+                Label indice = new Label("" + i);
+                i++;
+                ImageView imageview = null;
+                switch (pays.getNomPays()) {
+                    case "France":
+                        imageview = new ImageView(new Image("images/drapeaux/fr.png"));
+                        break;
+                    case "Allemagne":
+                        imageview = new ImageView(new Image("images/drapeaux/de.png"));
+                        break;
+                    case "Italie":
+                        imageview = new ImageView(new Image("images/drapeaux/it.png"));
+                        break;
+                    case "Espagne":
+                        imageview = new ImageView(new Image("images/drapeaux/es.png"));
+                        break;
+                    case "Royaume-Uni":
+                        imageview = new ImageView(new Image("images/drapeaux/uk.png"));
+                        break;
+                    case "USA":
+                        imageview = new ImageView(new Image("images/drapeaux/us.png"));
+                        break;
+                    case "China":
+                        imageview = new ImageView(new Image("images/drapeaux/cn.png"));
+                        break;
+                    case "CANADA":
+                        imageview = new ImageView(new Image("images/drapeaux/ca.png"));
+                        break;
+                    case "Japon":
+                        imageview = new ImageView(new Image("images/drapeaux/jp.png"));
+                        break;
+                    case "Kenya":
+                        imageview = new ImageView(new Image("images/drapeaux/ke.png"));
+                        break;
+                    case "Turquie":
+                        imageview = new ImageView(new Image("images/drapeaux/tr.png"));
+                        break;
+                    case "Congo":
+                        imageview = new ImageView(new Image("images/drapeaux/cd.png"));
+                        break;
+                    case "Brésil":
+                        imageview = new ImageView(new Image("images/drapeaux/br.png"));
+                        break;
+                    case "Maroc":
+                        imageview = new ImageView(new Image("images/drapeaux/ma.png"));
+                        break;
+                    case "Australie":
+                        imageview = new ImageView(new Image("images/drapeaux/au.png"));
+                        break;
+                    default:
+                        break;
+                }
+    
+                if (imageview != null) {
                     imageview.setFitHeight(50);
                     imageview.setFitWidth(50);
                     imageview.setPreserveRatio(true);
-
-
-                    System.out.println("salut");
-                    System.out.println("salutsalut");
-
-
-                    Label label = new Label(pays.getNomPays());
-                    hb1.getChildren().addAll(indice, imageview, label);
-                    VBox vb2 = new VBox();
-                    vb2.setAlignment(Pos.CENTER);
-                    HBox hb2 = new HBox();
-                    System.out.println("jesuisla");
-                    ImageView medailleOr = new ImageView(new Image("images/médailles/medaille_or.png"));
-                    medailleOr.setFitHeight(50);
-                    medailleOr.setFitWidth(50);
-                    System.out.println("jesuisla2");
-                    Label or = new Label(pays.getMedailles().get("Or").toString());
-                    ImageView medailleArgent = new ImageView(new Image("images/médailles/medaille_argent.png"));
-                    medailleArgent.setFitHeight(50);
-                    medailleArgent.setFitWidth(50);
-                    Label argent = new Label(pays.getMedailles().get("Argent").toString());
-                    ImageView medailleBronze = new ImageView(new Image("images/médailles/medaille_bronze.png"));
-                    medailleBronze.setFitHeight(50);
-                    medailleBronze.setFitWidth(50);
-                    Label bronze = new Label(pays.getMedailles().get("Bronze").toString());
-                    hb2.getChildren().addAll(medailleOr, or, medailleArgent, argent, medailleBronze, bronze);
-                    HBox hb3 = new HBox();
-                    Label total = new Label("Total : " + pays.getScoreTotal());
-                    hb3.getChildren().add(total);
-                    borderPane.setLeft(hb1);
-                    vb2.getChildren().add(hb2);
-                    borderPane.setCenter(vb2);
-                    borderPane.setRight(hb3);
-                    borderPane.setPadding(new Insets(10, 50, 10, 50));
-                    System.out.println("Je suis dans la méthode getSceneClassement, dans le try");
-                    vBox.getChildren().add(borderPane);
-                    vBox.setAlignment(Pos.CENTER);
                 }
+    
+                System.out.println("salut");
+                System.out.println("salutsalut");
+    
+                Label label = new Label(pays.getNomPays());
+                HBox.setHgrow(label, Priority.ALWAYS);
+    
+                hb1.getChildren().addAll(indice, imageview, label);
+                hb1.setPadding(new Insets(0, 64, 0, 64));
+                VBox vb2 = new VBox();
+                vb2.setAlignment(Pos.CENTER);
+                HBox hb2 = new HBox(10);
+                hb2.setAlignment(Pos.CENTER);
+    
+                System.out.println("jesuisla");
+    
+                ImageView medailleOr = new ImageView(new Image("images/médailles/medaille_or.png"));
+                medailleOr.setFitHeight(50);
+                medailleOr.setFitWidth(50);
+    
+                System.out.println("jesuisla2");
+    
+                Label or = new Label(pays.getMedailles().get("Or").toString());
+                HBox.setHgrow(or, Priority.ALWAYS);
+    
+                ImageView medailleArgent = new ImageView(new Image("images/médailles/medaille_argent.png"));
+                medailleArgent.setFitHeight(50);
+                medailleArgent.setFitWidth(50);
+    
+                Label argent = new Label(pays.getMedailles().get("Argent").toString());
+                HBox.setHgrow(argent, Priority.ALWAYS);
+    
+                ImageView medailleBronze = new ImageView(new Image("images/médailles/medaille_bronze.png"));
+                medailleBronze.setFitHeight(50);
+                medailleBronze.setFitWidth(50);
+    
+                Label bronze = new Label(pays.getMedailles().get("Bronze").toString());
+                HBox.setHgrow(bronze, Priority.ALWAYS);
+    
+                hb2.getChildren().addAll(medailleOr, or, medailleArgent, argent, medailleBronze, bronze);
+                hb2.setPadding(new Insets(0, 64, 0, 64));
+
+                HBox hb3 = new HBox();
+                hb3.setAlignment(Pos.CENTER_RIGHT);
+    
+                Label total = new Label("Total : " + pays.getScoreTotal());
+                HBox.setHgrow(total, Priority.ALWAYS);
+    
+                hb3.getChildren().add(total);
+                hb3.setPadding(new Insets(0, 64, 0, 64));
+                borderPane.setLeft(hb1);
+                vb2.getChildren().add(hb2);
+                borderPane.setCenter(vb2);
+                borderPane.setRight(hb3);
+    
+                System.out.println("Je suis dans la méthode getSceneClassement, dans le try");
+    
+                vBox.getChildren().add(borderPane);
+                vBox.setAlignment(Pos.CENTER);
             }
-            catch (Exception e){
-                System.out.println("Erreur lors de la récupération des pays");
-                System.err.println(e.getMessage());
-            }
-            vBoxPricpale.getChildren().add(scrollPane);
-            vBoxPricpale.setAlignment(Pos.CENTER);
-
-            scrollPane.setFitToHeight(true);
-            //centrer les éléments dans le scrollPane
-            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-            scrollPane.setFitToHeight(true);
-            scrollPane.setHmax(3);
-            scrollPane.setHvalue(3);
-
-
-            return sceneClassement;
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la récupération des pays");
+            System.err.println(e.getMessage());
         }
+    
+        vBoxPricpale.getChildren().add(scrollPane);
+        vBoxPricpale.setAlignment(Pos.CENTER);
+    
+        scrollPane.setFitToHeight(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+    
+        return sceneClassement;
+    }
 
     public Scene getSceneAccueilAdmin(){
         return sceneAccueilAdmin;

@@ -86,8 +86,8 @@
     <center>
         <VBox alignment="CENTER" prefHeight="513.0" prefWidth="855.0" spacing="70.0" BorderPane.alignment="CENTER">
          <children>
-                  <Button alignment="CENTER" maxHeight="400.0" minHeight="100.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" style="-fx-background-radius: 30;" text="Lancer une épreuve" />
-                  <Button alignment="CENTER" minHeight="100.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #0085C7; -fx-background-radius: 30;" text="Lancer toutes les épreuves" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="lancerUneEpreuve" alignment="CENTER" maxHeight="400.0" minHeight="100.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" style="-fx-background-radius: 30;" text="Lancer une épreuve" />
+                  <Button fx:id="lancerToutesLesEpreuves"  alignment="CENTER" minHeight="100.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="300.0" style="-fx-background-color: #0085C7; -fx-background-radius: 30;" text="Lancer toutes les épreuves" textAlignment="CENTER" textFill="WHITE">
                       <opaqueInsets>
                           <Insets />
                       </opaqueInsets>

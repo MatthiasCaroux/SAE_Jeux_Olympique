@@ -7,10 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.media.AudioClip;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import javafx.scene.control.ButtonType;;
 
 public class ControleurFenetre implements EventHandler<ActionEvent> {
 
