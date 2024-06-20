@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import src.basededonnee.exception.AthleteInexistantException;
 import src.basededonnee.exception.BaseDeDonneeInaccessibleException;
 import src.basededonnee.exception.EpreuveDejaExistantException;
 import src.modele.exceptions.JeuxPasCommenceException;
@@ -74,7 +75,7 @@ public class testBD {
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, BaseDeDonneeInaccessibleException, EpreuveDejaExistantException, JeuxPasCommenceException {
+    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, BaseDeDonneeInaccessibleException, EpreuveDejaExistantException, JeuxPasCommenceException, AthleteInexistantException {
         // try {
         //     Requete requete = new Requete();
         //     System.out.println(requete.connexion("niksan", "niksan"));
@@ -151,14 +152,14 @@ public class testBD {
         Requete requete = new Requete();
         Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("Développement/donnees.csv");
 
-        List<EpreuveIndividuelle> epreuveIndividuelles = requete.getEpreuvesIndiv(jeux);
-        System.out.println(epreuveIndividuelles);
-        for (EpreuveIndividuelle epreuveIndividuelle : epreuveIndividuelles) {
-            System.out.println(epreuveIndividuelle.getParticipants());
-            for (Participant athlete : epreuveIndividuelle.getParticipants()) {
-                System.out.println(" + " + athlete.getPays());
-            }
-        }
+        // List<EpreuveIndividuelle> epreuveIndividuelles = requete.getEpreuvesIndiv(jeux);
+        // System.out.println(epreuveIndividuelles);
+        // for (EpreuveIndividuelle epreuveIndividuelle : epreuveIndividuelles) {
+        //     System.out.println(epreuveIndividuelle.getParticipants());
+        //     for (Participant athlete : epreuveIndividuelle.getParticipants()) {
+        //         System.out.println(" + " + athlete.getPays());
+        //     }
+        // }
 
         // List<EpreuveCollective> epreuveCollectives = requete.getEpreuveCollec(jeux);
         // System.out.println(epreuveCollectives);
@@ -166,11 +167,17 @@ public class testBD {
         //     System.out.println(epreuve + " " + epreuve.getParticipants());
         // }
 
+
+        for (Epreuve epreuve : test.keySet()) {
+            requete.ajouteEpreuve(epreuve, jeux);
+        }
+
         List<Epreuve> epreuves = requete.getEpreuves(jeux);
         System.out.println(epreuves);
         for (Epreuve epreuve : epreuves) {
-            if (epreuve.getParticipants() instanceof Equipe) {
-                System.out.println(epreuve + " " + epreuve.getParticipants());
+            if (epreuve instanceof EpreuveCollective && epreuve.getParticipants() instanceof Equipe) {
+                System.out.println("je suis une équipe");
+                System.out.println(epreuve + " " + epreuve.getParticipants().get(0));
                 System.out.println("je suis une équipe");
                 for (Athlete athlete : ((Equipe) epreuve.getParticipants()).getLesAthlètes()) {
                     System.out.println(" + " + athlete);
@@ -178,13 +185,16 @@ public class testBD {
             } else {
                 System.out.println(epreuve + " " + epreuve.getParticipants());
             }
-            System.out.println(epreuve + " " + epreuve.getParticipants());
+            // System.out.println(epreuve + " " + epreuve.getParticipants());
         }
 
         Athlete a = requete.getAthlete(235);
         a.setNom("test");
         a.setPrenom("test");
-        requete.modierAthlete(a, 235);
+        requete.modifierAthlete(a, 235);
+
+        System.out.println();
+        System.out.println(requete.getLesEquipes());
 
         // System.out.println("icicicicic" + test.keySet());
         // for (Epreuve epreuve : test.keySet()) {
@@ -233,5 +243,7 @@ public class testBD {
 
         // // A tester 
         // requete.rechercherAthlete("a");
+
+        
     }
 }

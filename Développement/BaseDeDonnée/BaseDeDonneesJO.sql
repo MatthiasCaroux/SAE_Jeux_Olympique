@@ -36,6 +36,8 @@ CREATE TABLE EQUIPE (
   id_Equipe INT PRIMARY KEY,
   nom_E     VARCHAR(100),
   id_Pays   INT NOT NULL,
+  sexe_Equipe CHAR(1),
+  CHECK (sexe_Equipe IN ('M', 'F')),
   FOREIGN KEY (id_Pays) REFERENCES PAYS (id_Pays) ON DELETE CASCADE
 );
 
@@ -132,9 +134,9 @@ INSERT INTO ATHLETE (id_Athlete, nom_A, prenom_A, sexe_A, la_force, endurance, a
 
 -- Insertion des équipes
 INSERT INTO EQUIPE (id_Equipe, nom_E, id_Pays) VALUES 
-(1, 'Equipe France', 1), 
-(2, 'Team USA', 2), 
-(3, 'Team China', 3);
+(1, 'Equipe France', 1, 'M'), 
+(2, 'Team USA', 2, 'M'), 
+(3, 'Team China', 3, 'M');
 
 -- Insertion des relations entre équipes et athlètes
 INSERT INTO FAIT_PARTIE (id_Equipe, id_Athlete, sexe) VALUES 
