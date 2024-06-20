@@ -695,7 +695,6 @@ public class Requete {
             List<EpreuveCollective> epreuves = new ArrayList<>();
             EpreuveCollective epreuve;
             while (resultat.next()) {
-                System.out.println("7878787878" + resultat.getBoolean("a_ete_joue"));
                 epreuve = new EpreuveCollective(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve")));
                 for (Equipe equipe : this.getEquipesDansEpreuves(epreuve, jeuxOlympique)) {
                     try {
@@ -724,6 +723,9 @@ public class Requete {
             requete.setString(2, epreuve.getSport().toString());
             requete.setString(3, epreuve.getSexe().toString().charAt(0) + "");
             requete.executeUpdate();
+            for (Pays pays : jeuxOlympique.getLesPays()) {
+                this.majPays(pays);
+            }
             System.out.println("ééééééééééééééééééééééééééééé");
         } catch (Exception e) {
             // Pass
