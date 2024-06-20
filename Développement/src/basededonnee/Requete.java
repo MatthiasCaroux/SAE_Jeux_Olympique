@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.plaf.BorderUIResource.EmptyBorderUIResource;
+
 import src.basededonnee.exception.*;
 import src.modele.jeuxOlympique.*;
 
@@ -890,6 +892,24 @@ public class Requete {
             requete.executeUpdate();
         } catch (Exception e) {
             throw new PaysInexistantException(pays.getNomPays());
+        }
+    }
+
+    public Epreuve getEpreuve(Epreuve.TypeSport nomSport, Epreuve.Sexe sexe) throws EpreuveInexistanteException {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from EPREUVE where type_Epreuve = ? and sexe_Epreuve = ?");
+            requete.setString(1, nomSport.toString());
+            requete.setString(2, sexe.toString().charAt(0) + "");
+            ResultSet resultat = requete.executeQuery();
+            resultat.next();
+            EpreuveCollective epreuve = new EpreuveCollective(nomSport, sexe);
+            if (nomSport.getNbParticipantNecessaire() > 1) {
+                return epreuve;
+            } else {
+                return new EpreuveIndividuelle(nomSport, sexe);
+            } 
+        } catch (Exception e) {
+            throw new EpreuveInexistanteException(nomSport.toString(), sexe.toString().charAt(0));
         }
     }
 }
