@@ -119,13 +119,16 @@ public class JeuxOlympique {
      * @throws EpreuveDejaPresenteException si l'épreuve est déjà présente
      */
     public void ajouteEpreuve(Epreuve epreuve) throws EpreuveDejaPresenteException {
-        if (this.epreuves.contains(epreuve)) {
-            throw new EpreuveDejaPresenteException(epreuve);
-        }
-        this.epreuves.add(epreuve);
-        for (Participant p : epreuve.getParticipants()) {
-            if (!this.lesPays.contains(p.getPays())) {
-                this.lesPays.add(p.getPays());
+        System.out.println(epreuve);
+        System.out.println(this.epreuves);
+        System.out.println(this.epreuves.contains(epreuve));
+        if (! this.epreuves.contains(epreuve)) {
+            this.epreuves.add(epreuve);
+            System.out.println("Je suis dans ajouteEpreuve");
+            for (Participant p : epreuve.getParticipants()) {
+                if (!this.lesPays.contains(p.getPays())) {
+                    this.lesPays.add(p.getPays());
+                }
             }
         }
     }
@@ -422,6 +425,7 @@ public class JeuxOlympique {
             }
         }
         System.out.println(this.epreuves);
+        this.epreuves.clear();
         return participantsParEpreuve;
     }
 
