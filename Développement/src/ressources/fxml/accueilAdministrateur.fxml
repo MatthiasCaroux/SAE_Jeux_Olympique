@@ -38,7 +38,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Jeux Olympique" underline="true">
+                        <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Actus" underline="true">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>

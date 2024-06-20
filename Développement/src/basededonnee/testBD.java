@@ -1,6 +1,5 @@
 package src.basededonnee;
 
-import java.beans.Expression;
 import java.util.List;
 import java.util.Map;
 
@@ -191,6 +190,26 @@ public class testBD {
         // for (EpreuveCollective epreuve : epreuveCollectives) {
         //     System.out.println(epreuve + " " + epreuve.getParticipants());
         // }
+
+        List<Epreuve> epreuves = requete.getEpreuves(jeux);
+        System.out.println(epreuves);
+        for (Epreuve epreuve : epreuves) {
+            if (epreuve.getParticipants() instanceof Equipe) {
+                System.out.println(epreuve + " " + epreuve.getParticipants());
+                System.out.println("je suis une équipe");
+                for (Athlete athlete : ((Equipe) epreuve.getParticipants()).getLesAthlètes()) {
+                    System.out.println(" + " + athlete);
+                }
+            } else {
+                System.out.println(epreuve + " " + epreuve.getParticipants());
+            }
+            System.out.println(epreuve + " " + epreuve.getParticipants());
+        }
+
+        Athlete a = requete.getAthlete(235);
+        a.setNom("test");
+        a.setPrenom("test");
+        requete.modifierAthlete(a, 235);
 
 
         // for (Epreuve epreuve : test.keySet()) {

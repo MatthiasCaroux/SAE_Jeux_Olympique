@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import javafx.event.EventHandler;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -39,6 +40,7 @@ public class ApplicationJeuxOlympique extends Application {
     private Scene sceneEquipe;
     private Scene sceneAjouterUnAthlete;
     private Scene sceneAjouterEquipe;
+    private Scene sceneModificationDonnéeAthlete;
     private FXMLLoader loaderAccueil;
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
@@ -57,16 +59,33 @@ public class ApplicationJeuxOlympique extends Application {
     @Override
     public void init() throws ClassNotFoundException, SQLException, IOException {
         this.modele = new JeuxOlympique(2024, "Paris", "Jeux Olympique de Paris 2024");
+        // this.modele.getParticipantsParEpreuve();
+
+        this.constructionRequete();
+        this.loadScenes();
+        this.constructionEpreuve();
+    }
+
+
+    private void constructionRequete(){
         try {
             this.requete = new Requete();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+    }
 
-        System.out.println("Initialisation de l'application");
-
-        this.loadScenes();
-        System.out.println("Chargement des scènes terminé");
+    private void constructionEpreuve(){
+        for (Epreuve epreuve : requete.getEpreuves(modele)) {
+            try{
+                this.modele.ajouteEpreuve(epreuve);
+            }
+            catch (Exception e){
+                System.out.println("Erreur lors de l'ajout d'une épreuve");
+                System.err.println(e.getMessage());
+            }
+            
+        }
     }
 
     private void loadScenes() throws IOException {
@@ -89,8 +108,8 @@ public class ApplicationJeuxOlympique extends Application {
         loaderAjoutDonnees = new FXMLLoader(this.getClass().getResource("/fxml/ajoutDesDonnées.fxml"));
         this.sceneAjoutDonnees = new Scene(loaderAjoutDonnees.load());
 
-        // loaderAccueilOrganisateur = new FXMLLoader(this.getClass().getResource("/fxml/accueilOrganisateur.fxml"));
-        // this.sceneAccueilOrganisateur = new Scene(loaderAccueilOrganisateur.load());
+        loaderAccueilOrganisateur = new FXMLLoader(this.getClass().getResource("/fxml/accueilOrganisateur.fxml"));
+        this.sceneAccueilOrganisateur = new Scene(loaderAccueilOrganisateur.load());
         // System.out.println("Chargement des scènes ");
 
         loaderGestionUtilisateur = new FXMLLoader(this.getClass().getResource("/fxml/gestionUtilisateur.fxml"));
@@ -134,321 +153,70 @@ public class ApplicationJeuxOlympique extends Application {
 
     private void configureButtonActions() {
         System.out.println("Configuration des actions des boutons");
-        Button boutonConnexion = (Button) sceneFenetreAccueil.lookup("#seConnecter");
-        if (boutonConnexion != null) {
-            boutonConnexion.setOnAction(new ControleurFenetre(this, "Fenetre de connexion"));
-            System.out.println("Bouton #seConnecter trouvé et configuré");
-        } else {
-            System.err.println("Bouton #seConnecter non trouvé dans sceneFenetreAccueil");
-        }
-    
-        Button boutonSinscrire = (Button) sceneFenetreAccueil.lookup("#sinscrire");
-        if (boutonSinscrire != null) {
-            boutonSinscrire.setOnAction(new ControleurFenetre(this, "Fenetre d'inscription"));
-            System.out.println("Bouton #sinscrire trouvé et configuré");
-        } else {
-            System.err.println("Bouton #sinscrire non trouvé dans sceneFenetreAccueil");
-        }
-    
-        Button boutonClassement = (Button) sceneConnexion.lookup("#entrer");
-        if (boutonClassement != null) {
-            boutonClassement.setOnAction(new ControleurFenetre(this, "Fenetre de classement"));
-            System.out.println("Bouton #entrer trouvé et configuré");
-        } else {
-            System.err.println("Bouton #entrer non trouvé dans sceneConnexion");
-        }
-    
-        Button boutonRetour = (Button) sceneInscription.lookup("#boutonRetour");
-        if (boutonRetour != null) {
-            boutonRetour.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
-            System.out.println("Bouton #boutonRetour trouvé et configuré");
-        } else {
-            System.err.println("Bouton #boutonRetour non trouvé dans sceneInscription");
-        }
-    
-        Button boutonRetourConnexion = (Button) sceneConnexion.lookup("#boutonRetourConnexion");
-        if (boutonRetourConnexion != null) {
-            boutonRetourConnexion.setOnAction(new ControleurFenetre(this, "Fenetre Accueil"));
-            System.out.println("Bouton #boutonRetourConnexion trouvé et configuré");
-        } else {
-            System.err.println("Bouton #boutonRetourConnexion non trouvé dans sceneConnexion");
-        }
-    
-        Button boutonInscription = (Button) sceneInscription.lookup("#estInscrit");
-        if (boutonInscription != null) {
-            boutonInscription.setOnAction(new ControleurInscription(this));
-            System.out.println("Bouton #estInscrit trouvé et configuré");
-        } else {
-            System.err.println("Bouton #estInscrit non trouvé dans sceneInscription");
-        }
-    
-        Button boutonGestionUtilisateur = (Button) sceneAccueilAdmin.lookup("#gestionUtilisateur");
-        if (boutonGestionUtilisateur != null) {
-            boutonGestionUtilisateur.setOnAction(new ControleurFenetre(this, "Gestion des utilisateurs"));
-            System.out.println("Bouton #gestionUtilisateur trouvé et configuré");
-        } else {
-            System.err.println("Bouton #gestionUtilisateur non trouvé dans sceneAccueilAdmin");
-        }
-    
-        Button boutonJeuxOlympique = (Button) getSceneGestionUtilisateur().lookup("#retourAccueilAdmin");
-        if (boutonJeuxOlympique != null) {
-            boutonJeuxOlympique.setOnAction(new ControleurFenetre(this, "Fenetre d'accueil"));
-            System.out.println("Bouton #retourAccueilAdmin trouvé et configuré");
-        } else {
-            System.err.println("Bouton #retourAccueilAdmin non trouvé dans sceneGestionUtilisateur");
-        }
-    
-        System.out.println("coucou");
-        System.out.println("La scene est " + sceneAccueilAdmin);
-        Button boutonDeconnexion = (Button) sceneAccueilAdmin.lookup("#choixDeconnexion");
-        System.out.println(boutonDeconnexion);
-        if (boutonDeconnexion != null) {
-            boutonDeconnexion.setOnAction(new ControleurDeconnexion(this));
-            System.out.println("Bouton #choixDeconnexion trouvé et configuré");
-        } else {
-            System.out.println("Bouton #choixDeconnexion non trouvé dans sceneAccueilAdmin");
-        }
 
-        Button boutonAjoutDesDonnées = (Button) sceneAccueilAdmin.lookup("#ajoutDesDonnées");
-        if (boutonAjoutDesDonnées != null) {
-            boutonAjoutDesDonnées.setOnAction(new ControleurFenetre(this, "Ajout des données"));
-            System.out.println("Bouton #ajoutDesDonnées trouvé et configuré");
-        } else {
-            System.out.println("Bouton #ajoutDesDonnées non trouvé dans sceneAccueilAdmin");
-        }
+        configureButton(sceneFenetreAccueil, "#seConnecter", new ControleurFenetre(this, "Fenetre de connexion"));
+        configureButton(sceneFenetreAccueil, "#sinscrire", new ControleurFenetre(this, "Fenetre d'inscription"));
+        configureButton(sceneConnexion, "#entrer", new ControleurFenetre(this, "Fenetre de classement"));
+        configureButton(sceneInscription, "#boutonRetour", new ControleurFenetre(this, "Fenetre Accueil"));
+        configureButton(sceneConnexion, "#boutonRetourConnexion", new ControleurFenetre(this, "Fenetre Accueil"));
+        configureButton(sceneInscription, "#estInscrit", new ControleurInscription(this));
+        configureButton(sceneAccueilAdmin, "#gestionUtilisateur", new ControleurFenetre(this, "Gestion des utilisateurs"));
+        configureButton(getSceneGestionUtilisateur(), "#retourAccueilAdmin", new ControleurFenetre(this, "Fenetre d'accueil"));
+        configureButton(sceneAccueilAdmin, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneAccueilAdmin, "#ajoutDesDonnées", new ControleurFenetre(this, "Ajout des données"));
+        configureButton(sceneAjoutDonnees, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneGestionUtilisateur, "#logoJO", new ControleurRetourJO(this));
+        configureButton(sceneAjoutDonnees, "#logoJO", new ControleurRetourJO(this));
+        configureButton(sceneModificationDonnée, "#logoJO", new ControleurRetourJO(this));
+        configureButton(sceneGestionUtilisateur, "#jeuxOlympique", new ControleurRetourJO(this));
+        configureButton(sceneGestionUtilisateur, "#ajoutDesDonnées", new ControleurAjoutDonnees(this));
+        configureButton(sceneGestionUtilisateur, "#modificationDonnées", new ControleurModificationDonnée(this));
+        configureButton(sceneGestionUtilisateur, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneAccueilAdmin, "#modificationDonnées", new ControleurModificationDonnée(this));
+        configureButton(sceneAjoutDonnees, "#modificationDonnées", new ControleurModificationDonnée(this));
+        configureButton(sceneAjoutDonnees, "#gestionUtilisateur", new ControleurGestionUtilisateur(this));
+        configureButton(sceneModificationDonnée, "#jeuxOlympique", new ControleurRetourJO(this));
+        configureButton(sceneModificationDonnée, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneModificationDonnée, "#gestionUtilisateur", new ControleurGestionUtilisateur(this));
+        configureButton(sceneModificationDonnée, "#ajoutDesDonnées", new ControleurAjoutDonnees(this));
+        configureButton(sceneJournalisteAccueil, "#Athlètes", new ControleurAthletes(this));
+        configureButton(sceneJournalisteAccueil, "#Equipes", new ControleurEquipe(this));
+        configureButton(sceneJournalisteAccueil, "#Classement", new ControleurClassement(this));
+        configureButton(sceneJournalisteAccueil, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneAthletes, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneAthletes, "#Actus", new ControleurActus(this));
+        configureButton(sceneAthletes, "#Equipes", new ControleurEquipe(this));
+        configureButton(sceneAthletes, "#Classement", new ControleurClassement(this));
+        configureButton(sceneAjoutDonnees, "#ajouterUnAthletes", new ControleurAjouterUnAthlete(this));
+        configureButton(sceneAjouterUnAthlete, "#Actus", new ControleurActus(this));
+        configureButton(sceneAjouterUnAthlete, "#Equipes", new ControleurEquipe(this));
+        configureButton(sceneAjouterUnAthlete, "#Classement", new ControleurClassement(this));
+        configureButton(sceneAjouterUnAthlete, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneAjoutDonnees, "#ajouterUneEquipe", new ControleurAjouterEquipe(this));
+        configureButton(sceneAthletes, "#boutonJO", new ControleurRetourJOJournaliste(this));
+        configureButton(sceneClassement, "#boutonJO", new ControleurRetourJOJournaliste(this));
+        configureButton(sceneClassement, "#Actus", new ControleurActus(this));
+        configureButton(sceneClassement, "#Athlètes", new ControleurAthletes(this));
+        configureButton(sceneClassement, "#Equipes", new ControleurEquipe(this));
+        configureButton(sceneClassement, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneEquipe, "#logoJO", new ControleurRetourJOJournaliste(this));
+        configureButton(sceneEquipe, "#Actus", new ControleurRetourJOJournaliste(this));
+        configureButton(sceneEquipe, "#Athlètes", new ControleurAthletes(this));
+        configureButton(sceneEquipe, "#Classement", new ControleurClassement(this));
+        configureButton(sceneEquipe, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneModificationDonnée, "#athletes", new ControleurModifierAthlete(this));
+    }
 
-        Button boutonDecoDepuisAjoutDonnees = (Button) sceneAjoutDonnees.lookup("#choixDeconnexion");
-        if (boutonDecoDepuisAjoutDonnees != null) {
-            boutonDecoDepuisAjoutDonnees.setOnAction(new ControleurDeconnexion(this));
-            System.out.println("Bouton #deconnexion trouvé et configuré");
+    private void configureButton(Scene scene, String buttonId, EventHandler<ActionEvent> handler) {
+        Button button = (Button) scene.lookup(buttonId);
+        if (button != null) {
+            button.setOnAction(handler);
+            System.out.println("Bouton " + buttonId + " trouvé et configuré");
         } else {
-            System.out.println("Bouton #deconnexion non trouvé dans sceneAjoutDonnees");
-        }
-
-        Button boutonLogoJODepuisGestionUtilisitateur = (Button) sceneGestionUtilisateur.lookup("#logoJO");
-        if (boutonLogoJODepuisGestionUtilisitateur != null) {
-            boutonLogoJODepuisGestionUtilisitateur.setOnAction(new ControleurRetourJO(this));
-            System.out.println("Bouton #logoJO trouvé et configuré");
-        } else {
-            System.out.println("Bouton #logoJO non trouvé dans sceneGestionUtilisateur");
-        }
-        
-        Button boutonLogoJODepuisAjoutDeDonnees = (Button) sceneAjoutDonnees.lookup("#logoJO");
-        if (boutonLogoJODepuisAjoutDeDonnees != null) {
-            boutonLogoJODepuisAjoutDeDonnees.setOnAction(new ControleurRetourJO(this));
-            System.out.println("Bouton #logoJO trouvé et configuré");
-        } else {
-            System.out.println("Bouton #logoJO non trouvé dans sceneAjoutDeDonnees");
-        }
-
-        Button boutonLogoJOModifierDonnees = (Button) sceneModificationDonnée.lookup("#logoJO");
-        if (boutonLogoJOModifierDonnees != null) {
-            boutonLogoJOModifierDonnees.setOnAction(new ControleurRetourJO(this));
-            System.out.println("Bouton #logoJO trouvé et configuré");
-        } else {
-            System.out.println("Bouton #logoJO non trouvé dans sceneModifierDonnées");
-        }
-
-        Button boutonJeuxOlympiqueDepuisGestionUtilisateur = (Button) sceneGestionUtilisateur.lookup("#jeuxOlympique");
-        if (boutonJeuxOlympiqueDepuisGestionUtilisateur != null) {
-            boutonJeuxOlympiqueDepuisGestionUtilisateur.setOnAction(new ControleurRetourJO(this));
-            System.out.println("Bouton #jeuxOlympique trouvé et configuré");
-        } else {
-            System.out.println("Bouton #jeuxOlympique non trouvé dans sceneGestionUtilisateur");
-        }
-
-        Button boutonAjoutDesDonneesDepuisGestionUtiliButton = (Button) sceneGestionUtilisateur.lookup("#ajoutDesDonnées");
-        if (boutonAjoutDesDonneesDepuisGestionUtiliButton != null) {
-            boutonAjoutDesDonneesDepuisGestionUtiliButton.setOnAction(new ControleurAjoutDonnees(this));
-            System.out.println("Bouton #ajoutDesDonnées trouvé et configuré");
-        } else {
-            System.out.println("Bouton #ajoutDesDonnées non trouvé dans sceneGestionUtilisateur");
-        }
-
-        Button modificationDesDonnéeDepuisGestionUtiliButton = (Button) sceneGestionUtilisateur.lookup("#modificationDonnées");
-        if (modificationDesDonnéeDepuisGestionUtiliButton != null) {
-            modificationDesDonnéeDepuisGestionUtiliButton.setOnAction(new ControleurModificationDonnée(this));
-            System.out.println("Bouton #ajoutDesDonnées trouvé et configuré");
-        } else {
-            System.out.println("Bouton #ajoutDesDonnées non trouvé dans sceneGestionUtilisateur");
-        }
-
-        Button boutonDeconnexionDepuisGestionUtilisateur = (Button) sceneGestionUtilisateur.lookup("#choixDeconnexion");
-        if (boutonDeconnexionDepuisGestionUtilisateur != null) {
-            boutonDeconnexionDepuisGestionUtilisateur.setOnAction(new ControleurDeconnexion(this));
-            System.out.println("Bouton #choixDeconnexion trouvé et configuré");
-        } else {
-            System.out.println("Bouton #choixDeconnexion non trouvé dans sceneGestionUtilisateur");
-        }
-
-        Button boutonModificationDesDonnéeDepuis = (Button) sceneAccueilAdmin.lookup("#modificationDonnées");
-        if (boutonModificationDesDonnéeDepuis != null) {
-            boutonModificationDesDonnéeDepuis.setOnAction(new ControleurModificationDonnée(this));
-            System.out.println("Bouton #modificationDonnées trouvé et configuré");
-        } else {
-            System.out.println("Bouton #modificationDonnées non trouvé dans sceneAccueilAdmin");
-        }
-
-        Button boutonModificationDonnées = (Button) sceneAjoutDonnees.lookup("#modificationDonnées");
-        if (boutonModificationDonnées != null) {
-            boutonModificationDonnées.setOnAction(new ControleurModificationDonnée(this));
-            System.out.println("Bouton #modificationDonnées trouvé et configuré");
-        } else {
-            System.out.println("Bouton #modificationDonnées non trouvé dans sceneAjoutDonnees");
-        }
-
-        Button boutonGestionUtilisateurDepuisAjoutDonnees = (Button) sceneAjoutDonnees.lookup("#gestionUtilisateur");
-        if (boutonGestionUtilisateurDepuisAjoutDonnees != null) {
-            boutonGestionUtilisateurDepuisAjoutDonnees.setOnAction(new ControleurGestionUtilisateur(this));
-            System.out.println("Bouton #gestionUtilisateur trouvé et configuré");
-        } else {
-            System.out.println("Bouton #gestionUtilisateur non trouvé dans sceneAjoutDonnees");
-        }
-
-        Button boutonJODepuisModificationDonnée = (Button) sceneModificationDonnée.lookup("#jeuxOlympique");
-        if (boutonJODepuisModificationDonnée != null) {
-            boutonJODepuisModificationDonnée.setOnAction(new ControleurRetourJO(this));
-            System.out.println("Bouton #jeuxOlympique trouvé et configuré");
-        } else {
-            System.out.println("Bouton #jeuxOlympique non trouvé dans sceneModificationDonnée");
-        }
-
-        Button boutonJODepuisAjoutDeDonnées = (Button) sceneAjoutDonnees.lookup("#jeuxOlympique");
-        if (boutonJODepuisAjoutDeDonnées != null) {
-            boutonJODepuisAjoutDeDonnées.setOnAction(new ControleurRetourJO(this));
-            System.out.println("Bouton #jeuxOlympique trouvé et configuré");
-        } else {
-            System.out.println("Bouton #jeuxOlympique non trouvé dans sceneModificationDonnée");
-        }
-
-        Button boutonDeconnexionDepuisModificationDonnée = (Button) sceneModificationDonnée.lookup("#choixDeconnexion");
-        if (boutonDeconnexionDepuisModificationDonnée != null) {
-            boutonDeconnexionDepuisModificationDonnée.setOnAction(new ControleurDeconnexion(this));
-            System.out.println("Bouton #choixDeconnexion trouvé et configuré");
-        } else {
-            System.out.println("Bouton #choixDeconnexion non trouvé dans sceneModificationDonnée");
-        }
-        
-        Button boutonGestionDesUtilisateurDepuisModificationDonnée = (Button) sceneModificationDonnée.lookup("#gestionUtilisateur");
-        if (boutonGestionDesUtilisateurDepuisModificationDonnée != null) {
-            boutonGestionDesUtilisateurDepuisModificationDonnée.setOnAction(new ControleurGestionUtilisateur(this));
-            System.out.println("Bouton #gestionUtilisateur trouvé et configuré");
-        } else {
-            System.out.println("Bouton #gestionUtilisateur non trouvé dans sceneModificationDonnée");
-        }
-
-        Button boutonAjoutDesDonnéeDepuisModificationDonnée = (Button) sceneModificationDonnée.lookup("#ajoutDesDonnées");
-        if (boutonAjoutDesDonnéeDepuisModificationDonnée != null) {
-            boutonAjoutDesDonnéeDepuisModificationDonnée.setOnAction(new ControleurAjoutDonnees(this));
-            System.out.println("Bouton #ajoutDesDonnées trouvé et configuré");
-        } else {
-            System.out.println("Bouton #ajoutDesDonnées non trouvé dans sceneModificationDonnée");
-        }
-
-        Button boutonAthletesDepuisAccueilJournaliste = (Button) sceneJournalisteAccueil.lookup("#Athlètes");
-        if (boutonAthletesDepuisAccueilJournaliste != null) {
-            boutonAthletesDepuisAccueilJournaliste.setOnAction(new ControleurAthletes(this));
-            System.out.println("Bouton #athletes trouvé et configuré");
-        } else {
-            System.out.println("Bouton #athletes non trouvé dans sceneJournalisteAccueil");
-        }
-
-        Button boutonEquipeDepuisAccueilJournaliste = (Button) sceneJournalisteAccueil.lookup("#Equipes");
-        if (boutonEquipeDepuisAccueilJournaliste != null) {
-            boutonEquipeDepuisAccueilJournaliste.setOnAction(new ControleurEquipe(this));
-            System.out.println("Bouton #equipe trouvé et configuré");
-        } else {
-            System.out.println("Bouton #equipe non trouvé dans sceneJournalisteAccueil");
-        }
-
-        Button boutonClassementDepuisAccueilJournaliste = (Button) sceneJournalisteAccueil.lookup("#Classement");
-        if (boutonClassementDepuisAccueilJournaliste != null) {
-            boutonClassementDepuisAccueilJournaliste.setOnAction(new ControleurClassement(this));
-            System.out.println("Bouton #Classement trouvé et configuré");
-        } else {
-            System.out.println("Bouton #Classement non trouvé dans sceneJournalisteAccueil");
-        }
-
-        Button boutonDeconnexionDepuisAccueilJournaliste = (Button) sceneJournalisteAccueil.lookup("#choixDeconnexion");
-        if (boutonDeconnexionDepuisAccueilJournaliste != null) {
-            boutonDeconnexionDepuisAccueilJournaliste.setOnAction(new ControleurDeconnexion(this));
-            System.out.println("Bouton #choixDeconnexion trouvé et configuré");
-        } else {
-            System.out.println("Bouton #choixDeconnexion non trouvé dans sceneJournalisteAccueil");
-        }
-
-        Button boutonDeconnexionDepuisAthletes = (Button) sceneAthletes.lookup("#choixDeconnexion");
-        if (boutonDeconnexionDepuisAthletes != null) {
-            boutonDeconnexionDepuisAthletes.setOnAction(new ControleurDeconnexion(this));
-            System.out.println("Bouton #choixDeconnexion trouvé et configuré");
-        } else {
-            System.out.println("Bouton #choixDeconnexion non trouvé dans sceneAthletes");
-        }
-
-        Button boutonActusDepuisAthletes = (Button) sceneAthletes.lookup("#Actus");
-        if (boutonActusDepuisAthletes != null) {
-            boutonActusDepuisAthletes.setOnAction(new ControleurActus(this));
-            System.out.println("Bouton #Actus trouvé et configuré");
-        } else {
-            System.out.println("Bouton #Actus non trouvé dans sceneAthletes");
-        }
-
-        Button boutonEquipeDepuisAthletes = (Button) sceneAthletes.lookup("#Equipes");
-        if (boutonEquipeDepuisAthletes != null) {
-            boutonEquipeDepuisAthletes.setOnAction(new ControleurEquipe(this));
-            System.out.println("Bouton #Equipes trouvé et configuré");
-        } else {
-            System.out.println("Bouton #Equipes non trouvé dans sceneAthletes");
-        }
-
-        Button boutonClassementDepuisAthletes = (Button) sceneAthletes.lookup("#Classement");
-        if (boutonClassementDepuisAthletes != null) {
-            boutonClassementDepuisAthletes.setOnAction(new ControleurClassement(this));
-            System.out.println("Bouton #Classement trouvé et configuré");
-        } else {
-            System.out.println("Bouton #Classement non trouvé dans sceneAthletes");
-        }
-
-        Button boutonAjouterAthDepuisAjoutDeDonnées = (Button) sceneAjoutDonnees.lookup("#ajouterUnAthletes");
-        if (boutonAjouterAthDepuisAjoutDeDonnées != null) {
-            boutonAjouterAthDepuisAjoutDeDonnées.setOnAction(new ControleurAjouterUnAthlete(this));
-            System.out.println("Bouton #ajouterUnAthletes trouvé et configuré");
-        } else {
-            System.out.println("Bouton #ajouterUnAthletes non trouvé dans sceneAjoutDonnees");
-        }
-
-        Button boutonActusDepuisAjouterUnAthlete = (Button) sceneAjouterUnAthlete.lookup("#Actus");
-        if (boutonActusDepuisAjouterUnAthlete != null) {
-            boutonActusDepuisAjouterUnAthlete.setOnAction(new ControleurActus(this));
-            System.out.println("Bouton #Actus trouvé et configuré");
-        } else {
-            System.out.println("Bouton #Actus non trouvé dans sceneAjouterUnAthlete");
-        }
-
-        Button boutonEquipeDepuisAjouterUnAthlete = (Button) sceneAjouterUnAthlete.lookup("#Equipes");
-        if (boutonEquipeDepuisAjouterUnAthlete != null) {
-            boutonEquipeDepuisAjouterUnAthlete.setOnAction(new ControleurEquipe(this));
-            System.out.println("Bouton #Equipes trouvé et configuré");
-        } else {
-            System.out.println("Bouton #Equipes non trouvé dans sceneAjouterUnAthlete");
-        }
-
-        Button boutonClassementDepuisAjouterUnAthlete = (Button) sceneAjouterUnAthlete.lookup("#Classement");
-        if (boutonClassementDepuisAjouterUnAthlete != null) {
-            boutonClassementDepuisAjouterUnAthlete.setOnAction(new ControleurClassement(this));
-            System.out.println("Bouton #Classement trouvé et configuré");
-        } else {
-            System.out.println("Bouton #Classement non trouvé dans sceneAjouterUnAthlete");
-        }
-
-        Button boutonDeconnexionDepuisAjouterUnAthlete = (Button) sceneAjouterUnAthlete.lookup("#choixDeconnexion");
-        if (boutonDeconnexionDepuisAjouterUnAthlete != null) {
-            boutonDeconnexionDepuisAjouterUnAthlete.setOnAction(new ControleurDeconnexion(this));
-            System.out.println("Bouton #choixDeconnexion trouvé et configuré");
-        } else {
-            System.out.println("Bouton #choixDeconnexion non trouvé dans sceneAjouterUnAthlete");
+            System.err.println("Bouton " + buttonId + " non trouvé dans " + scene);
         }
     }
+
     
 
     public void changerFenetre(Scene scene, String titre) {
@@ -469,9 +237,145 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneInscription;
     }
 
-    public Scene getSceneClassement() {
-        return sceneClassement;
-    }
+        public Scene getSceneClassement() {
+            System.out.println("getSceneClassement");
+            VBox vBoxPricpale = (VBox) sceneClassement.lookup("#vboxPrincipal");
+            VBox vBox = new VBox();
+            ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setContent(vBox);
+            vBox.getChildren().clear();
+            int i = 1;
+            try{
+                System.out.println(this.requete.getPays());
+                for (Pays pays : this.requete.getPays()) {
+                    System.out.println("coucou");
+                    BorderPane borderPane = new BorderPane();
+                    borderPane.setPadding(new Insets(10, 50, 10, 50));
+                    borderPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-color: #0085C7;");
+
+                    
+
+                    HBox hb1 = new HBox();
+                    hb1.setAlignment(Pos.CENTER);
+        
+                    Label indice = new Label("" + i);
+                    indice.setMaxWidth(Double.MAX_VALUE);
+                    HBox.setHgrow(indice, Priority.ALWAYS); // Ajuster la taille de l'élément
+        
+                    i++;
+                    ImageView imageview = null;
+                    
+                    switch (pays.getNomPays()) {
+                        case "France":
+                            imageview = new ImageView(new Image("images/drapeaux/fr.png"));
+                            break;
+                        case "Allemagne":
+                            imageview = new ImageView(new Image("images/drapeaux/de.png"));
+                            break;
+                        case "Italie":
+                            imageview = new ImageView(new Image("images/drapeaux/it.png"));
+                            break;
+                        case "Espagne":
+                            imageview = new ImageView(new Image("images/drapeaux/es.png"));
+                            break;
+                        case "Royaume-Uni": 
+                            imageview = new ImageView(new Image("images/drapeaux/uk.png"));
+                            break;
+                        case "USA":
+                            imageview = new ImageView(new Image("images/drapeaux/us.png"));
+                            break;
+                        case "China":
+                            imageview = new ImageView(new Image("images/drapeaux/cn.png"));
+                            break;
+                        case "CANADA":
+                            imageview = new ImageView(new Image("images/drapeaux/ca.png"));
+                            break;
+                        case "Japon":
+                            imageview = new ImageView(new Image("images/drapeaux/jp.png"));
+                            break;
+                        case "Kenya":
+                            imageview = new ImageView(new Image("images/drapeaux/ke.png"));
+                            break;
+                        case "Turquie":
+                            imageview = new ImageView(new Image("images/drapeaux/tr.png"));
+                            break;
+                        case "Congo":
+                            imageview = new ImageView(new Image("images/drapeaux/cd.png"));
+                            break;
+                        case "Brésil":
+                            imageview = new ImageView(new Image("images/drapeaux/br.png"));
+                            break;
+                        case "Maroc":
+                            imageview = new ImageView(new Image("images/drapeaux/ma.png"));
+                            break;
+                        case "Australie":
+                            imageview = new ImageView(new Image("images/drapeaux/au.png"));
+                            break;
+                        default:
+                            break;
+                    }
+
+
+                    imageview.setFitHeight(50);
+                    imageview.setFitWidth(50);
+                    imageview.setPreserveRatio(true);
+
+
+                    System.out.println("salut");
+                    System.out.println("salutsalut");
+
+
+                    Label label = new Label(pays.getNomPays());
+                    hb1.getChildren().addAll(indice, imageview, label);
+                    VBox vb2 = new VBox();
+                    vb2.setAlignment(Pos.CENTER);
+                    HBox hb2 = new HBox();
+                    System.out.println("jesuisla");
+                    ImageView medailleOr = new ImageView(new Image("images/médailles/medaille_or.png"));
+                    medailleOr.setFitHeight(50);
+                    medailleOr.setFitWidth(50);
+                    System.out.println("jesuisla2");
+                    Label or = new Label(pays.getMedailles().get("Or").toString());
+                    ImageView medailleArgent = new ImageView(new Image("images/médailles/medaille_argent.png"));
+                    medailleArgent.setFitHeight(50);
+                    medailleArgent.setFitWidth(50);
+                    Label argent = new Label(pays.getMedailles().get("Argent").toString());
+                    ImageView medailleBronze = new ImageView(new Image("images/médailles/medaille_bronze.png"));
+                    medailleBronze.setFitHeight(50);
+                    medailleBronze.setFitWidth(50);
+                    Label bronze = new Label(pays.getMedailles().get("Bronze").toString());
+                    hb2.getChildren().addAll(medailleOr, or, medailleArgent, argent, medailleBronze, bronze);
+                    HBox hb3 = new HBox();
+                    Label total = new Label("Total : " + pays.getScoreTotal());
+                    hb3.getChildren().add(total);
+                    borderPane.setLeft(hb1);
+                    vb2.getChildren().add(hb2);
+                    borderPane.setCenter(vb2);
+                    borderPane.setRight(hb3);
+                    borderPane.setPadding(new Insets(10, 50, 10, 50));
+                    System.out.println("Je suis dans la méthode getSceneClassement, dans le try");
+                    vBox.getChildren().add(borderPane);
+                    vBox.setAlignment(Pos.CENTER);
+                }
+            }
+            catch (Exception e){
+                System.out.println("Erreur lors de la récupération des pays");
+                System.err.println(e.getMessage());
+            }
+            vBoxPricpale.getChildren().add(scrollPane);
+            vBoxPricpale.setAlignment(Pos.CENTER);
+
+            scrollPane.setFitToHeight(true);
+            //centrer les éléments dans le scrollPane
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            scrollPane.setFitToHeight(true);
+            scrollPane.setHmax(3);
+            scrollPane.setHvalue(3);
+
+
+            return sceneClassement;
+        }
 
     public Scene getSceneAccueilAdmin(){
         return sceneAccueilAdmin;
@@ -489,9 +393,10 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneModificationDonnée;
     }
 
-    public Scene getAccueilJournaliste(){
-        return sceneJournalisteAccueil;
+    public Scene getSceneOrganisateur(){
+        return sceneAccueilOrganisateur;
     }
+
 
     public Scene getSceneJournalisteAccueil(){
         return sceneJournalisteAccueil;
@@ -612,155 +517,26 @@ public class ApplicationJeuxOlympique extends Application {
         borderPane.setTop(null);
         return sceneAjouterUnAthlete;
     }
-    
+
+    public Scene getSceneModifierAthlete(){
+        ModifierAthleteScene modifierAthleteScene = new ModifierAthleteScene(requete, this);
+        this.sceneModificationDonnéeAthlete = modifierAthleteScene.createScene();
+        return this.sceneModificationDonnéeAthlete;
+    }
+
 
     public Scene getSceneAthletes(){// Permet de faire une fenetre avec tous les athletes
-    BorderPane borderPane = (BorderPane) sceneAthletes.lookup("#borderPane");
-
-    ScrollPane scrollPane = new ScrollPane();
-    scrollPane.setFitToHeight(true);
-    scrollPane.setFitToWidth(true); // Ajuster le scroll pane à la largeur de la fenêtre
-
-    GridPane gridPane = new GridPane();
-    gridPane.setHgap(10);
-    gridPane.setVgap(10);
-    gridPane.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
-    gridPane.setAlignment(Pos.TOP_CENTER); // Centrer le GridPane horizontalement
-
-    try{
-        System.out.println("Je suis dans la méthode getSceneAthletes, dans le try");
-        List<Athlete> athletes = this.requete.getAthletes();
-        for (int i = 0; i < athletes.size(); i++) {
-            Athlete athlete = athletes.get(i);
-            VBox vb = new VBox();
-            vb.setAlignment(Pos.CENTER); // Centrer le contenu de chaque VBox horizontalement
-            String prenom = athlete.getPrenom();
-            String nom = athlete.getNom();
-            ImageView imageView;
-            if (athlete.getSexe() == Epreuve.Sexe.M) {
-                imageView = new ImageView(new Image("images/hommeAth.png"));
-            } else {
-                imageView = new ImageView(new Image("images/femmeAth.png"));
-            }
-            imageView.setFitHeight(100);
-            imageView.setFitWidth(100);
-            Label label = new Label(prenom + " " + nom);
-            label.setStyle("-fx-font-size: 24px;"); // Augmenter la taille du texte
-            vb.getChildren().addAll(imageView, label);
-            
-            // Ajouter un event handler pour afficher une popup avec les attributs de l'athlète
-            vb.setOnMouseClicked(event -> {
-                showAthleteDetails(athlete);
-            });
-            
-            gridPane.add(vb, i % 5, i / 5);
-        }
-    }
-    catch (Exception e){
-        System.out.println("Erreur lors de la récupération des athlètes");
-        System.err.println(e.getMessage());
-    }
-
-    scrollPane.setContent(gridPane);
-    borderPane.setCenter(scrollPane);
-
-    return sceneAthletes;
+        SceneAthletes sceneAthletes = new SceneAthletes(requete);
+        this.sceneAthletes = sceneAthletes.createScene();
+        return this.sceneAthletes;
 
 }
 
-    private void showAthleteDetails(Athlete athlete) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Détails de l'athlète");
-        alert.setHeaderText(athlete.getPrenom() + " " + athlete.getNom());
-        alert.setContentText("Prénom: " + athlete.getPrenom() + "\n" +
-                            "Nom: " + athlete.getNom() + "\n" + 
-                            "Pays: " + athlete.getPays() + "\n" +
-                            "Sexe: " + athlete.getSexe() + "\n" +
-                            "Agilité: " + athlete.getAgilité() + "\n" +
-                            "Force: " + athlete.getForce() + "\n" +
-                            "Endurance: " + athlete.getEndurance()
-                            );
-                                
-
-        alert.showAndWait();
-    }
 
     public Scene getSceneAjouterUneEquipe(){
-        BorderPane borderPane = new BorderPane();
-
-        VBox mainVBox = new VBox(20);
-        mainVBox.setAlignment(Pos.CENTER);
-        mainVBox.setStyle("-fx-background-color: #0085C7;");
-
-        Label titleLabel = new Label("Ajouter une équipe");
-        titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        VBox formVBox = new VBox(10);
-        formVBox.setAlignment(Pos.CENTER);
-        formVBox.setPadding(new Insets(20, 50, 20, 50));
-
-        TextField nom = new TextField();
-        nom.setPromptText("Nom de l'équipe");
-        nom.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
-
-        TextField pays = new TextField();
-        pays.setPromptText("Pays de l'équipe");
-        pays.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
-
-        ToggleGroup sexe = new ToggleGroup();
-        HBox sexeHBox = new HBox(10);
-        sexeHBox.setAlignment(Pos.CENTER);
-        RadioButton homme = new RadioButton("Homme");
-        homme.setToggleGroup(sexe);
-        RadioButton femme = new RadioButton("Femme");
-        femme.setToggleGroup(sexe);
-        sexeHBox.getChildren().addAll(homme, femme);
-
-
-        HBox buttonHBox = new HBox(10);
-        buttonHBox.setAlignment(Pos.CENTER);
-        Button ajouter = new Button("Ajouter");
-        ajouter.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;");
-        ajouter.setOnMouseEntered(e -> ajouter.setStyle("-fx-background-color: #00A1E4; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
-        ajouter.setOnMouseExited(e -> ajouter.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
-        ajouter.setOnAction(e -> {
-            try {
-                String nomEquipe = nom.getText();
-                Pays paysEquipe = new Pays(pays.getText());
-                String sexeEquipe = ((RadioButton) sexe.getSelectedToggle()).getText();
-                Epreuve.Sexe sex = sexeEquipe.equals("Homme") ? Epreuve.Sexe.M : Epreuve.Sexe.F;
-                Equipe equipe = new Equipe(nomEquipe, paysEquipe, sex);
-                this.requete.ajouterEquipe(equipe);
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Ajout d'une équipe");
-                alert.setHeaderText("Équipe ajoutée");
-                alert.setContentText("L'équipe " + nomEquipe + " a bien été ajoutée");
-                alert.showAndWait();
-            } catch (Exception ex) {
-                System.out.println("Erreur lors de l'ajout de l'équipe");
-                System.err.println(ex.getMessage());
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Ajout d'une équipe");
-                alert.setHeaderText("Erreur lors de l'ajout de l'équipe");
-                alert.setContentText("Une erreur est survenue lors de l'ajout de l'équipe");
-                alert.showAndWait();
-            }});
-
-        Button retour = new Button("Retour");
-        retour.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;");
-        retour.setOnMouseEntered(e -> retour.setStyle("-fx-background-color: #00A1E4; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
-        retour.setOnMouseExited(e -> retour.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
-        retour.setOnAction(new ControleurAjoutDonnees(this));
-
-        buttonHBox.getChildren().addAll(ajouter, retour);
-
-        formVBox.getChildren().addAll(nom, pays, sexeHBox, buttonHBox);
-
-        mainVBox.getChildren().addAll(titleLabel, formVBox);
-
-        borderPane.setCenter(mainVBox);
-
-        return new Scene(borderPane);
+        AjouterUneEquipeScene ajouterUneEquipeScene = new AjouterUneEquipeScene(requete, this);
+        this.sceneAjouterEquipe = ajouterUneEquipeScene.createScene();
+        return this.sceneAjouterEquipe;
     }
 
 
@@ -813,20 +589,8 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneEquipe;
     }
 
-    private void showEquipeDetails(Equipe equipe) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Détails de l'équipe");
-        alert.setHeaderText(equipe.getNomEquipe());
-        List<Athlete> athletes = equipe.getLesAthlètes();
-        String contenu = "";
-        for (Athlete athlete : athletes) {
-            contenu += athlete.getPrenom() + " " + athlete.getNom() + "\n";
-        }
-        alert.setContentText(contenu);
-
-                            
-
-        alert.showAndWait();
+    public Scene getSceneAccueilJournaliste(){
+        return sceneJournalisteAccueil;
     }
 
     public Scene getSceneGestionUtilisateur() {

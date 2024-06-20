@@ -82,6 +82,10 @@ public class Pays {
         return this.medailles;
     }
 
+    public int getMedaille(String typeMedaille) {
+        return this.medailles.get(typeMedaille);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Pays) {
