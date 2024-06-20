@@ -239,15 +239,22 @@ public class ApplicationJeuxOlympique extends Application {
 
         public Scene getSceneClassement() {
             System.out.println("getSceneClassement");
+            VBox vBoxPricpale = (VBox) sceneClassement.lookup("#vboxPrincipal");
+            VBox vBox = new VBox();
+            ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setContent(vBox);
+            vBox.getChildren().clear();
             int i = 1;
             try{
                 System.out.println(this.requete.getPays());
                 for (Pays pays : this.requete.getPays()) {
                     System.out.println("coucou");
-                    HBox hBox = new HBox();
-                    hBox.setAlignment(Pos.CENTER); // Centrer le contenu de la HBox
-                    hBox.setStyle("-fx-border-color: black;"); // Mettre des bords noirs autour de la HBox
-        
+                    BorderPane borderPane = new BorderPane();
+                    borderPane.setPadding(new Insets(10, 50, 10, 50));
+                    borderPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-color: #0085C7;");
+
+                    
+
                     HBox hb1 = new HBox();
                     hb1.setAlignment(Pos.CENTER);
         
@@ -320,6 +327,8 @@ public class ApplicationJeuxOlympique extends Application {
 
                     Label label = new Label(pays.getNomPays());
                     hb1.getChildren().addAll(indice, imageview, label);
+                    VBox vb2 = new VBox();
+                    vb2.setAlignment(Pos.CENTER);
                     HBox hb2 = new HBox();
                     System.out.println("jesuisla");
                     ImageView medailleOr = new ImageView(new Image("images/médailles/medaille_or.png"));
@@ -339,10 +348,13 @@ public class ApplicationJeuxOlympique extends Application {
                     HBox hb3 = new HBox();
                     Label total = new Label("Total : " + pays.getScoreTotal());
                     hb3.getChildren().add(total);
-                    hBox.getChildren().addAll(hb1, hb2, hb3);
+                    borderPane.setLeft(hb1);
+                    vb2.getChildren().add(hb2);
+                    borderPane.setCenter(vb2);
+                    borderPane.setRight(hb3);
+                    borderPane.setPadding(new Insets(10, 50, 10, 50));
                     System.out.println("Je suis dans la méthode getSceneClassement, dans le try");
-                    VBox vBox = (VBox) sceneClassement.lookup("#vboxPrincipal");
-                    vBox.getChildren().add(hBox);
+                    vBox.getChildren().add(borderPane);
                     vBox.setAlignment(Pos.CENTER);
                 }
             }
@@ -350,6 +362,17 @@ public class ApplicationJeuxOlympique extends Application {
                 System.out.println("Erreur lors de la récupération des pays");
                 System.err.println(e.getMessage());
             }
+            vBoxPricpale.getChildren().add(scrollPane);
+            vBoxPricpale.setAlignment(Pos.CENTER);
+
+            scrollPane.setFitToHeight(true);
+            //centrer les éléments dans le scrollPane
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            scrollPane.setFitToHeight(true);
+            scrollPane.setHmax(3);
+            scrollPane.setHvalue(3);
+
 
             return sceneClassement;
         }
