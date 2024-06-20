@@ -34,6 +34,12 @@ public class Pays {
         this.medailles.put("Bronze", 0);
     }
 
+    public Pays(String nomPays, Map<String, Integer> medailles) {
+        this.nomPays = nomPays;
+        this.medailles = medailles;
+        this.scoreTotal = this.getScoreTotal();
+    }
+
     /**
      * Méthode permettant de récupérer le nom du pays 
      * @return le nom du pays
@@ -47,7 +53,7 @@ public class Pays {
      * @return le score total du pays
      */
     public int getScoreTotal() {
-        return this.scoreTotal;
+    return this.getMedaille("Or") * 3 + this.getMedaille("Argent") * 2 + this.getMedaille("Bronze");
     }
 
     /**
@@ -57,6 +63,10 @@ public class Pays {
     @Override
     public String toString() {
         return this.nomPays;
+    }
+
+    public void setMedailles(Map<String, Integer> medailles) {
+        this.medailles = medailles;
     }
 
     /**

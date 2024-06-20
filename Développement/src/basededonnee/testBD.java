@@ -8,6 +8,7 @@ import org.junit.Test;
 import src.basededonnee.exception.AthleteInexistantException;
 import src.basededonnee.exception.BaseDeDonneeInaccessibleException;
 import src.basededonnee.exception.EpreuveDejaExistantException;
+import src.basededonnee.exception.PaysInexistantException;
 import src.modele.exceptions.EpreuveDejaJoueeException;
 import src.modele.exceptions.EpreuveDejaPresenteException;
 import src.modele.exceptions.JeuxPasCommenceException;
@@ -76,7 +77,7 @@ public class testBD {
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, BaseDeDonneeInaccessibleException, EpreuveDejaExistantException, JeuxPasCommenceException, AthleteInexistantException, EpreuveDejaPresenteException, EpreuveDejaJoueeException {
+    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, BaseDeDonneeInaccessibleException, EpreuveDejaExistantException, JeuxPasCommenceException, AthleteInexistantException, EpreuveDejaPresenteException, EpreuveDejaJoueeException, PaysInexistantException {
         // try {
         //     Requete requete = new Requete();
         //     System.out.println(requete.connexion("niksan", "niksan"));
@@ -174,7 +175,7 @@ public class testBD {
                 // Pass, l'épreuve n'a pas encore lancer
             }
         }
-        System.out.println(jeux.getClassementPays());
+        // System.out.println(jeux.getClassementPays());
 
         // List<EpreuveIndividuelle> epreuveIndividuelles = requete.getEpreuvesIndiv(jeux);
         // System.out.println(epreuveIndividuelles);
@@ -206,10 +207,15 @@ public class testBD {
             System.out.println(epreuve + " " + epreuve.getParticipants());
         }
 
-        Athlete a = requete.getAthlete(235);
-        a.setNom("test");
-        a.setPrenom("test");
-        requete.modifierAthlete(a, 235);
+        for (Pays pays : requete.getPays()) {
+            pays.ajouterMedaille("Bronze");
+            requete.majPays(pays);
+            System.out.println(pays.getScoreTotal());
+        }
+        // Athlete a = requete.getAthlete(235);
+        // a.setNom("test");
+        // a.setPrenom("test");
+        // requete.modifierAthlete(a, 235);
 
 
         // for (Epreuve epreuve : test.keySet()) {
