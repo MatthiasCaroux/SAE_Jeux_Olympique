@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.plaf.BorderUIResource.EmptyBorderUIResource;
+
 import src.basededonnee.exception.*;
 import src.modele.jeuxOlympique.*;
 
@@ -464,17 +466,13 @@ public class Requete {
 
     public int getIdPays(String nomPays) throws SQLException, PaysInexistantException {
         try {
-            System.out.println(nomPays + "*******************");
             if (this.dansPays(nomPays)) {
-                System.out.println("Jesuislà@@@@@@@@");
                 PreparedStatement requete = this.connexionBD.prepareStatement("Select id_Pays from PAYS where nom_P = ?");
                 requete.setString(1, nomPays);
                 ResultSet resultat = requete.executeQuery();
                 resultat.next();
-                System.out.println(resultat.getInt("id_Pays"));
                 return resultat.getInt("id_Pays");
             } else {
-                System.out.println("jesuislà&&&&&&");
                 throw new PaysInexistantException(nomPays);
             }
         } catch (PaysInexistantException e) {
@@ -484,50 +482,22 @@ public class Requete {
 
     public Pays getPays(int idPays) throws PaysInexistantException {
         try {
-            System.out.println("33333333333333");
             if (this.dansPays(idPays)) {
-                System.out.println("4444444444444444444");
                 PreparedStatement requete = this.connexionBD.prepareStatement("Select * from PAYS where id_Pays = ?");
                 requete.setInt(1, idPays);
-                System.out.println("azergthyj");
                 ResultSet resultat = requete.executeQuery();
                 resultat.next();
-                System.out.println("Helo");
                 Map<String, Integer> medailles = new HashMap<>();
                 medailles.put("Or", resultat.getInt("M_or"));
                 medailles.put("Argent", resultat.getInt("M_argent"));
                 medailles.put("Bronze", resultat.getInt("M_bronze"));
-                System.out.println("OOOOOOPPPPPPPPPPP");
-                System.out.println(medailles);
-
-                // Map<String, Integer> medailles = Map.of("Or", 0, "Argent", 0, "Bronze", 0);
-                // System.out.println(medailles);
-                // System.out.println("chehehehehehehcf");
-                // System.out.println(resultat.getInt("M_or"));
-                // System.out.println(resultat.getInt("M_argent"));
-                // System.out.println(resultat.getInt("M_bronze"));
-                // System.out.println("@@@@@@@@@@@@@@");
-                // medailles.put("Or", 14);//resultat.getInt("M_or"));
-                // System.out.println(medailles);
-                // System.out.println("1");
-                // medailles.put("Argent", resultat.getInt("M_argent"));
-                // System.out.println("2");
-                // medailles.put("Bronze", resultat.getInt("M_bronze"));
-                // System.out.println("3");
-                // System.out.println("Bonjour");
-                // System.out.println(medailles);
-                System.out.println(medailles == null);
-                System.out.println(resultat.getString("nom_P"));
-                System.out.println(medailles.get("Or"));
                 Pays pays = new Pays(resultat.getString("nom_P"));//, medailles);
                 pays.setMedailles(medailles);
-                System.out.println("Je suis là");
                 return pays;//new Pays(resultat.getString("nom_P"), medailles);
             } else {
                 throw new PaysInexistantException(idPays);
             }
         } catch (Exception e) {
-            System.out.println("rpout");
             System.err.println(e.getMessage());
             throw new PaysInexistantException(idPays);
         }
@@ -754,6 +724,7 @@ public class Requete {
             requete.setString(2, epreuve.getSport().toString());
             requete.setString(3, epreuve.getSexe().toString().charAt(0) + "");
             requete.executeUpdate();
+            System.out.println("ééééééééééééééééééééééééééééé");
         } catch (Exception e) {
             // Pass
         }
@@ -921,6 +892,24 @@ public class Requete {
             requete.executeUpdate();
         } catch (Exception e) {
             throw new PaysInexistantException(pays.getNomPays());
+        }
+    }
+
+    public Epreuve getEpreuve(Epreuve.TypeSport nomSport, Epreuve.Sexe sexe) throws EpreuveInexistanteException {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from EPREUVE where type_Epreuve = ? and sexe_Epreuve = ?");
+            requete.setString(1, nomSport.toString());
+            requete.setString(2, sexe.toString().charAt(0) + "");
+            ResultSet resultat = requete.executeQuery();
+            resultat.next();
+            EpreuveCollective epreuve = new EpreuveCollective(nomSport, sexe);
+            if (nomSport.getNbParticipantNecessaire() > 1) {
+                return epreuve;
+            } else {
+                return new EpreuveIndividuelle(nomSport, sexe);
+            } 
+        } catch (Exception e) {
+            throw new EpreuveInexistanteException(nomSport.toString(), sexe.toString().charAt(0));
         }
     }
 }

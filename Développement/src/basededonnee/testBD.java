@@ -212,6 +212,12 @@ public class testBD {
             requete.majPays(pays);
             System.out.println(pays.getScoreTotal());
         }
+        requete.getEpreuves(jeux);
+        System.out.println(jeux.getClassementPays());
+        for (Pays pays : jeux.getClassementPays()) {
+            System.out.println(pays.getMedailles());
+            System.out.println(pays.getScoreTotal());
+        }
         // Athlete a = requete.getAthlete(235);
         // a.setNom("test");
         // a.setPrenom("test");
