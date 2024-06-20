@@ -800,7 +800,7 @@ public class Requete {
         }
     }
 
-    public void modierAthlete(Athlete athlete, int idAthlete) {
+    public void modifierAthlete(Athlete athlete, int idAthlete) {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Update ATHLETE set nom_A = ?, prenom_A = ?, sexe_A = ?, la_force = ?, endurance = ?, agilite = ?, id_Pays = ? where id_Athlete = ?");
             requete.setString(1, athlete.getNom());

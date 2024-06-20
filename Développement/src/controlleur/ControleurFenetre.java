@@ -66,10 +66,10 @@ public class ControleurFenetre implements EventHandler<ActionEvent> {
                             break;
                         case 'C':
                             System.out.println("role est C");
-                            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getAccueilJournaliste(), titre);
+                            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneAccueilJournaliste(), titre);
                             break;
                         case 'O':
-                            // this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneOrganisateur(), titre, "entrer");
+                            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneOrganisateur(), titre);
                             break;                
                         default:
                             this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneClassement(), titre);

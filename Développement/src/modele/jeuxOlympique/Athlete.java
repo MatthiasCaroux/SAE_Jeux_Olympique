@@ -167,6 +167,27 @@ public class Athlete implements Comparable<Athlete>, Participant {
         return this.sexe;
     }
 
+    public void setSexe(Epreuve.Sexe sexe) {
+        this.sexe = sexe;
+    }
+
+
+    public void setForce(int force) {
+        this.force = force;
+    }
+
+    public void setEndurance(int endurance) {
+        this.endurance = endurance;
+    }
+
+    public void setAgilité(int agilite) {
+        this.agilite = agilite;
+    }
+
+
+
+
+
     /**
      * Méthode permettant de comparer deux athlètes
      * @param a l'athlète à comparer

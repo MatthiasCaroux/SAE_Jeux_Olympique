@@ -1,6 +1,5 @@
 package src.basededonnee;
 
-import java.beans.Expression;
 import java.util.List;
 import java.util.Map;
 
@@ -184,7 +183,7 @@ public class testBD {
         Athlete a = requete.getAthlete(235);
         a.setNom("test");
         a.setPrenom("test");
-        requete.modierAthlete(a, 235);
+        requete.modifierAthlete(a, 235);
 
         // System.out.println("icicicicic" + test.keySet());
         // for (Epreuve epreuve : test.keySet()) {
