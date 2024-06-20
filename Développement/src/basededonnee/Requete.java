@@ -723,6 +723,7 @@ public class Requete {
             requete.setString(2, epreuve.getSport().toString());
             requete.setString(3, epreuve.getSexe().toString().charAt(0) + "");
             requete.executeUpdate();
+            jeuxOlympique.lancerUneEpreuve(epreuve);
             for (Pays pays : jeuxOlympique.getLesPays()) {
                 this.majPays(pays);
             }
