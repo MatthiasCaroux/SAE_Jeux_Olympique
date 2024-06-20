@@ -9,6 +9,7 @@ import org.junit.Test;
 import src.basededonnee.exception.AthleteInexistantException;
 import src.basededonnee.exception.BaseDeDonneeInaccessibleException;
 import src.basededonnee.exception.EpreuveDejaExistantException;
+import src.modele.exceptions.EpreuveDejaJoueeException;
 import src.modele.exceptions.EpreuveDejaPresenteException;
 import src.modele.exceptions.JeuxPasCommenceException;
 import src.modele.jeuxOlympique.*;
@@ -76,7 +77,7 @@ public class testBD {
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, BaseDeDonneeInaccessibleException, EpreuveDejaExistantException, JeuxPasCommenceException, AthleteInexistantException, EpreuveDejaPresenteException {
+    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, BaseDeDonneeInaccessibleException, EpreuveDejaExistantException, JeuxPasCommenceException, AthleteInexistantException, EpreuveDejaPresenteException, EpreuveDejaJoueeException {
         // try {
         //     Requete requete = new Requete();
         //     System.out.println(requete.connexion("niksan", "niksan"));
@@ -152,14 +153,29 @@ public class testBD {
         JeuxOlympique jeux = new JeuxOlympique(2036, "Paris", "France");
         Requete requete = new Requete();
         Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("Développement/donnees.csv");
-        System.out.println("11111" + test);
-        System.out.println("11111" + requete.getEpreuves(jeux));
-        System.out.println("11111" + jeux.getEpreuves());
-        for (Epreuve epreuve : requete.getEpreuves(jeux)) {
-            System.out.println("22222" + epreuve);
-            jeux.ajouteEpreuve(epreuve);
+        for (Epreuve epreuve : test.keySet()) {
+            requete.ajouteEpreuve(epreuve, jeux);
         }
-        System.out.println("333333333" + jeux.getEpreuves());
+        // System.out.println("11111" + test);
+        // System.out.println("11111" + requete.getEpreuves(jeux));
+        // System.out.println("11111" + jeux.getEpreuves());
+        // for (Epreuve epreuve : requete.getEpreuves(jeux)) {
+        //     System.out.println("22222" + epreuve);
+        //     jeux.ajouteEpreuve(epreuve);
+        // }
+        // System.out.println("333333333" + jeux.getEpreuves());
+        jeux.lancerUneEpreuve(requete.getEpreuves(jeux).get(2));
+        requete.lancerUneEpreuve(requete.getEpreuves(jeux).get(2), jeux);
+        for (Epreuve epreuve : jeux.getEpreuves()) {
+            try {
+                System.out.println("je suis là" + epreuve.getParticipants()); // ça ne marche pas
+                epreuve.rapport();
+            } catch (Exception e) {
+                // TODO: handle exception
+                // Pass, l'épreuve n'a pas encore lancer
+            }
+        }
+        System.out.println(jeux.getClassementPays());
 
         // List<EpreuveIndividuelle> epreuveIndividuelles = requete.getEpreuvesIndiv(jeux);
         // System.out.println(epreuveIndividuelles);
