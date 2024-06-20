@@ -4,8 +4,7 @@ package src.controlleur;
 import src.vues.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;      
+import javafx.scene.control.Alert;   
 
 
 public class ControleurInscription implements EventHandler<ActionEvent>{
