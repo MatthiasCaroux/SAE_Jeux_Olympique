@@ -261,6 +261,21 @@ public class Requete {
         }
     }
 
+    public int getIdAthlete(Athlete athlete) throws AthleteInexistantException {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select id_Athlete from ATHLETE where nom_A = ? and prenom_A = ? and sexe_A = ? and id_Pays = ?");
+            requete.setString(1, athlete.getNom());
+            requete.setString(2, athlete.getPrenom());
+            requete.setString(3, athlete.getSexe().toString().charAt(0) + "");
+            requete.setInt(4, this.getIdPays(athlete.getPays().getNomPays()));
+            ResultSet resultat = requete.executeQuery();
+            resultat.next();
+            return resultat.getInt("id_Athlete");
+        } catch (Exception e) {
+            throw new AthleteInexistantException(athlete.getNom(), athlete.getPrenom());
+        }
+    }
+
     public List<Athlete> getAthletes() throws BaseDeDonneeInaccessibleException {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE NATURAL JOIN PAYS");
@@ -644,35 +659,21 @@ public class Requete {
         } 
     }
 
-
-    // TODO: A tester ; pb de nbr d'épreuves et pas encore ajouter les participants
-    public List<Epreuve> getEpreuves(JeuxOlympique jeuxOlympique) {
+    public List<EpreuveIndividuelle> getEpreuvesIndiv(JeuxOlympique jeuxOlympique) {
         try {
-            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from EPREUVE where id_JO = ?");
+            PreparedStatement requete = this.connexionBD.prepareStatement("select * from EPREUVE NATURAL JOIN PARTICIPE_INDIV WHERE id_JO = ? GROUP BY type_Epreuve");
             requete.setInt(1, this.getIdJO(jeuxOlympique));
             ResultSet resultat = requete.executeQuery();
-            List<Epreuve> epreuves = new ArrayList<>();
+            List<EpreuveIndividuelle> epreuves = new ArrayList<>();
+            EpreuveIndividuelle epreuve;
             while (resultat.next()) {
-                List<String> epreuveCollectives = Arrays.asList("NatationRelais", "Handball", "Volley", "AthlétismeRelais");
-                if (epreuveCollectives.contains(resultat.getString("type_Epreuve"))) {
-                    epreuves.add(new EpreuveCollective(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve"))));
-                } else {
-                    epreuves.add(new EpreuveIndividuelle(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve"))));
+                System.out.println("Je suis là");
+                epreuve = new EpreuveIndividuelle(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve")));
+                for (Athlete athlete : this.getAthletesDansEpreuvesIndiv(epreuve, jeuxOlympique)) {
+                    epreuve.participer(athlete);
                 }
-                // Epreuve epreuve = new Epreuve(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve")));
-                // if (resultat.getString("type_Epreuve").equals("EscrimeÉpée")) {
-                //     if (resultat.getString("sexe_Epreuve").charAt(0) == 'M') {
-                //         epreuves.add(new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.M));
-                //     } else {
-                //         epreuves.add(new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.F));
-                //     }
-                // } else {
-                //     if (resultat.getString("sexe_Epreuve").charAt(0) == 'M') {
-                //         epreuves.add(new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.M));
-                //     } else {
-                //         epreuves.add(new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.F));
-                //     }
-                // }
+                epreuves.add(epreuve);
+                
             }
             return epreuves;
         } catch (Exception e) {
@@ -680,7 +681,46 @@ public class Requete {
         }
     }
 
-    // To do : A tester
+    public List<EpreuveCollective> getEpreuveCollec(JeuxOlympique jeuxOlympique) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("select * from EPREUVE NATURAL JOIN PARTICIPE_COLLEC WHERE id_JO = ? GROUP BY type_Epreuve");
+            requete.setInt(1, this.getIdJO(jeuxOlympique));
+            ResultSet resultat = requete.executeQuery();
+            List<EpreuveCollective> epreuves = new ArrayList<>();
+            EpreuveCollective epreuve;
+            while (resultat.next()) {
+                epreuve = new EpreuveCollective(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve")));
+                for (Equipe equipe : this.getEquipesDansEpreuves(epreuve, jeuxOlympique)) {
+                    try {
+                        epreuve.participer(equipe);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                        // Pass, pas assez de participants
+                    }
+                }
+                epreuves.add(epreuve);
+            }
+            return epreuves;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+
+    // TODO: A tester ; pb de nbr d'épreuves et pas encore ajouter les participants
+    public List<Epreuve> getEpreuves(JeuxOlympique jeuxOlympique) {
+        try {
+            List<Epreuve> epreuves = new ArrayList<>();
+            List<EpreuveIndividuelle> epreuvesIndiv = this.getEpreuvesIndiv(jeuxOlympique);
+            List<EpreuveCollective> epreuvesCollec = this.getEpreuveCollec(jeuxOlympique);
+            epreuves.addAll(epreuvesIndiv);
+            epreuves.addAll(epreuvesCollec);
+            return epreuves;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
     public List<Athlete> getAthletesDansEpreuvesIndiv(Epreuve epreuve, JeuxOlympique jeuxOlympique) {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Select * from PARTICIPE_INDIV where id_Epreuve = ? and type_Epreuve = ?");
@@ -689,11 +729,7 @@ public class Requete {
             ResultSet resultat = requete.executeQuery();
             List<Athlete> athletes = new ArrayList<>();
             while (resultat.next()) {
-                PreparedStatement requeteAthlete = this.connexionBD.prepareStatement("Select * from ATHLETE where id_Athlete = ?");
-                requeteAthlete.setInt(1, resultat.getInt("id_Athlete"));
-                ResultSet resultatAthlete = requeteAthlete.executeQuery();
-                resultatAthlete.next();
-                athletes.add(new Athlete(resultatAthlete.getString("nom_A"), resultatAthlete.getString("prenom_A"), Epreuve.Sexe.valueOf(resultatAthlete.getString("sexe_A")), new Pays(resultatAthlete.getString("id_Pays")), resultatAthlete.getInt("la_force"), resultatAthlete.getInt("endurance"), resultatAthlete.getInt("agilite")));
+                athletes.add(this.getAthlete((resultat.getInt("id_Athlete"))));
             }
             return athletes;
         } catch (Exception e) {
@@ -701,7 +737,6 @@ public class Requete {
         }
     }
 
-    // To do : A tester
     public List<Equipe> getEquipesDansEpreuves(Epreuve epreuve, JeuxOlympique jeuxOlympique) {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Select * from PARTICIPE_COLLEC where id_Epreuve = ? and type_Epreuve = ?");
@@ -730,8 +765,9 @@ public class Requete {
     // To do : A tester
     public List<Athlete> getAthletesDansEquipe(Equipe equipe) {
         try {
-            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from FAIT_PARTIE where id_Equipe = ?");
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from FAIT_PARTIE where id_Equipe = ? and sexe = ?");
             requete.setInt(1, this.getIdEquipe(equipe));
+            requete.setString(2, equipe.getSexeEquipe().toString().charAt(0) + "");
             ResultSet resultat = requete.executeQuery();
             List<Athlete> athletes = new ArrayList<>();
             while (resultat.next()) {
@@ -747,8 +783,6 @@ public class Requete {
         }
     }
 
-    // public List<Epreuve>
-
     public List<Athlete> rechercherAthlete(String chaineDeCarac) {
         try {
             List<Athlete> lesAthetes = new ArrayList<>();
@@ -763,6 +797,35 @@ public class Requete {
         } catch (Exception e) {
             // TODO: handle exception
             return new ArrayList<>();
+        }
+    }
+
+    public void modierAthlete(Athlete athlete, int idAthlete) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Update ATHLETE set nom_A = ?, prenom_A = ?, sexe_A = ?, la_force = ?, endurance = ?, agilite = ?, id_Pays = ? where id_Athlete = ?");
+            requete.setString(1, athlete.getNom());
+            requete.setString(2, athlete.getPrenom());
+            requete.setString(3, athlete.getSexe().toString().charAt(0) + "");
+            requete.setInt(4, athlete.getForce());
+            requete.setInt(5, athlete.getEndurance());
+            requete.setInt(6, athlete.getAgilité());
+            requete.setInt(7, this.getIdPays(athlete.getPays().getNomPays())); 
+            requete.setInt(8, idAthlete);
+            requete.executeUpdate();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
+    public Athlete getAthlete(int idAthlete) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from ATHLETE NATURAL JOIN PAYS where id_Athlete = ?");
+            requete.setInt(1, idAthlete);
+            ResultSet resultat = requete.executeQuery();
+            resultat.next();
+            return new Athlete(resultat.getString("nom_A"), resultat.getString("prenom_A"), Epreuve.Sexe.valueOf(resultat.getString("sexe_A")), new Pays(resultat.getString("nom_P")), resultat.getInt("la_force"), resultat.getInt("endurance"), resultat.getInt("agilite"));
+        } catch (Exception e) {
+            return null;
         }
     }
 }
