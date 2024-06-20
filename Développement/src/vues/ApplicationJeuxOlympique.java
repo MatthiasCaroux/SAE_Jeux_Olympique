@@ -2,17 +2,21 @@ package src.vues;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.fxml.FXMLLoader;
-
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import src.controlleur.*;
 import src.basededonnee.*;
 import src.modele.jeuxOlympique.*;
@@ -33,6 +37,8 @@ public class ApplicationJeuxOlympique extends Application {
     private Scene sceneJournalisteAccueil;
     private Scene sceneAthletes;
     private Scene sceneEquipe;
+    private Scene sceneAjouterUnAthlete;
+    private Scene sceneAjouterEquipe;
     private FXMLLoader loaderAccueil;
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
@@ -45,6 +51,7 @@ public class ApplicationJeuxOlympique extends Application {
     private FXMLLoader loaderJournalisteAccueil;
     private FXMLLoader loaderAthletes;
     private FXMLLoader loaderEquipe;
+    private FXMLLoader loaderAjouterUnAthlete;
     // private 
   
     @Override
@@ -53,7 +60,6 @@ public class ApplicationJeuxOlympique extends Application {
         try {
             this.requete = new Requete();
         } catch (Exception e) {
-            // TODO: handle exception
             System.err.println(e.getMessage());
         }
 
@@ -101,10 +107,10 @@ public class ApplicationJeuxOlympique extends Application {
 
         loaderEquipe = new FXMLLoader(this.getClass().getResource("/fxml/equipesJournaliste.fxml"));
         this.sceneEquipe = new Scene(loaderEquipe.load());
-        
 
-        
-        
+        loaderAjouterUnAthlete = new FXMLLoader(this.getClass().getResource("/fxml/ajouterUnAthlete.fxml"));
+        this.sceneAjouterUnAthlete = new Scene(loaderAjouterUnAthlete.load());
+
     }
     
     @Override
@@ -370,6 +376,78 @@ public class ApplicationJeuxOlympique extends Application {
         } else {
             System.out.println("Bouton #choixDeconnexion non trouvé dans sceneJournalisteAccueil");
         }
+
+        Button boutonDeconnexionDepuisAthletes = (Button) sceneAthletes.lookup("#choixDeconnexion");
+        if (boutonDeconnexionDepuisAthletes != null) {
+            boutonDeconnexionDepuisAthletes.setOnAction(new ControleurDeconnexion(this));
+            System.out.println("Bouton #choixDeconnexion trouvé et configuré");
+        } else {
+            System.out.println("Bouton #choixDeconnexion non trouvé dans sceneAthletes");
+        }
+
+        Button boutonActusDepuisAthletes = (Button) sceneAthletes.lookup("#Actus");
+        if (boutonActusDepuisAthletes != null) {
+            boutonActusDepuisAthletes.setOnAction(new ControleurActus(this));
+            System.out.println("Bouton #Actus trouvé et configuré");
+        } else {
+            System.out.println("Bouton #Actus non trouvé dans sceneAthletes");
+        }
+
+        Button boutonEquipeDepuisAthletes = (Button) sceneAthletes.lookup("#Equipes");
+        if (boutonEquipeDepuisAthletes != null) {
+            boutonEquipeDepuisAthletes.setOnAction(new ControleurEquipe(this));
+            System.out.println("Bouton #Equipes trouvé et configuré");
+        } else {
+            System.out.println("Bouton #Equipes non trouvé dans sceneAthletes");
+        }
+
+        Button boutonClassementDepuisAthletes = (Button) sceneAthletes.lookup("#Classement");
+        if (boutonClassementDepuisAthletes != null) {
+            boutonClassementDepuisAthletes.setOnAction(new ControleurClassement(this));
+            System.out.println("Bouton #Classement trouvé et configuré");
+        } else {
+            System.out.println("Bouton #Classement non trouvé dans sceneAthletes");
+        }
+
+        Button boutonAjouterAthDepuisAjoutDeDonnées = (Button) sceneAjoutDonnees.lookup("#ajouterUnAthletes");
+        if (boutonAjouterAthDepuisAjoutDeDonnées != null) {
+            boutonAjouterAthDepuisAjoutDeDonnées.setOnAction(new ControleurAjouterUnAthlete(this));
+            System.out.println("Bouton #ajouterUnAthletes trouvé et configuré");
+        } else {
+            System.out.println("Bouton #ajouterUnAthletes non trouvé dans sceneAjoutDonnees");
+        }
+
+        Button boutonActusDepuisAjouterUnAthlete = (Button) sceneAjouterUnAthlete.lookup("#Actus");
+        if (boutonActusDepuisAjouterUnAthlete != null) {
+            boutonActusDepuisAjouterUnAthlete.setOnAction(new ControleurActus(this));
+            System.out.println("Bouton #Actus trouvé et configuré");
+        } else {
+            System.out.println("Bouton #Actus non trouvé dans sceneAjouterUnAthlete");
+        }
+
+        Button boutonEquipeDepuisAjouterUnAthlete = (Button) sceneAjouterUnAthlete.lookup("#Equipes");
+        if (boutonEquipeDepuisAjouterUnAthlete != null) {
+            boutonEquipeDepuisAjouterUnAthlete.setOnAction(new ControleurEquipe(this));
+            System.out.println("Bouton #Equipes trouvé et configuré");
+        } else {
+            System.out.println("Bouton #Equipes non trouvé dans sceneAjouterUnAthlete");
+        }
+
+        Button boutonClassementDepuisAjouterUnAthlete = (Button) sceneAjouterUnAthlete.lookup("#Classement");
+        if (boutonClassementDepuisAjouterUnAthlete != null) {
+            boutonClassementDepuisAjouterUnAthlete.setOnAction(new ControleurClassement(this));
+            System.out.println("Bouton #Classement trouvé et configuré");
+        } else {
+            System.out.println("Bouton #Classement non trouvé dans sceneAjouterUnAthlete");
+        }
+
+        Button boutonDeconnexionDepuisAjouterUnAthlete = (Button) sceneAjouterUnAthlete.lookup("#choixDeconnexion");
+        if (boutonDeconnexionDepuisAjouterUnAthlete != null) {
+            boutonDeconnexionDepuisAjouterUnAthlete.setOnAction(new ControleurDeconnexion(this));
+            System.out.println("Bouton #choixDeconnexion trouvé et configuré");
+        } else {
+            System.out.println("Bouton #choixDeconnexion non trouvé dans sceneAjouterUnAthlete");
+        }
     }
     
 
@@ -419,12 +497,336 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneJournalisteAccueil;
     }
 
-    public Scene getSceneAthletes(){
-        return sceneAthletes;
+    public Scene getSceneAjouterUnAthlete() {
+        BorderPane borderPane = (BorderPane) sceneAjouterUnAthlete.lookup("#borderPane");
+    
+        VBox mainVBox = new VBox(20);
+        mainVBox.setAlignment(Pos.CENTER);
+        mainVBox.setStyle("-fx-background-color: #0085C7;");
+    
+        Label titleLabel = new Label("Ajouter un athlète");
+        titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: white;");
+    
+        VBox formVBox = new VBox(10);
+        formVBox.setAlignment(Pos.CENTER);
+        formVBox.setPadding(new Insets(20, 50, 20, 50));
+    
+        TextField nom = new TextField();
+        nom.setPromptText("Nom");
+        nom.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+    
+        TextField prenom = new TextField();
+        prenom.setPromptText("Prénom");
+        prenom.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+    
+        TextField force = new TextField();
+        force.setPromptText("Force");
+        force.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+    
+        TextField endurance = new TextField();
+        endurance.setPromptText("Endurance");
+        endurance.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+    
+        TextField agilite = new TextField();
+        agilite.setPromptText("Agilité");
+        agilite.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+    
+        ToggleGroup sexe = new ToggleGroup();
+        HBox sexeHBox = new HBox(10);
+        sexeHBox.setAlignment(Pos.CENTER);
+        RadioButton homme = new RadioButton("Homme");
+        homme.setToggleGroup(sexe);
+        RadioButton femme = new RadioButton("Femme");
+        femme.setToggleGroup(sexe);
+        sexeHBox.getChildren().addAll(homme, femme);
+    
+        HBox paysHBox = new HBox(10);
+        paysHBox.setAlignment(Pos.CENTER);
+        Label paysLabel = new Label("Choix du pays");
+        paysLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+        ComboBox<String> pays = new ComboBox<>();
+        pays.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+        
+        List<String> paysList = new ArrayList<>();
+        try {
+            for (Pays pay : this.requete.getPays()) {
+                paysList.add(pay.getNomPays());
+            }
+            pays.getItems().addAll(paysList);
+            pays.setValue(paysList.get(0));
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la récupération des pays");
+            System.err.println(e.getMessage());
+        }
+    
+        paysHBox.getChildren().addAll(paysLabel, pays);
+    
+        HBox buttonHBox = new HBox(10);
+        buttonHBox.setAlignment(Pos.CENTER);
+        Button ajouter = new Button("Ajouter");
+        ajouter.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;");
+        ajouter.setOnMouseEntered(e -> ajouter.setStyle("-fx-background-color: #00A1E4; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+        ajouter.setOnMouseExited(e -> ajouter.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+        ajouter.setOnAction(e -> {
+            try {
+                String nomAthlete = nom.getText();
+                String prenomAthlete = prenom.getText();
+                String sexeAthlete = ((RadioButton) sexe.getSelectedToggle()).getText();
+                Epreuve.Sexe sex = sexeAthlete.equals("Homme") ? Epreuve.Sexe.M : Epreuve.Sexe.F;
+                Pays paysAthlete = new Pays(pays.getValue());
+                int forceAthlete = Integer.parseInt(force.getText());
+                int enduranceAthlete = Integer.parseInt(endurance.getText());
+                int agiliteAthlete = Integer.parseInt(agilite.getText());
+                Athlete athlete = new Athlete(nomAthlete, prenomAthlete, sex, paysAthlete, forceAthlete, enduranceAthlete, agiliteAthlete);
+                this.requete.ajouterAthlete(athlete);
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Ajout d'un athlète");
+                alert.setHeaderText("Athlète ajouté");
+                alert.setContentText("L'athlète " + prenomAthlete + " " + nomAthlete + " a bien été ajouté");
+                alert.showAndWait();
+            } catch (Exception ex) {
+                System.out.println("Erreur lors de l'ajout de l'athlète");
+                System.err.println(ex.getMessage());
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Ajout d'un athlète");
+                alert.setHeaderText("Erreur lors de l'ajout de l'athlète");
+                alert.setContentText("Une erreur est survenue lors de l'ajout de l'athlète");
+                alert.showAndWait();
+            }
+        });
+    
+        Button retour = new Button("Retour");
+        retour.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;");
+        retour.setOnMouseEntered(e -> retour.setStyle("-fx-background-color: #00A1E4; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+        retour.setOnMouseExited(e -> retour.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+        retour.setOnAction(new ControleurAjoutDonnees(this));
+    
+        buttonHBox.getChildren().addAll(ajouter, retour);
+    
+        formVBox.getChildren().addAll(nom, prenom, force, endurance, agilite, sexeHBox, paysHBox, buttonHBox);
+    
+        mainVBox.getChildren().addAll(titleLabel, formVBox);
+    
+        borderPane.setCenter(mainVBox);
+    
+        borderPane.setTop(null);
+        return sceneAjouterUnAthlete;
+    }
+    
+
+    public Scene getSceneAthletes(){// Permet de faire une fenetre avec tous les athletes
+    BorderPane borderPane = (BorderPane) sceneAthletes.lookup("#borderPane");
+
+    ScrollPane scrollPane = new ScrollPane();
+    scrollPane.setFitToHeight(true);
+    scrollPane.setFitToWidth(true); // Ajuster le scroll pane à la largeur de la fenêtre
+
+    GridPane gridPane = new GridPane();
+    gridPane.setHgap(10);
+    gridPane.setVgap(10);
+    gridPane.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
+    gridPane.setAlignment(Pos.TOP_CENTER); // Centrer le GridPane horizontalement
+
+    try{
+        System.out.println("Je suis dans la méthode getSceneAthletes, dans le try");
+        List<Athlete> athletes = this.requete.getAthletes();
+        for (int i = 0; i < athletes.size(); i++) {
+            Athlete athlete = athletes.get(i);
+            VBox vb = new VBox();
+            vb.setAlignment(Pos.CENTER); // Centrer le contenu de chaque VBox horizontalement
+            String prenom = athlete.getPrenom();
+            String nom = athlete.getNom();
+            ImageView imageView;
+            if (athlete.getSexe() == Epreuve.Sexe.M) {
+                imageView = new ImageView(new Image("images/hommeAth.png"));
+            } else {
+                imageView = new ImageView(new Image("images/femmeAth.png"));
+            }
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(100);
+            Label label = new Label(prenom + " " + nom);
+            label.setStyle("-fx-font-size: 24px;"); // Augmenter la taille du texte
+            vb.getChildren().addAll(imageView, label);
+            
+            // Ajouter un event handler pour afficher une popup avec les attributs de l'athlète
+            vb.setOnMouseClicked(event -> {
+                showAthleteDetails(athlete);
+            });
+            
+            gridPane.add(vb, i % 5, i / 5);
+        }
+    }
+    catch (Exception e){
+        System.out.println("Erreur lors de la récupération des athlètes");
+        System.err.println(e.getMessage());
     }
 
-    public Scene getSceneEquipe(){
+    scrollPane.setContent(gridPane);
+    borderPane.setCenter(scrollPane);
+
+    return sceneAthletes;
+
+}
+
+    private void showAthleteDetails(Athlete athlete) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Détails de l'athlète");
+        alert.setHeaderText(athlete.getPrenom() + " " + athlete.getNom());
+        alert.setContentText("Prénom: " + athlete.getPrenom() + "\n" +
+                            "Nom: " + athlete.getNom() + "\n" + 
+                            "Pays: " + athlete.getPays() + "\n" +
+                            "Sexe: " + athlete.getSexe() + "\n" +
+                            "Agilité: " + athlete.getAgilité() + "\n" +
+                            "Force: " + athlete.getForce() + "\n" +
+                            "Endurance: " + athlete.getEndurance()
+                            );
+                                
+
+        alert.showAndWait();
+    }
+
+    public Scene getSceneAjouterUneEquipe(){
+        BorderPane borderPane = new BorderPane();
+
+        VBox mainVBox = new VBox(20);
+        mainVBox.setAlignment(Pos.CENTER);
+        mainVBox.setStyle("-fx-background-color: #0085C7;");
+
+        Label titleLabel = new Label("Ajouter une équipe");
+        titleLabel.setStyle("-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        VBox formVBox = new VBox(10);
+        formVBox.setAlignment(Pos.CENTER);
+        formVBox.setPadding(new Insets(20, 50, 20, 50));
+
+        TextField nom = new TextField();
+        nom.setPromptText("Nom de l'équipe");
+        nom.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+
+        TextField pays = new TextField();
+        pays.setPromptText("Pays de l'équipe");
+        pays.setStyle("-fx-font-size: 20px; -fx-padding: 10px; -fx-background-color: #f0f0f0;");
+
+        ToggleGroup sexe = new ToggleGroup();
+        HBox sexeHBox = new HBox(10);
+        sexeHBox.setAlignment(Pos.CENTER);
+        RadioButton homme = new RadioButton("Homme");
+        homme.setToggleGroup(sexe);
+        RadioButton femme = new RadioButton("Femme");
+        femme.setToggleGroup(sexe);
+        sexeHBox.getChildren().addAll(homme, femme);
+
+
+        HBox buttonHBox = new HBox(10);
+        buttonHBox.setAlignment(Pos.CENTER);
+        Button ajouter = new Button("Ajouter");
+        ajouter.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;");
+        ajouter.setOnMouseEntered(e -> ajouter.setStyle("-fx-background-color: #00A1E4; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+        ajouter.setOnMouseExited(e -> ajouter.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+        ajouter.setOnAction(e -> {
+            try {
+                String nomEquipe = nom.getText();
+                Pays paysEquipe = new Pays(pays.getText());
+                String sexeEquipe = ((RadioButton) sexe.getSelectedToggle()).getText();
+                Epreuve.Sexe sex = sexeEquipe.equals("Homme") ? Epreuve.Sexe.M : Epreuve.Sexe.F;
+                Equipe equipe = new Equipe(nomEquipe, paysEquipe, sex);
+                this.requete.ajouterEquipe(equipe);
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Ajout d'une équipe");
+                alert.setHeaderText("Équipe ajoutée");
+                alert.setContentText("L'équipe " + nomEquipe + " a bien été ajoutée");
+                alert.showAndWait();
+            } catch (Exception ex) {
+                System.out.println("Erreur lors de l'ajout de l'équipe");
+                System.err.println(ex.getMessage());
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Ajout d'une équipe");
+                alert.setHeaderText("Erreur lors de l'ajout de l'équipe");
+                alert.setContentText("Une erreur est survenue lors de l'ajout de l'équipe");
+                alert.showAndWait();
+            }});
+
+        Button retour = new Button("Retour");
+        retour.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;");
+        retour.setOnMouseEntered(e -> retour.setStyle("-fx-background-color: #00A1E4; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+        retour.setOnMouseExited(e -> retour.setStyle("-fx-background-color: #0085C7; -fx-text-fill: white; -fx-font-size: 15px; -fx-padding: 10px; -fx-background-radius: 5;"));
+        retour.setOnAction(new ControleurAjoutDonnees(this));
+
+        buttonHBox.getChildren().addAll(ajouter, retour);
+
+        formVBox.getChildren().addAll(nom, pays, sexeHBox, buttonHBox);
+
+        mainVBox.getChildren().addAll(titleLabel, formVBox);
+
+        borderPane.setCenter(mainVBox);
+
+        return new Scene(borderPane);
+    }
+
+
+
+
+    public Scene getSceneEquipe(){// permet de lister toutes les equipes
+        // BorderPane borderPane = (BorderPane) sceneEquipe.lookup("#borderPane");
+
+
+        // ScrollPane scrollPane = new ScrollPane();
+        // scrollPane.setFitToHeight(true);
+        // scrollPane.setFitToWidth(true); // Ajuster le scroll pane à la largeur de la fenêtre
+
+        // GridPane gridPane = new GridPane();
+        // gridPane.setHgap(10);
+        // gridPane.setVgap(10);
+        // gridPane.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
+        // gridPane.setAlignment(Pos.TOP_CENTER); // Centrer le GridPane horizontalement
+
+        // try{
+        //     System.out.println("Je suis dans la méthode getSceneEquipe, dans le try");
+        //     List<Equipe> equipes = this.requete.getEquipe();
+        //     for (int i = 0; i < equipes.size(); i++) {
+        //         Equipe equipe = equipes.get(i);
+        //         VBox vb = new VBox();
+        //         vb.setAlignment(Pos.CENTER); // Centrer le contenu de chaque VBox horizontalement
+        //         String nom = equipe.getNomEquipe();
+        //         ImageView imageView = new ImageView(new Image("images/equipe.png"));
+        //         imageView.setFitHeight(100);
+        //         imageView.setFitWidth(100);
+        //         Label label = new Label(nom);
+        //         label.setStyle("-fx-font-size: 24px;"); // Augmenter la taille du texte
+        //         vb.getChildren().addAll(imageView, label);
+                
+        //         // Ajouter un event handler pour afficher une popup avec les attributs de l'athlète
+        //         vb.setOnMouseClicked(event -> {
+        //             showEquipeDetails(equipe);
+        //         });
+                
+        //         gridPane.add(vb, i % 5, i / 5);
+        //     }
+        // }
+        // catch (Exception e){
+        //     System.out.println("Erreur lors de la récupération des équipes");
+        //     System.err.println(e.getMessage());
+        // }
+
+
+
         return sceneEquipe;
+    }
+
+    private void showEquipeDetails(Equipe equipe) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Détails de l'équipe");
+        alert.setHeaderText(equipe.getNomEquipe());
+        List<Athlete> athletes = equipe.getLesAthlètes();
+        String contenu = "";
+        for (Athlete athlete : athletes) {
+            contenu += athlete.getPrenom() + " " + athlete.getNom() + "\n";
+        }
+        alert.setContentText(contenu);
+
+                            
+
+        alert.showAndWait();
     }
 
     public Scene getSceneGestionUtilisateur() {

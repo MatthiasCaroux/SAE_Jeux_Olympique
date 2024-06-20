@@ -149,7 +149,7 @@ public class testBD {
         // }
         JeuxOlympique jeux = new JeuxOlympique(2036, "Paris", "France");
         Requete requete = new Requete();
-        Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("/home/iut45/Etudiants/o22301527/Documents/SAE/SAE_Jeux_Olympique/Développement/donnees.csv");
+        Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("Développement/donnees.csv");
         for (Epreuve epreuve : test.keySet()) {
             boolean val;
             if (epreuve instanceof EpreuveCollective) {

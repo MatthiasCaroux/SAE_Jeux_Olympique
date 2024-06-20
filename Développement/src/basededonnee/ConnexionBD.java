@@ -19,13 +19,6 @@ public class ConnexionBD {
 		this.mysql=null;
 		this.connecte=false;
 		Class.forName("org.mariadb.jdbc.Driver");
-        // try {
-		// 	System.out.println("Tentative de connexion à la base de donnée");
-        //     this.connecter();
-		// 	System.out.println("Connexion reussi !");
-        // } catch (Exception e) {
-        //     System.out.println("Erreur de connexion à la base de donnée");
-        // } 
 	}
 
 	public void connecter() throws SQLException {

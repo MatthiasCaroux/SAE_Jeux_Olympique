@@ -8,6 +8,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.media.AudioClip;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class ControleurFenetre implements EventHandler<ActionEvent> {
 
@@ -52,7 +55,13 @@ public class ControleurFenetre implements EventHandler<ActionEvent> {
                             // tfID.setText("");
                             // TextField tfMDP = (TextField) this.applicationJeuxOlympique.getSceneConnexion().lookup("MDP");
                             // tfMDP.setText("");
-                            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneAccueilAdmin(), titre);  
+                            //verifier si un fichier est bien trouvé
+                            // String path = getClass().getResource("/home/caroux/Bureau/SAE_Jeux_Olympique/").toString();
+                            // System.out.println("Chemin actuel = " + path);
+                            
+                            // AudioClip audio = new AudioClip(getClass().getResource("Gta-5.mp3").toString());
+                            // audio.play();
+                            this.applicationJeuxOlympique.changerFenetre(this.applicationJeuxOlympique.getSceneAccueilAdmin(), titre);
                             System.out.println("seroiuhg osig poqpoîpùo3546546");                      
                             break;
                         case 'C':
