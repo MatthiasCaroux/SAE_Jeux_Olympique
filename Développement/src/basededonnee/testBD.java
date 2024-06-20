@@ -9,6 +9,7 @@ import org.junit.Test;
 import src.basededonnee.exception.AthleteInexistantException;
 import src.basededonnee.exception.BaseDeDonneeInaccessibleException;
 import src.basededonnee.exception.EpreuveDejaExistantException;
+import src.modele.exceptions.EpreuveDejaPresenteException;
 import src.modele.exceptions.JeuxPasCommenceException;
 import src.modele.jeuxOlympique.*;
 
@@ -75,7 +76,7 @@ public class testBD {
         }
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, BaseDeDonneeInaccessibleException, EpreuveDejaExistantException, JeuxPasCommenceException, AthleteInexistantException {
+    public static void main(String[] args) throws ClassNotFoundException, InterruptedException, BaseDeDonneeInaccessibleException, EpreuveDejaExistantException, JeuxPasCommenceException, AthleteInexistantException, EpreuveDejaPresenteException {
         // try {
         //     Requete requete = new Requete();
         //     System.out.println(requete.connexion("niksan", "niksan"));
@@ -103,16 +104,16 @@ public class testBD {
             //     System.out.println(e.getMessage());
             //     // Pass, l'athlète existe déjà
             // }
-            System.out.println("9874563210000.0");
-            Equipe equipe1 = new Equipe("Equipe 1", France, Epreuve.Sexe.M);
-            equipe1.ajouterMembre(new Athlete("Hanks", "Tom", Epreuve.Sexe.M, France, 90, 70, 80));
-            equipe1.ajouterMembre(new Athlete("Doe", "Jane", Epreuve.Sexe.M, France, 60, 95, 90));
-            equipe1.ajouterMembre(new Athlete("Doe", "John", Epreuve.Sexe.M, France, 80, 80, 80));
-            equipe1.ajouterMembre(new Athlete("PLOUF", "PLOUF", Epreuve.Sexe.M, France, 60, 95, 90));
-            EpreuveCollective epreuveCollective = new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.M);
-            epreuveCollective.participer(equipe1);
-            requete.ajouteEpreuve(epreuveCollective, jeux);
-            System.out.println("99999999999999999999999999999999999");
+            // System.out.println("9874563210000.0");
+            // Equipe equipe1 = new Equipe("Equipe 1", France, Epreuve.Sexe.M);
+            // equipe1.ajouterMembre(new Athlete("Hanks", "Tom", Epreuve.Sexe.M, France, 90, 70, 80));
+            // equipe1.ajouterMembre(new Athlete("Doe", "Jane", Epreuve.Sexe.M, France, 60, 95, 90));
+            // equipe1.ajouterMembre(new Athlete("Doe", "John", Epreuve.Sexe.M, France, 80, 80, 80));
+            // equipe1.ajouterMembre(new Athlete("PLOUF", "PLOUF", Epreuve.Sexe.M, France, 60, 95, 90));
+            // EpreuveCollective epreuveCollective = new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.M);
+            // epreuveCollective.participer(equipe1);
+            // requete.ajouteEpreuve(epreuveCollective, jeux);
+            // System.out.println("99999999999999999999999999999999999");
             // requete.ajouterEquipe(equipe1);
             // requete.ajouterPays("France");
             // Epreuve epreuve = new EpreuveIndividuelle(Epreuve.TypeSport.EscrimeÉpée, Epreuve.Sexe.M);
@@ -151,6 +152,14 @@ public class testBD {
         JeuxOlympique jeux = new JeuxOlympique(2036, "Paris", "France");
         Requete requete = new Requete();
         Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("Développement/donnees.csv");
+        System.out.println("11111" + test);
+        System.out.println("11111" + requete.getEpreuves(jeux));
+        System.out.println("11111" + jeux.getEpreuves());
+        for (Epreuve epreuve : requete.getEpreuves(jeux)) {
+            System.out.println("22222" + epreuve);
+            jeux.ajouteEpreuve(epreuve);
+        }
+        System.out.println("333333333" + jeux.getEpreuves());
 
         // List<EpreuveIndividuelle> epreuveIndividuelles = requete.getEpreuvesIndiv(jeux);
         // System.out.println(epreuveIndividuelles);
@@ -168,81 +177,92 @@ public class testBD {
         // }
 
 
-        for (Epreuve epreuve : test.keySet()) {
-            requete.ajouteEpreuve(epreuve, jeux);
-        }
-
-        List<Epreuve> epreuves = requete.getEpreuves(jeux);
-        System.out.println(epreuves);
-        for (Epreuve epreuve : epreuves) {
-            if (epreuve instanceof EpreuveCollective && epreuve.getParticipants() instanceof Equipe) {
-                System.out.println("je suis une équipe");
-                System.out.println(epreuve + " " + epreuve.getParticipants().get(0));
-                System.out.println("je suis une équipe");
-                for (Athlete athlete : ((Equipe) epreuve.getParticipants()).getLesAthlètes()) {
-                    System.out.println(" + " + athlete);
-                }
-            } else {
-                System.out.println(epreuve + " " + epreuve.getParticipants());
-            }
-            // System.out.println(epreuve + " " + epreuve.getParticipants());
-        }
-
-        Athlete a = requete.getAthlete(235);
-        a.setNom("test");
-        a.setPrenom("test");
-        requete.modifierAthlete(a, 235);
-
-        System.out.println();
-        System.out.println(requete.getLesEquipes());
-
-        // System.out.println("icicicicic" + test.keySet());
         // for (Epreuve epreuve : test.keySet()) {
-        //     boolean val;
-        //     if (epreuve instanceof EpreuveCollective) {
-        //         val = true;
-        //     } else {
-        //         val = false;
-        //     }
-        //     String text;
-        //     if (test.get(epreuve).get(0) instanceof Equipe) {
-        //         text = "Equipe";
-        //     } else {
-        //         text = "Athlete";
-        //     }
-            // System.out.println(epreuve.getSport() + " " + epreuve.getSexe() + " " + val + " " + text);
-            // int equipeValide = 0;
-            // if (epreuve instanceof EpreuveCollective) {
-            //     for (Participant participant : test.get(epreuve)) {
-            //         Equipe equipe = (Equipe) participant;
-            //         if (equipe.getLesAthlètes().size() == 4) {
-            //             equipeValide++;
-            //         }
-            //     }
-            // }
-            // System.out.println(equipeValide);
-            // Thread.sleep(3000);
-            // requete.ajouteEpreuve(epreuve, jeux);
-            // System.out.println(epreuve.getParticipants());
+        //     requete.ajouteEpreuve(epreuve, jeux);
         // }
-        // System.out.println(jeux.getLesPays());
-        // System.out.println(jeux.getEpreuves());
-        // // System.out.println(jeux.lesParticipantsAuxJo());
+
+        // System.out.println("11111" + requete.getEpreuves(jeux));
+        // for (Epreuve epreuve : requete.getEpreuves(jeux)) {
+        //     jeux.ajouteEpreuve(epreuve);
+        // }
+        // System.out.println("11111" + jeux.getEpreuves());
+
+        // List<Epreuve> epreuves = requete.getEpreuves(jeux);
+        // // for (Epreuve epreuve : epreuves) {
+        // //     requete.lancerUneEpreuve(epreuve, jeux);
+        // // }
+        // System.out.println("0000" + epreuves);
+        // System.out.println("0000" + jeux.getEpreuves()); // ICICICICICICICICICICI
+        // for (Epreuve epreuve : epreuves) {
+        //     if (epreuve instanceof EpreuveCollective && epreuve.getParticipants() instanceof Equipe) {
+        //         System.out.println("je suis une équipe");
+        //         System.out.println(epreuve + " " + epreuve.getParticipants().get(0));
+        //         System.out.println("je suis une équipe");
+        //         for (Athlete athlete : ((Equipe) epreuve.getParticipants()).getLesAthlètes()) {
+        //             System.out.println(" + " + athlete);
+        //         }
+        //     } else {
+        //         System.out.println(epreuve + " " + epreuve.getParticipants());
+        //     }
+        //     // System.out.println(epreuve + " " + epreuve.getParticipants());
+        // }
+
+        // Athlete a = requete.getAthlete(235);
+        // a.setNom("test");
+        // a.setPrenom("test");
+        // requete.modifierAthlete(a, 235);
+
+        // System.out.println();
+        // System.out.println(requete.getLesEquipes());
         // System.out.println(requete.getEpreuves(jeux));
 
-        // int t1 = requete.getEpreuves(jeux).size();
-        // int t2 = jeux.getEpreuves().size();
-        // System.out.println(t1 + " " + t2);
-        // // String nomEpreuve = "NatationRelais";
-        // // System.out.println(Epreuve.TypeSport.valueOf(nomEpreuve));
-        // // System.out.println(requete.getAthletes());
-        // // System.out.println(jeux.getClassementPays());
-        // for (Epreuve epreuve : test.keySet()) {
-        //     System.out.println(epreuve.getParticipants().size());
-        // }
+        // // System.out.println("icicicicic" + test.keySet());
+        // // for (Epreuve epreuve : test.keySet()) {
+        // //     boolean val;
+        // //     if (epreuve instanceof EpreuveCollective) {
+        // //         val = true;
+        // //     } else {
+        // //         val = false;
+        // //     }
+        // //     String text;
+        // //     if (test.get(epreuve).get(0) instanceof Equipe) {
+        // //         text = "Equipe";
+        // //     } else {
+        // //         text = "Athlete";
+        // //     }
+        //     // System.out.println(epreuve.getSport() + " " + epreuve.getSexe() + " " + val + " " + text);
+        //     // int equipeValide = 0;
+        //     // if (epreuve instanceof EpreuveCollective) {
+        //     //     for (Participant participant : test.get(epreuve)) {
+        //     //         Equipe equipe = (Equipe) participant;
+        //     //         if (equipe.getLesAthlètes().size() == 4) {
+        //     //             equipeValide++;
+        //     //         }
+        //     //     }
+        //     // }
+        //     // System.out.println(equipeValide);
+        //     // Thread.sleep(3000);
+        //     // requete.ajouteEpreuve(epreuve, jeux);
+        //     // System.out.println(epreuve.getParticipants());
+        // // }
+        // // System.out.println(jeux.getLesPays());
+        // // System.out.println(jeux.getEpreuves());
+        // // // System.out.println(jeux.lesParticipantsAuxJo());
+        // // System.out.println(requete.getEpreuves(jeux));
 
-        // // A tester 
-        // requete.rechercherAthlete("a");
+        // // int t1 = requete.getEpreuves(jeux).size();
+        // // int t2 = jeux.getEpreuves().size();
+        // // System.out.println(t1 + " " + t2);
+        // // // String nomEpreuve = "NatationRelais";
+        // // // System.out.println(Epreuve.TypeSport.valueOf(nomEpreuve));
+        // // // System.out.println(requete.getAthletes());
+        // // // System.out.println(jeux.getClassementPays());
+        // // for (Epreuve epreuve : test.keySet()) {
+        // //     System.out.println(epreuve.getParticipants().size());
+        // // }
+
+        // // // A tester 
+        // // requete.rechercherAthlete("a");
 
         
     }

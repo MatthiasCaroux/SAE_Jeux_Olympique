@@ -665,6 +665,7 @@ public class Requete {
             List<EpreuveCollective> epreuves = new ArrayList<>();
             EpreuveCollective epreuve;
             while (resultat.next()) {
+                System.out.println("7878787878" + resultat.getBoolean("a_ete_joue"));
                 epreuve = new EpreuveCollective(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve")));
                 for (Equipe equipe : this.getEquipesDansEpreuves(epreuve, jeuxOlympique)) {
                     try {
@@ -674,11 +675,27 @@ public class Requete {
                         // Pass, pas assez de participants
                     }
                 }
+                jeuxOlympique.ajouteEpreuve(epreuve);
+                if (resultat.getBoolean("a_ete_joue")) {
+                    jeuxOlympique.lancerUneEpreuve(epreuve);
+                }
                 epreuves.add(epreuve);
             }
             return epreuves;
         } catch (Exception e) {
             return new ArrayList<>();
+        }
+    }
+
+    public void lancerUneEpreuve(Epreuve epreuve, JeuxOlympique jeuxOlympique) {
+        try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Update EPREUVE set a_ete_joue = true where id_Epreuve = ? and type_Epreuve = ? and sexe_Epreuve = ?");
+            requete.setInt(1, this.getIdEpreuve(epreuve));
+            requete.setString(2, epreuve.getSport().toString());
+            requete.setString(3, epreuve.getSexe().toString().charAt(0) + "");
+            requete.executeUpdate();
+        } catch (Exception e) {
+            // Pass
         }
     }
 
@@ -825,12 +842,4 @@ public class Requete {
             throw new AthleteInexistantException(idAthlete);
         }
     }
-
-    // public void supprimerAthlete(int idAthlete) {
-    //     try {
-    //         PreparedStatement requete = this.connexionBD.prepareStatement("delete from ATHLETE where id_Athlete = ?");
-    //         requete.setInt(1, idAthlete);
-    //         requete.executeUpdate();
-    //     } catch (Exception e) {
-
 }
