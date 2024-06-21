@@ -23,6 +23,10 @@ public class ModifierAthleteScene {
         this.appli = appli;
     }
 
+    /**
+     * Permet de créer la scène de modification des athlètes
+     * @return la scène de modification des athlètes
+     */
     public Scene createScene() {
         BorderPane borderPaneInterieur = new BorderPane();
         ScrollPane scrollPane = new ScrollPane();
@@ -115,6 +119,10 @@ public class ModifierAthleteScene {
         return new Scene(borderPaneInterieur, 1000, 650);
     }
 
+    /**
+     * Permet de modifier un athlète
+     * @param athlete l'athlète à modifier
+     */
     private void editAthlete(Athlete athlete) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         TextField prenom = new TextField(athlete.getPrenom());
