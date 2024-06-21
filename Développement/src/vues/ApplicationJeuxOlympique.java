@@ -207,6 +207,7 @@ public class ApplicationJeuxOlympique extends Application {
         configureButton(sceneAjouterUnAthlete, "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(sceneAjoutDonnees, "#ajouterUneEquipe", new ControleurAjouterEquipe(this));
         configureButton(sceneAjoutDonnees, "#ajouterUneEpreuve", new ControleurAjoutEpreuve(this));
+        configureButton(sceneAjoutDonnees, "#Actus", new ControleurRetourJO(this, "admin"));
 
         configureButton(sceneAthletes, "#boutonJO", new ControleurRetourJOJournaliste(this));
         configureButton(sceneClassement, "#boutonJO", new ControleurRetourJOJournaliste(this));
@@ -229,6 +230,7 @@ public class ApplicationJeuxOlympique extends Application {
         configureButton(this.getSceneGestionEpreuve(), "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(this.getSceneGestionEpreuve(), "#boutonJO", new ControleurRetourJO(this, "organisateur"));
         configureButton(this.getSceneGestionEpreuve(), "#Actus", new ControleurRetourJO(this, "organisateur"));
+        
     }
 
     //*Méthode de récupération du modèle */
