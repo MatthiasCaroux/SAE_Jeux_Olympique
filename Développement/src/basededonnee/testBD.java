@@ -1,5 +1,6 @@
 package src.basededonnee;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -123,13 +124,13 @@ public class testBD {
             //     epreuve.participer(athlete);
             // }
             // requete.ajouteEpreuve(epreuve, jeux);
-            System.out.println(requete.getAthletes());
-            requete.supprimerUtilisateur("user");
-            requete.changerRoleUtilisateur("niksan", 'A');
-            requete.ajouterPays("Allemagne");
-            requete.ajouterPays("Italie");
-            requete.ajouterAthlete("test", "prenomTest", 84, 69, 91, 'M', requete.getIdPays("France"));
-            System.out.println(requete.idMaxTable("PAYS"));
+            // // System.out.println(requete.getAthletes());
+            // // requete.supprimerUtilisateur("user");
+            // // requete.changerRoleUtilisateur("niksan", 'A');
+            // // requete.ajouterPays("Allemagne");
+            // // requete.ajouterPays("Italie");
+            // // requete.ajouterAthlete("test", "prenomTest", 84, 69, 91, 'M', requete.getIdPays("France"));
+            // // System.out.println(requete.idMaxTable("PAYS"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             // TODO: handle exception
@@ -153,20 +154,47 @@ public class testBD {
         // }
         JeuxOlympique jeux = new JeuxOlympique(2036, "Paris", "France");
         Requete requete = new Requete();
-        Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("Développement/donnees.csv");
+        System.out.println(requete.getAthletes() + "&&&&&&&&&&&&&&&&&&&&&&&&&&");
+        // Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("Développement/donnees.csv");
+        Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("donnees.csv");
+        System.out.println(test.keySet() + "***********************");
         for (Epreuve epreuve : test.keySet()) {
+            System.out.println("Attention !!!!!!!!!!");
+            System.out.println(epreuve);
             requete.ajouteEpreuve(epreuve, jeux);
+            System.out.println("je passs");
+        }
+        for (Equipe equipe : requete.getLesEquipes()) {
+            System.out.println(equipe.getLesAthlètes().size() + "!!!!!!!!!!!!!!!!!!!!!!");
         }
         System.out.println(requete.getEpreuves(jeux) + "£££££££££££££££££££££££££££");
         System.out.println(jeux.getEpreuves() + "ùùùùùùùùùùùùùùùùùùùùùùùùùùùù");
-        EpreuveCollective epreuveCollective = new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.M);
-        try {
-            System.out.println(requete.getEpreuve(epreuveCollective.getSport(), epreuveCollective.getSexe()));
-        } catch (EpreuveInexistanteException e) {
-            // TODO Auto-generated catch block
-            System.out.println("On m'a catch");
-            e.printStackTrace();
+        System.out.println(requete.getPays() + "///////////////////");
+        System.out.println(jeux.getLesPays() + "///////////////////");
+        System.out.println(jeux.getAnnee() + "///////////////////");
+        for (Epreuve epreuve : jeux.getEpreuves()) {
+            System.out.println(epreuve + "ççççççççççççççççççç");
+            requete.lancerUneEpreuve(epreuve, jeux);
         }
+        System.out.println(jeux.getEpreuves());
+        System.out.println(requete.getEpreuves(jeux));
+        System.out.println(jeux.getClassementPays());
+        // EpreuveCollective epreuveCollective = new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.M);
+        // try {
+        //     System.out.println(requete.getEpreuve(epreuveCollective.getSport(), epreuveCollective.getSexe()));
+        // } catch (EpreuveInexistanteException e) {
+        //     // TODO Auto-generated catch block
+        //     System.out.println("On m'a catch");
+        //     e.printStackTrace();
+        // }
+
+
+        // Map<String, Integer> testMajPays = new HashMap<>();
+        // testMajPays.put("Or", 10);
+        // testMajPays.put("Argent", 10);
+        // testMajPays.put("Bronze", 10);
+        // Pays testmajPays = new Pays("France", testMajPays);
+        
         // System.out.println("11111" + test);
         // System.out.println("11111" + requete.getEpreuves(jeux));
         // System.out.println("11111" + jeux.getEpreuves());
@@ -175,17 +203,22 @@ public class testBD {
         //     jeux.ajouteEpreuve(epreuve);
         // }
         // System.out.println("333333333" + jeux.getEpreuves());
-        jeux.lancerUneEpreuve(requete.getEpreuves(jeux).get(2));
-        requete.lancerUneEpreuve(requete.getEpreuves(jeux).get(2), jeux);
-        for (Epreuve epreuve : jeux.getEpreuves()) {
-            try {
-                System.out.println("je suis là" + epreuve.getParticipants()); // ça ne marche pas
-                epreuve.rapport();
-            } catch (Exception e) {
-                // TODO: handle exception
-                // Pass, l'épreuve n'a pas encore lancer
-            }
-        }
+
+
+        // System.out.println(jeux.getEpreuves());
+        // jeux.lancerUneEpreuve(requete.getEpreuves(jeux).get(2));
+        // requete.lancerUneEpreuve(requete.getEpreuves(jeux).get(2), jeux);
+        // for (Epreuve epreuve : jeux.getEpreuves()) {
+        //     try {
+        //         System.out.println("je suis là" + epreuve.getParticipants()); // ça ne marche pas
+        //         epreuve.rapport();
+        //     } catch (Exception e) {
+        //         // TODO: handle exception
+        //         // Pass, l'épreuve n'a pas encore lancer
+        //     }
+        // }
+
+
         // System.out.println(jeux.getClassementPays());
 
         // List<EpreuveIndividuelle> epreuveIndividuelles = requete.getEpreuvesIndiv(jeux);
@@ -203,32 +236,36 @@ public class testBD {
         //     System.out.println(epreuve + " " + epreuve.getParticipants());
         // }
 
-        List<Epreuve> epreuves = requete.getEpreuves(jeux);
-        System.out.println(epreuves);
-        for (Epreuve epreuve : epreuves) {
-            if (epreuve.getParticipants() instanceof Equipe) {
-                System.out.println(epreuve + " " + epreuve.getParticipants());
-                System.out.println("je suis une équipe");
-                for (Athlete athlete : ((Equipe) epreuve.getParticipants()).getLesAthlètes()) {
-                    System.out.println(" + " + athlete);
-                }
-            } else {
-                System.out.println(epreuve + " " + epreuve.getParticipants());
-            }
-            System.out.println(epreuve + " " + epreuve.getParticipants());
-        }
+        // List<Epreuve> epreuves = requete.getEpreuves(jeux);
+        // System.out.println(epreuves);
+        // for (Epreuve epreuve : epreuves) {
+        //     if (epreuve.getParticipants() instanceof Equipe) {
+        //         System.out.println(epreuve + " " + epreuve.getParticipants());
+        //         System.out.println("je suis une équipe");
+        //         for (Athlete athlete : ((Equipe) epreuve.getParticipants()).getLesAthlètes()) {
+        //             System.out.println(" + " + athlete);
+        //         }
+        //     } else {
+        //         System.out.println(epreuve + " " + epreuve.getParticipants());
+        //     }
+        //     System.out.println(epreuve + " " + epreuve.getParticipants());
+        // }
 
-        for (Pays pays : requete.getPays()) {
-            pays.ajouterMedaille("Bronze");
-            requete.majPays(pays);
-            System.out.println(pays.getScoreTotal());
-        }
-        requete.getEpreuves(jeux);
-        System.out.println(jeux.getClassementPays());
-        for (Pays pays : jeux.getClassementPays()) {
-            System.out.println(pays.getMedailles());
-            System.out.println(pays.getScoreTotal());
-        }
+
+        // for (Pays pays : requete.getPays()) {
+        //     pays.ajouterMedaille("Bronze");
+        //     requete.majPays(pays);
+        //     System.out.println(pays.getScoreTotal());
+        // }
+        // requete.getEpreuves(jeux);
+        // System.out.println(jeux.getClassementPays());
+        // for (Pays pays : jeux.getClassementPays()) {
+        //     System.out.println(pays.getMedailles());
+        //     System.out.println(pays.getScoreTotal());
+        // }
+
+        // System.out.println(requete.getEpreuves(jeux));
+        // System.out.println(jeux.getEpreuves());
 
         // System.out.println(requete.getEpreuve(null, null));
         // Athlete a = requete.getAthlete(235);

@@ -1,5 +1,7 @@
 package src.controlleur;
 
+import src.modele.jeuxOlympique.Epreuve;
+import src.modele.jeuxOlympique.JeuxOlympique;
 import src.vues.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -63,6 +65,24 @@ public class ControleurLancerToutesLesEpreuves implements EventHandler<ActionEve
         timeline.play();
 
         // Show the alert and wait for it to be closed
+
+        JeuxOlympique jeux = this.applicationJeuxOlympique.getModele();
+                
+        for (Epreuve epreuve : jeux.getEpreuves()) {
+            System.out.println(epreuve + "ççççççççççççççççççç");
+            this.applicationJeuxOlympique.getRequete().lancerUneEpreuve(epreuve, jeux);
+        }
+        System.out.println(jeux.getEpreuves());
+        System.out.println(this.applicationJeuxOlympique.getRequete().getEpreuves(jeux));
+        try{
+            System.out.println("Affichage du classement");
+            System.out.println(jeux.getClassementPays());
+            System.out.println("le classement des pays");
+        }
+        catch(Exception ex){
+            System.out.println("Erreur lors de l'affichage du classement");
+            System.out.println(ex.getMessage());
+        }
         alert.showAndWait();
     }
 }
