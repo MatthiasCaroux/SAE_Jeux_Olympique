@@ -43,6 +43,7 @@ public class ApplicationJeuxOlympique extends Application {
     private Scene sceneAjouterEquipe;
     private Scene sceneModificationDonnéeAthlete;
     private Scene sceneGestionEpreuve;
+    private Scene sceneAjouterEpreuve;
     private FXMLLoader loaderAccueil;
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
@@ -182,17 +183,18 @@ public class ApplicationJeuxOlympique extends Application {
         configureButton(sceneAccueilAdmin, "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(sceneAccueilAdmin, "#ajoutDesDonnées", new ControleurFenetre(this, "Ajout des données"));
         configureButton(sceneAjoutDonnees, "#choixDeconnexion", new ControleurDeconnexion(this));
-        configureButton(sceneGestionUtilisateur, "#logoJO", new ControleurRetourJO(this));
-        configureButton(sceneAjoutDonnees, "#logoJO", new ControleurRetourJO(this));
-        configureButton(sceneModificationDonnée, "#logoJO", new ControleurRetourJO(this));
-        configureButton(sceneGestionUtilisateur, "#jeuxOlympique", new ControleurRetourJO(this));
+        configureButton(sceneGestionUtilisateur, "#logoJO", new ControleurRetourJO(this, "admin"));
+        configureButton(sceneAjoutDonnees, "#logoJO", new ControleurRetourJO(this, "admin"));
+        configureButton(sceneModificationDonnée, "#logoJO", new ControleurRetourJO(this, "admin"));
+        configureButton(sceneGestionUtilisateur, "#jeuxOlympique", new ControleurRetourJO(this, "admin"));
         configureButton(sceneGestionUtilisateur, "#ajoutDesDonnées", new ControleurAjoutDonnees(this));
         configureButton(sceneGestionUtilisateur, "#modificationDonnées", new ControleurModificationDonnée(this));
         configureButton(sceneGestionUtilisateur, "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(sceneAccueilAdmin, "#modificationDonnées", new ControleurModificationDonnée(this));
         configureButton(sceneAjoutDonnees, "#modificationDonnées", new ControleurModificationDonnée(this));
         configureButton(sceneAjoutDonnees, "#gestionUtilisateur", new ControleurGestionUtilisateur(this));
-        configureButton(sceneModificationDonnée, "#jeuxOlympique", new ControleurRetourJO(this));
+        configureButton(sceneAjoutDonnees, "", new ControleurAjoutEpreuve(this));
+        configureButton(sceneModificationDonnée, "#jeuxOlympique", new ControleurRetourJO(this, "admin"));
         configureButton(sceneModificationDonnée, "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(sceneModificationDonnée, "#gestionUtilisateur", new ControleurGestionUtilisateur(this));
         configureButton(sceneModificationDonnée, "#ajoutDesDonnées", new ControleurAjoutDonnees(this));
@@ -223,8 +225,16 @@ public class ApplicationJeuxOlympique extends Application {
         configureButton(sceneEquipe, "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(sceneModificationDonnée, "#athletes", new ControleurModifierAthlete(this));
         configureButton(sceneAccueilOrganisateur, "#gererEpreuve", new ControleurGererEpreuve(this));
+        configureButton(sceneAccueilOrganisateur, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneAccueilOrganisateur, "#Classement", new ControleurClassement(this));
         configureButton(this.getSceneGestionEpreuve(), "#lancerUneEpreuve", new ControleurLancerEpreuve(this));
         configureButton(this.getSceneGestionEpreuve(), "#lancerToutesLesEpreuves", new ControleurLancerToutesLesEpreuves(this));
+        configureButton(this.getSceneGestionEpreuve(), "#Classement", new ControleurClassement(this));
+        System.out.println("Bouton 1");
+        configureButton(this.getSceneGestionEpreuve(), "choixDeconnexion", new ControleurDeconnexion(this));
+        System.out.println("Bouton 2");
+        configureButton(this.getSceneGestionEpreuve(), "#logoJO", new ControleurRetourJO(this, "organisateur"));
+        configureButton(sceneAjoutDonnees, "#ajouterUneEpreuve", new ControleurAjoutEpreuve(this));
     }
 
     public JeuxOlympique getModele() {
@@ -237,8 +247,9 @@ public class ApplicationJeuxOlympique extends Application {
             button.setOnAction(handler);
             System.out.println("Bouton " + buttonId + " trouvé et configuré");
         } else {
-            System.err.println("Bouton " + buttonId + " non trouvé dans " + scene);
+            System.out.println("Bouton " + buttonId + " non trouvé dans " + scene);
         }
+        System.out.println("Bouton configuré");
     }
 
     
@@ -579,55 +590,74 @@ public class ApplicationJeuxOlympique extends Application {
         return this.sceneAjouterEquipe;
     }
 
+    public Scene getSceneAjouterUneEpreuve(){
+        AjouterUneEpreuveScene ajouterUneEpreuveScene = new AjouterUneEpreuveScene(requete, this);
+        this.sceneAjouterEpreuve = ajouterUneEpreuveScene.createScene();
+        return this.sceneAjouterEpreuve;
+    }
+
 
 
 
     public Scene getSceneEquipe(){// permet de lister toutes les equipes
-        // BorderPane borderPane = (BorderPane) sceneEquipe.lookup("#borderPane");
+        BorderPane borderPane = (BorderPane) sceneEquipe.lookup("#borderPane");
 
 
-        // ScrollPane scrollPane = new ScrollPane();
-        // scrollPane.setFitToHeight(true);
-        // scrollPane.setFitToWidth(true); // Ajuster le scroll pane à la largeur de la fenêtre
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true); // Ajuster le scroll pane à la largeur de la fenêtre
 
-        // GridPane gridPane = new GridPane();
-        // gridPane.setHgap(10);
-        // gridPane.setVgap(10);
-        // gridPane.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
-        // gridPane.setAlignment(Pos.TOP_CENTER); // Centrer le GridPane horizontalement
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
+        gridPane.setAlignment(Pos.TOP_CENTER); // Centrer le GridPane horizontalement
 
-        // try{
-        //     System.out.println("Je suis dans la méthode getSceneEquipe, dans le try");
-        //     List<Equipe> equipes = this.requete.getEquipe();
-        //     for (int i = 0; i < equipes.size(); i++) {
-        //         Equipe equipe = equipes.get(i);
-        //         VBox vb = new VBox();
-        //         vb.setAlignment(Pos.CENTER); // Centrer le contenu de chaque VBox horizontalement
-        //         String nom = equipe.getNomEquipe();
-        //         ImageView imageView = new ImageView(new Image("images/equipe.png"));
-        //         imageView.setFitHeight(100);
-        //         imageView.setFitWidth(100);
-        //         Label label = new Label(nom);
-        //         label.setStyle("-fx-font-size: 24px;"); // Augmenter la taille du texte
-        //         vb.getChildren().addAll(imageView, label);
+        try{
+            System.out.println("Je suis dans la méthode getSceneEquipe, dans le try");
+            List<Equipe> equipes = this.requete.getLesEquipes();
+            System.out.println(equipes);
+            for (int i = 0; i < equipes.size(); i++) {
+                Equipe equipe = equipes.get(i);
+                VBox vb = new VBox();
+                vb.setAlignment(Pos.CENTER); // Centrer le contenu de chaque VBox horizontalement
+                String nom = equipe.getNomEquipe();
+                ImageView imageView = new ImageView(new Image("images/logo-équipe.jpg"));
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(100);
+                Label label = new Label(nom);
+                label.setStyle("-fx-font-size: 24px;"); // Augmenter la taille du texte
+                vb.getChildren().addAll(imageView, label);
                 
-        //         // Ajouter un event handler pour afficher une popup avec les attributs de l'athlète
-        //         vb.setOnMouseClicked(event -> {
-        //             showEquipeDetails(equipe);
-        //         });
-                
-        //         gridPane.add(vb, i % 5, i / 5);
-        //     }
-        // }
-        // catch (Exception e){
-        //     System.out.println("Erreur lors de la récupération des équipes");
-        //     System.err.println(e.getMessage());
-        // }
+                // Ajouter un event handler pour afficher une popup avec les attributs de l'athlète
+                vb.setOnMouseClicked(event -> {
+                    showEquipeDetails(equipe);
+                });
+                gridPane.add(vb, i % 5, i / 5);
+            }
+        }
+        catch (Exception e){
+            System.out.println("Erreur lors de la récupération des équipes");
+            System.err.println(e.getMessage());
+        }
 
-
+        scrollPane.setContent(gridPane);
+        borderPane.setCenter(scrollPane);
+        
 
         return sceneEquipe;
     }
+
+    private void showEquipeDetails(Equipe equipe) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Détails de l'équipe");
+        alert.setHeaderText("Détails de l'équipe " + equipe.getNomEquipe());
+        alert.setContentText("Pays : " + equipe.getPays().getNomPays() + "\n" +
+                             "Nombre d'athlètes : " + equipe.getLesAthlètes().size());
+        alert.showAndWait();
+    }
+
+
 
     public Scene getSceneAccueilJournaliste(){
         return sceneJournalisteAccueil;
@@ -635,7 +665,7 @@ public class ApplicationJeuxOlympique extends Application {
 
     public Scene getSceneGestionEpreuve(){
         System.out.println("3");
-        return sceneGestionEpreuve;
+        return this.sceneGestionEpreuve;
     }
 
     public Scene getSceneGestionUtilisateur() {

@@ -17,6 +17,7 @@ public class ControleurDeconnexion implements EventHandler<ActionEvent> {
     }
 
     public void handle(ActionEvent event) {
+        System.out.println("Deconnexion");
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirmation");
         confirmationAlert.setHeaderText("Attention");

@@ -5,14 +5,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import javax.swing.plaf.BorderUIResource.EmptyBorderUIResource;
 
 import src.basededonnee.exception.*;
 import src.modele.jeuxOlympique.*;
@@ -404,14 +399,21 @@ public class Requete {
     // public void ajouterPays(String nomPays) throws BaseDeDonneeInaccessibleException {
     public void ajouterPays(String nomPays) throws BaseDeDonneeInaccessibleException {
         try {
-            if (this.dansPays(nomPays)) {
-                throw new PaysDejaExistantException(nomPays);
+            System.out.println(nomPays + "èèèèèèèèèèè");
+            // if (this.dansPays(nomPays)) {
+            //     System.out.println("1");
+            //     throw new PaysDejaExistantException(nomPays);
+            // }
+            if (! this.dansPays(nomPays)) {
+                PreparedStatement requete = this.connexionBD.prepareStatement("INSERT INTO PAYS (id_Pays, nom_P) VALUES (?, ?)");
+                requete.setInt(1, this.idMaxTable("PAYS") + 1);
+                requete.setString(2, nomPays);
+                System.out.println("2");
+                requete.executeUpdate();
+                System.out.println("3");
             }
-            PreparedStatement requete = this.connexionBD.prepareStatement("INSERT INTO PAYS (id_Pays, nom_P) VALUES (?, ?)");
-            requete.setInt(1, this.idMaxTable("PAYS") + 1);
-            requete.setString(2, nomPays);
-            requete.executeUpdate();
         } catch (Exception e) {
+            System.out.println("4");
             throw new BaseDeDonneeInaccessibleException();
             // throw new BaseDeDonneeInaccessibleException();
         }
@@ -419,7 +421,7 @@ public class Requete {
 
     public List<Pays> getPays() throws BaseDeDonneeInaccessibleException {
         try {
-            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from PAYS");
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from PAYS ORDER BY score_Total DESC");
             ResultSet resultat = requete.executeQuery();
             List<Pays> pays = new ArrayList<>();
             while (resultat.next()) {
@@ -635,13 +637,14 @@ public class Requete {
 
     public void ajouteEpreuve(Epreuve epreuve, JeuxOlympique jeuxOlympique) throws EpreuveDejaExistantException {
         try {
+            System.out.println(epreuve + ".............");
             if (! this.dansJO(jeuxOlympique)) {
                 this.ajouterJO(jeuxOlympique);
             }
             // if (this.dansEpreuve(epreuve)) {
             //     throw new EpreuveDejaExistantException(epreuve.getSport().toString(), epreuve.getSexe().toString().charAt(0));
             // }
-            System.out.println(epreuve.getParticipants().size());
+            System.out.println("taille : " + epreuve.getParticipants().size());
             if (! this.dansEpreuve(epreuve)) {// && epreuve.getParticipants().size() > 0) {
                 PreparedStatement requete = this.connexionBD.prepareStatement("insert into EPREUVE (id_Epreuve, type_Epreuve, sexe_Epreuve, id_JO) values (?, ?, ?, ?)");
                 requete.setInt(1, this.idMaxTable("EPREUVE") + 1);
@@ -652,15 +655,37 @@ public class Requete {
                 // requete.setInt(4, epreuve.getNbEquipes());
                 // requete.setInt(5, epreuve.getNbAthletesParEquipe());
                 requete.executeUpdate();
+                if (epreuve instanceof EpreuveIndividuelle) {
+                    this.ajouterAthleteDansEpreuveIndiv((EpreuveIndividuelle) epreuve, jeuxOlympique);
+                    // jeuxOlympique.ajouteEpreuve((EpreuveIndividuelle) epreuve);
+                    System.out.println("99999999999999999");
+                    for (Pays pays : jeuxOlympique.getLesPays()) {
+                        this.ajouterPays(pays.getNomPays());
+                        this.ajouterPaysJO(pays, jeuxOlympique);
+                    }
+                } else {
+                    System.out.println("99999999999999999");
+                    this.ajouterEquipeDansEpreuveEquipe((EpreuveCollective) epreuve, jeuxOlympique);
+                    // jeuxOlympique.ajouteEpreuve((EpreuveCollective) epreuve);
+                    // if (epreuve.getParticipants().size() > 0) {
+                    //     this.ajouterEquipeDansEpreuveEquipe((EpreuveCollective) epreuve, jeuxOlympique);
+                    // }
+                    for (Pays pays : jeuxOlympique.getLesPays()) {
+                        this.ajouterPays(pays.getNomPays());
+
+                        System.out.println("è_è_è_è_è_è_è_è_è");
+                        this.ajouterPaysJO(pays, jeuxOlympique);
+                    }
+                    System.out.println("è_è_è_è_è_è_è_è_è");
+                }
             }
-            if (epreuve instanceof EpreuveIndividuelle) {
-                this.ajouterAthleteDansEpreuveIndiv((EpreuveIndividuelle) epreuve, jeuxOlympique);
-            } else {
-                this.ajouterEquipeDansEpreuveEquipe((EpreuveCollective) epreuve, jeuxOlympique);
-                // if (epreuve.getParticipants().size() > 0) {
-                //     this.ajouterEquipeDansEpreuveEquipe((EpreuveCollective) epreuve, jeuxOlympique);
-                // }
-            }
+            // if (epreuve.getParticipants().size() > 0) {
+            //     jeuxOlympique.ajouteEpreuve(epreuve);
+            // }
+            jeuxOlympique.ajouteEpreuve(epreuve);
+            System.out.println(jeuxOlympique.getEpreuves());
+            System.out.println("taille : " + epreuve.getParticipants().size());
+            System.out.println("ça marche");
         } catch (Exception e) {
             throw new EpreuveDejaExistantException(epreuve.getSport().toString(), epreuve.getSexe().toString().charAt(0));
         } 
@@ -668,19 +693,24 @@ public class Requete {
 
     public List<EpreuveIndividuelle> getEpreuvesIndiv(JeuxOlympique jeuxOlympique) {
         try {
+            System.out.println("ZZ");
             PreparedStatement requete = this.connexionBD.prepareStatement("select * from EPREUVE NATURAL JOIN PARTICIPE_INDIV WHERE id_JO = ? GROUP BY type_Epreuve");
             requete.setInt(1, this.getIdJO(jeuxOlympique));
             ResultSet resultat = requete.executeQuery();
             List<EpreuveIndividuelle> epreuves = new ArrayList<>();
             EpreuveIndividuelle epreuve;
             while (resultat.next()) {
+                System.out.println(this.getIdJO(jeuxOlympique));
+                System.out.println("type : " + resultat.getString("type_Epreuve") + " " + resultat.getString("sexe_Epreuve"));
                 epreuve = new EpreuveIndividuelle(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve")));
                 for (Athlete athlete : this.getAthletesDansEpreuvesIndiv(epreuve, jeuxOlympique)) {
                     epreuve.participer(athlete);
+                    jeuxOlympique.ajouterPays(athlete.getPays());
                 }
                 epreuves.add(epreuve);
-                
             }
+            System.out.println("AA");
+            // System.out.println(epreuves + " " + jeuxOlympique.getEpreuves());
             return epreuves;
         } catch (Exception e) {
             return new ArrayList<>();
@@ -689,26 +719,36 @@ public class Requete {
 
     public List<EpreuveCollective> getEpreuveCollec(JeuxOlympique jeuxOlympique) {
         try {
+            System.out.println("Je suis là²²²²²²²²²²²²²²²²");
             PreparedStatement requete = this.connexionBD.prepareStatement("select * from EPREUVE NATURAL JOIN PARTICIPE_COLLEC WHERE id_JO = ? GROUP BY type_Epreuve");
             requete.setInt(1, this.getIdJO(jeuxOlympique));
+            System.out.println("a");
             ResultSet resultat = requete.executeQuery();
+            System.out.println("b");
             List<EpreuveCollective> epreuves = new ArrayList<>();
+            System.out.println("c");
             EpreuveCollective epreuve;
+            System.out.println(this.getIdJO(jeuxOlympique));
+            System.out.println(resultat.next());
+            System.out.println("d");
             while (resultat.next()) {
+                System.out.println("c");
                 epreuve = new EpreuveCollective(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve")));
                 for (Equipe equipe : this.getEquipesDansEpreuves(epreuve, jeuxOlympique)) {
                     try {
                         epreuve.participer(equipe);
+                        jeuxOlympique.ajouterPays(equipe.getPays());
                     } catch (Exception e) {
                         // TODO: handle exception
                         // Pass, pas assez de participants
                     }
                 }
-                jeuxOlympique.ajouteEpreuve(epreuve);
+                // jeuxOlympique.ajouteEpreuve(epreuve);
                 if (resultat.getBoolean("a_ete_joue")) {
                     jeuxOlympique.lancerUneEpreuve(epreuve);
                 }
                 epreuves.add(epreuve);
+                System.out.println("ça marche");
             }
             return epreuves;
         } catch (Exception e) {
@@ -718,14 +758,23 @@ public class Requete {
 
     public void lancerUneEpreuve(Epreuve epreuve, JeuxOlympique jeuxOlympique) {
         try {
+            System.out.println("===================");
+            System.out.println(jeuxOlympique.getLesPays());
+            for (Pays pays : jeuxOlympique.getLesPays()) {
+                //this.majPays(pays);
+                System.out.println(pays.getMedailles());
+            }
             PreparedStatement requete = this.connexionBD.prepareStatement("Update EPREUVE set a_ete_joue = true where id_Epreuve = ? and type_Epreuve = ? and sexe_Epreuve = ?");
             requete.setInt(1, this.getIdEpreuve(epreuve));
             requete.setString(2, epreuve.getSport().toString());
             requete.setString(3, epreuve.getSexe().toString().charAt(0) + "");
             requete.executeUpdate();
+            System.out.println("1");
             jeuxOlympique.lancerUneEpreuve(epreuve);
+            System.out.println("2");
             for (Pays pays : jeuxOlympique.getLesPays()) {
                 this.majPays(pays);
+                System.out.println("je passsssssssssssssssss");
             }
             System.out.println("ééééééééééééééééééééééééééééé");
         } catch (Exception e) {
@@ -742,6 +791,12 @@ public class Requete {
             List<EpreuveCollective> epreuvesCollec = this.getEpreuveCollec(jeuxOlympique);
             epreuves.addAll(epreuvesIndiv);
             epreuves.addAll(epreuvesCollec);
+            System.out.println(epreuves + "22222222222");
+            // for (Pays pays : jeuxOlympique.getLesPays()) {
+            //     // this.majPays(pays);
+            //     this.ajouterPays(pays.getNomPays());
+            //     this.ajouterPaysJO(pays, jeuxOlympique);
+            // }
             return epreuves;
         } catch (Exception e) {
             return new ArrayList<>();
@@ -796,7 +851,7 @@ public class Requete {
 
     public List<Equipe> getLesEquipes() {
         try {
-            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from EQUIPE");
+            PreparedStatement requete = this.connexionBD.prepareStatement("Select * from EQUIPE natural join PAYS;");
             ResultSet resultat = requete.executeQuery();
             List<Equipe> equipes = new ArrayList<>();
             Equipe equipe;
@@ -853,7 +908,6 @@ public class Requete {
         }
     }
 
-
     public void modifierAthlete(Athlete athlete, int idAthlete) throws AthleteInexistantException {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Update ATHLETE set nom_A = ?, prenom_A = ?, sexe_A = ?, la_force = ?, endurance = ?, agilite = ?, id_Pays = ? where id_Athlete = ?");
@@ -886,6 +940,7 @@ public class Requete {
 
     public void majPays(Pays pays) throws PaysInexistantException {
         try {
+            System.out.println("je pass^^^^^^^^^^^^^^^");
             PreparedStatement requete = this.connexionBD.prepareStatement("Update PAYS set M_or = ?, M_argent = ?, M_bronze = ?, score_Total = ? where nom_P = ?");
             requete.setInt(1, pays.getMedailles().get("Or"));
             requete.setInt(2, pays.getMedailles().get("Argent"));
@@ -893,8 +948,35 @@ public class Requete {
             requete.setInt(4, pays.getScoreTotal());
             requete.setString(5, pays.getNomPays());
             requete.executeUpdate();
+            System.out.println("icic aussi ^^^^^^^^^^^^^^");
         } catch (Exception e) {
             throw new PaysInexistantException(pays.getNomPays());
+        }
+    }
+
+    public void ajouterPaysJO(Pays pays, JeuxOlympique jeuxOlympique) throws BaseDeDonneeInaccessibleException {
+        try {
+            System.out.println("\\\\\\\\");
+            if (!this.dansPays(pays.getNomPays())) {
+                this.ajouterPays(pays.getNomPays());
+            }
+            try {
+            PreparedStatement requete = this.connexionBD.prepareStatement("Insert into PARTICIPE_JO values (?, ?)");
+            System.out.println(this.getIdPays(pays.getNomPays()));
+            System.out.println(this.getIdJO(jeuxOlympique));
+            requete.setInt(1, this.getIdPays(pays.getNomPays()));
+            System.out.println("a");
+            requete.setInt(2, this.getIdJO(jeuxOlympique));
+            System.out.println("b");
+            requete.executeUpdate();
+            System.out.println("//////");
+            } catch (Exception e) {
+                // TODO: handle exception
+                // Pass, le pays participe déjà aux JO
+            }
+
+        } catch (Exception e) {
+            throw new BaseDeDonneeInaccessibleException();
         }
     }
 

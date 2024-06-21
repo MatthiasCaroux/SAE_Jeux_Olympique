@@ -112,6 +112,15 @@ public class JeuxOlympique {
         return lesParticipantsAuxJo;
     }
     
+    /**
+     * Méthode permettant d'ajouter un pays aux jeux olympiques
+     * @param pays le pays à ajouter
+     */
+    public void ajouterPays(Pays pays){
+        if (!this.lesPays.contains(pays)) {
+            this.lesPays.add(pays);
+        }
+    }
 
     /**
      * Méthode permettant d'ajouter une épreuve aux jeux olympiques
