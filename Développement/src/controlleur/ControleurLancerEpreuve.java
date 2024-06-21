@@ -149,6 +149,11 @@ public class ControleurLancerEpreuve implements EventHandler<ActionEvent> {
                 // System.out.println(this.application.getRequete().getEpreuve(Epreuve.TypeSport.AthlétismeRelais, Epreuve.Sexe.F));
                 System.out.println("1,5 -----------------------------------------------------------------------");
                 Epreuve epreuve = this.application.getRequete().getEpreuve(typeSport, sexe);
+                System.out.println("3");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Lancer une épreuve");
+                alert.setHeaderText("L'épreuve a été lancée");
+                alert.showAndWait();
                 // Epreuve epreuve = this.application.getRequete().getEpreuve(typeSport, sexe);
                 System.out.println("2");
                 this.application.getRequete().lancerUneEpreuve(epreuve, this.application.getModele());
@@ -158,11 +163,7 @@ public class ControleurLancerEpreuve implements EventHandler<ActionEvent> {
                 System.out.println("2,5");
                 // this.application.getModele().lancerUneEpreuve(epreuve);
                 System.out.println(this.application.getModele().getClassementPays() + "#################");
-                System.out.println("3");
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Lancer une épreuve");
-                alert.setHeaderText("L'épreuve a été lancée");
-                alert.showAndWait();
+                
             }
             catch(Exception ex){
                 System.out.println("Erreur lors du lancement de l'épreuve");

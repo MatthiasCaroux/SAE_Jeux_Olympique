@@ -1,1 +1,7 @@
-unnamed package
+src.basededonnee
+src.basededonnee.exception
+src.controlleur
+src.modele.comparator
+src.modele.exceptions
+src.modele.jeuxOlympique
+src.vues

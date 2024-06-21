@@ -44,6 +44,7 @@ public class ApplicationJeuxOlympique extends Application {
     private Scene sceneModificationDonnéeAthlete;
     private Scene sceneGestionEpreuve;
     private Scene sceneAjouterEpreuve;
+    private Scene sceneListeEpreuve;
     private FXMLLoader loaderAccueil;
     private FXMLLoader loaderConnexion;
     private FXMLLoader loaderInscription;
@@ -61,15 +62,12 @@ public class ApplicationJeuxOlympique extends Application {
     // private 
   
     @Override
+    /**
+     * Méthode d'initialisation de l'application
+     */
     public void init() throws ClassNotFoundException, SQLException, IOException {
         this.modele = new JeuxOlympique(2024, "Paris", "Jeux Olympique de Paris 2024");
 
-        
-        // for (Epreuve epreuve : map.keySet()) {
-        //     for (Participant participant : map.get(epreuve)) {
-        //         epreuve.ajouterParticipant(participant);
-        //     }
-        // }
 
 
         this.constructionRequete();
@@ -77,7 +75,7 @@ public class ApplicationJeuxOlympique extends Application {
         this.constructionEpreuve();
     }
 
-
+    /**Métode de construction de la requête */
     private void constructionRequete(){
         try {
             Map<Epreuve, List<Participant>> map = this.modele.getParticipantsParEpreuve("/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/donnees.csv");
@@ -85,27 +83,25 @@ public class ApplicationJeuxOlympique extends Application {
             for (Epreuve epreuve : map.keySet()) {
                 this.requete.ajouteEpreuve(epreuve, modele);
             }
-            this.requete.getEpreuves(this.modele);
-            System.out.println(this.requete.getEpreuves(this.modele) + "***********");
-            
+            this.requete.getEpreuves(this.modele);            
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
+    //*Méthode de construction des épreuves */
     private void constructionEpreuve(){
         for (Epreuve epreuve : requete.getEpreuves(modele)) {
             try{
                 this.modele.ajouteEpreuve(epreuve);
             }
             catch (Exception e){
-                System.out.println("Erreur lors de l'ajout d'une épreuve");
                 System.err.println(e.getMessage());
             }
             
         }
     }
-
+    //*Méthode de chargement des scènes */
     private void loadScenes() throws IOException {
         loaderAccueil = new FXMLLoader(this.getClass().getResource("/fxml/accueil.fxml"));
         this.sceneFenetreAccueil = new Scene(loaderAccueil.load());
@@ -128,7 +124,6 @@ public class ApplicationJeuxOlympique extends Application {
 
         loaderAccueilOrganisateur = new FXMLLoader(this.getClass().getResource("/fxml/accueilOrganisateur.fxml"));
         this.sceneAccueilOrganisateur = new Scene(loaderAccueilOrganisateur.load());
-        // System.out.println("Chargement des scènes ");
 
         loaderGestionUtilisateur = new FXMLLoader(this.getClass().getResource("/fxml/gestionUtilisateur.fxml"));
         this.sceneGestionUtilisateur = new Scene(loaderGestionUtilisateur.load());
@@ -154,11 +149,10 @@ public class ApplicationJeuxOlympique extends Application {
     }
     
     @Override
+    //*Méthode de démarrage de l'application */
     public void start(Stage primaryStage) {
-        System.out.println("Je suis dans la méthode start");
         this.primaryStage = primaryStage;  // Initialiser l'attribut stage
         try {
-            System.out.println("Lancement de l'application");
             configureButtonActions();
             primaryStage.setScene(sceneFenetreAccueil);
             primaryStage.setTitle("Fenetre d'accueil");
@@ -169,9 +163,8 @@ public class ApplicationJeuxOlympique extends Application {
         }
     }
 
+    //*Méthode de configuration des actions des boutons */
     private void configureButtonActions() {
-        System.out.println("Configuration des actions des boutons");
-
         configureButton(sceneFenetreAccueil, "#seConnecter", new ControleurFenetre(this, "Fenetre de connexion"));
         configureButton(sceneFenetreAccueil, "#sinscrire", new ControleurFenetre(this, "Fenetre d'inscription"));
         configureButton(sceneConnexion, "#entrer", new ControleurFenetre(this, "Fenetre de classement"));
@@ -202,6 +195,7 @@ public class ApplicationJeuxOlympique extends Application {
         configureButton(sceneJournalisteAccueil, "#Equipes", new ControleurEquipe(this));
         configureButton(sceneJournalisteAccueil, "#Classement", new ControleurClassement(this));
         configureButton(sceneJournalisteAccueil, "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(sceneJournalisteAccueil, "#listeEpreuve", new ControleurListeEpreuve(this));
         configureButton(sceneAthletes, "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(sceneAthletes, "#Actus", new ControleurActus(this));
         configureButton(sceneAthletes, "#Equipes", new ControleurEquipe(this));
@@ -212,6 +206,9 @@ public class ApplicationJeuxOlympique extends Application {
         configureButton(sceneAjouterUnAthlete, "#Classement", new ControleurClassement(this));
         configureButton(sceneAjouterUnAthlete, "#choixDeconnexion", new ControleurDeconnexion(this));
         configureButton(sceneAjoutDonnees, "#ajouterUneEquipe", new ControleurAjouterEquipe(this));
+        configureButton(sceneAjoutDonnees, "#ajouterUneEpreuve", new ControleurAjoutEpreuve(this));
+        configureButton(sceneAjoutDonnees, "#Actus", new ControleurRetourJO(this, "admin"));
+
         configureButton(sceneAthletes, "#boutonJO", new ControleurRetourJOJournaliste(this));
         configureButton(sceneClassement, "#boutonJO", new ControleurRetourJOJournaliste(this));
         configureButton(sceneClassement, "#Actus", new ControleurActus(this));
@@ -230,35 +227,35 @@ public class ApplicationJeuxOlympique extends Application {
         configureButton(this.getSceneGestionEpreuve(), "#lancerUneEpreuve", new ControleurLancerEpreuve(this));
         configureButton(this.getSceneGestionEpreuve(), "#lancerToutesLesEpreuves", new ControleurLancerToutesLesEpreuves(this));
         configureButton(this.getSceneGestionEpreuve(), "#Classement", new ControleurClassement(this));
-        System.out.println("Bouton 1");
-        configureButton(this.getSceneGestionEpreuve(), "choixDeconnexion", new ControleurDeconnexion(this));
-        System.out.println("Bouton 2");
-        configureButton(this.getSceneGestionEpreuve(), "#logoJO", new ControleurRetourJO(this, "organisateur"));
-        configureButton(sceneAjoutDonnees, "#ajouterUneEpreuve", new ControleurAjoutEpreuve(this));
+        configureButton(this.getSceneGestionEpreuve(), "#choixDeconnexion", new ControleurDeconnexion(this));
+        configureButton(this.getSceneGestionEpreuve(), "#boutonJO", new ControleurRetourJO(this, "organisateur"));
+        configureButton(this.getSceneGestionEpreuve(), "#Actus", new ControleurRetourJO(this, "organisateur"));
+        
     }
 
+    //*Méthode de récupération du modèle */
     public JeuxOlympique getModele() {
         return modele;
     }
 
+    //*Méthode de récupération de la requête */
     private void configureButton(Scene scene, String buttonId, EventHandler<ActionEvent> handler) {
         Button button = (Button) scene.lookup(buttonId);
         if (button != null) {
             button.setOnAction(handler);
-            System.out.println("Bouton " + buttonId + " trouvé et configuré");
-        } else {
-            System.out.println("Bouton " + buttonId + " non trouvé dans " + scene);
-        }
-        System.out.println("Bouton configuré");
+            //System.out.println("Bouton " + buttonId + " trouvé et configuré");
+        } //else {
+            //System.out.println("Bouton " + buttonId + " non trouvé dans " + scene);
+        //}
+        //System.out.println("Bouton configuré");
     }
 
-    
 
     public void changerFenetre(Scene scene, String titre) {
-        System.out.println("Changement de fenetre : " + scene);
         primaryStage.setScene(scene);
         primaryStage.setTitle(titre);
     }
+
 
     public Scene getSceneFenetreAccueil() {
         return sceneFenetreAccueil;
@@ -272,32 +269,32 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneInscription;
     }
 
+    /*Méthode de récupération de la scène de classement */
     public Scene getSceneClassement() {
-        System.out.println("getSceneClassement");
         VBox vBoxPricpale = (VBox) sceneClassement.lookup("#vboxPrincipal");
+        vBoxPricpale.getChildren().clear();
         VBox vBox = new VBox();
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(vBox);
         vBox.getChildren().clear();
         int i = 1;
         try {
-            System.out.println(this.requete.getPays());
             for (Pays pays : this.requete.getPays()) {
-                System.out.println("coucou");
+
                 BorderPane borderPane = new BorderPane();
                 borderPane.setPadding(new Insets(10, 50, 10, 50));
                 if (i%2 == 1){
                     borderPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-color: white;");
 
                 } else{
-                    borderPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-color: grey;");
+                    borderPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-color: #f1f1f1;");
                 }
-                borderPane.setMargin(scrollPane, new Insets(0,0,0,20));
+                BorderPane.setMargin(scrollPane, new Insets(0,0,0,20));
                 HBox hb1 = new HBox(10);
                 hb1.setAlignment(Pos.CENTER_LEFT);
                 Label indice = new Label("" + i);
                 i++;
-                ImageView imageview = null;
+                ImageView imageview = new ImageView(new Image("images/drapeaux/fr.png"));
                 switch (pays.getNomPays()) {
                     case "France":
                         imageview = new ImageView(new Image("images/drapeaux/fr.png"));
@@ -317,7 +314,7 @@ public class ApplicationJeuxOlympique extends Application {
                     case "USA":
                         imageview = new ImageView(new Image("images/drapeaux/us.png"));
                         break;
-                    case "China":
+                    case "Chine":
                         imageview = new ImageView(new Image("images/drapeaux/cn.png"));
                         break;
                     case "CANADA":
@@ -354,9 +351,6 @@ public class ApplicationJeuxOlympique extends Application {
                     imageview.setPreserveRatio(true);
                 }
     
-                System.out.println("salut");
-                System.out.println("salutsalut");
-    
                 Label label = new Label(pays.getNomPays());
                 HBox.setHgrow(label, Priority.ALWAYS);
     
@@ -367,13 +361,11 @@ public class ApplicationJeuxOlympique extends Application {
                 HBox hb2 = new HBox(10);
                 hb2.setAlignment(Pos.CENTER);
     
-                System.out.println("jesuisla");
     
                 ImageView medailleOr = new ImageView(new Image("images/médailles/medaille_or.png"));
                 medailleOr.setFitHeight(50);
                 medailleOr.setFitWidth(50);
     
-                System.out.println("jesuisla2");
     
                 Label or = new Label(pays.getMedailles().get("Or").toString());
                 HBox.setHgrow(or, Priority.ALWAYS);
@@ -408,7 +400,6 @@ public class ApplicationJeuxOlympique extends Application {
                 borderPane.setCenter(vb2);
                 borderPane.setRight(hb3);
     
-                System.out.println("Je suis dans la méthode getSceneClassement, dans le try");
     
                 vBox.getChildren().add(borderPane);
                 vBox.setAlignment(Pos.CENTER);
@@ -453,6 +444,7 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneJournalisteAccueil;
     }
 
+    /*Méthode de récupération de la scène d'ajout d'un athlète */
     public Scene getSceneAjouterUnAthlete() {
         BorderPane borderPane = (BorderPane) sceneAjouterUnAthlete.lookup("#borderPane");
     
@@ -569,21 +561,22 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneAjouterUnAthlete;
     }
 
+    /*Méthode de récupération de la scène d'ajout d'une équipe */
     public Scene getSceneModifierAthlete(){
         ModifierAthleteScene modifierAthleteScene = new ModifierAthleteScene(requete, this);
         this.sceneModificationDonnéeAthlete = modifierAthleteScene.createScene();
         return this.sceneModificationDonnéeAthlete;
     }
 
-
+    /*Méthode de récupération de la scène d'ajout d'une équipe */
     public Scene getSceneAthletes(){// Permet de faire une fenetre avec tous les athletes
-        SceneAthletes sceneAthletes = new SceneAthletes(requete);
+        SceneAthletes sceneAthletes = new SceneAthletes(requete, this);
         this.sceneAthletes = sceneAthletes.createScene();
         return this.sceneAthletes;
 
 }
 
-
+    /*Méthode de récupération de la scène d'ajout d'une équipe */
     public Scene getSceneAjouterUneEquipe(){
         AjouterUneEquipeScene ajouterUneEquipeScene = new AjouterUneEquipeScene(requete, this);
         this.sceneAjouterEquipe = ajouterUneEquipeScene.createScene();
@@ -591,14 +584,20 @@ public class ApplicationJeuxOlympique extends Application {
     }
 
     public Scene getSceneAjouterUneEpreuve(){
-        AjouterUneEpreuveScene ajouterUneEpreuveScene = new AjouterUneEpreuveScene(requete, this);
+        AjouterUneEpreuveScene ajouterUneEpreuveScene = new AjouterUneEpreuveScene(this);
         this.sceneAjouterEpreuve = ajouterUneEpreuveScene.createScene();
         return this.sceneAjouterEpreuve;
     }
 
+    public Scene getSceneListeEpreuve(){
+        SceneListeEpreuve listeEpreuveScene = new SceneListeEpreuve(requete, this);
+        this.sceneListeEpreuve = listeEpreuveScene.createScene();
+        return this.sceneListeEpreuve;
+    }
 
 
 
+    /*Méthode de récupération de la scène d'ajout d'une équipe */
     public Scene getSceneEquipe(){// permet de lister toutes les equipes
         BorderPane borderPane = (BorderPane) sceneEquipe.lookup("#borderPane");
 
@@ -614,9 +613,7 @@ public class ApplicationJeuxOlympique extends Application {
         gridPane.setAlignment(Pos.TOP_CENTER); // Centrer le GridPane horizontalement
 
         try{
-            System.out.println("Je suis dans la méthode getSceneEquipe, dans le try");
             List<Equipe> equipes = this.requete.getLesEquipes();
-            System.out.println(equipes);
             for (int i = 0; i < equipes.size(); i++) {
                 Equipe equipe = equipes.get(i);
                 VBox vb = new VBox();
@@ -648,6 +645,7 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneEquipe;
     }
 
+    /*Méthode de récupération de la scène de gestion des épreuves */
     private void showEquipeDetails(Equipe equipe) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Détails de l'équipe");
@@ -664,10 +662,10 @@ public class ApplicationJeuxOlympique extends Application {
     }
 
     public Scene getSceneGestionEpreuve(){
-        System.out.println("3");
         return this.sceneGestionEpreuve;
     }
 
+    /*Méthode de récupération de la scène de gestion des utilisateurs */
     public Scene getSceneGestionUtilisateur() {
         VBox vBox = (VBox) sceneGestionUtilisateur.lookup("#vboxPrincipal");
         vBox.getChildren().clear();
@@ -740,6 +738,7 @@ public class ApplicationJeuxOlympique extends Application {
         return sceneGestionUtilisateur;
     }
     
+    /*Méthode de création d'un bouton pour changer de rôle */
     private Button createRoleButton(String roleName, char roleCode, ComboBox<String> comboBox) {
         Button button = new Button(roleName);
         button.setOnAction(new ControleurChangerRole(this, roleCode, comboBox));
@@ -773,7 +772,6 @@ public class ApplicationJeuxOlympique extends Application {
 
     public String getMotDePasseInscription() {
         PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDP");
-        System.out.println(motDePasse.getText());
         return motDePasse.getText();
     }
 
@@ -787,20 +785,18 @@ public class ApplicationJeuxOlympique extends Application {
     }
 
 
-
+    /*Méthode de récupération de la scène de classement */
     public void ajouterPaysALaBase(){
         for (Pays pays : this.modele.getLesPays()){
             try {
                 this.requete.ajouterPays(pays.getNomPays());
             } catch (Exception e) {
-                System.out.println("le pays");
                 System.err.println(e.getMessage());
             }
         }
     }
 
     public static void main(String[] args) {
-        System.out.println("Lancement de l'application JavaFX");
         launch(args);
     }  
 }

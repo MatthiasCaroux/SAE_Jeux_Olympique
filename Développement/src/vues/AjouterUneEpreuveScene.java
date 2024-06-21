@@ -8,23 +8,17 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import src.controlleur.ControleurAjoutDonnees;
 import src.modele.jeuxOlympique.Epreuve;
-import src.modele.jeuxOlympique.Pays;
 import src.modele.jeuxOlympique.Epreuve.TypeSport;
 import src.modele.jeuxOlympique.EpreuveCollective;
 import src.modele.jeuxOlympique.EpreuveIndividuelle;
-import src.modele.jeuxOlympique.Equipe;
-import src.basededonnee.Requete;
 
 public class AjouterUneEpreuveScene {
 
-    private Requete requete;
     private ApplicationJeuxOlympique appli;
 
-    public AjouterUneEpreuveScene(Requete requete, ApplicationJeuxOlympique appli) {
-        this.requete = requete;
+    public AjouterUneEpreuveScene(ApplicationJeuxOlympique appli) {
         this.appli = appli;
     }
 

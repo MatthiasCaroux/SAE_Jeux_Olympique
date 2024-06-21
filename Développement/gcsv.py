@@ -20,7 +20,7 @@ epreuves = ["Natation 100 brasse", "Natation relais libre", "Handball", "Volley-
 
 # Génération des enregistrements
 records = []
-for _ in range(400):
+for _ in range(2000):
     if random.random() < 0.25:
         nom = random.choice(noms_fr)
         prenom = random.choice(prenoms_fr)

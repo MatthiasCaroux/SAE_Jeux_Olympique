@@ -17,9 +17,11 @@ public class SceneAthletes {
 
     private Requete requete;
     private Scene sceneAthletes;
+    private ApplicationJeuxOlympique appli;
 
-    public SceneAthletes(Requete requete) {
+    public SceneAthletes(Requete requete, ApplicationJeuxOlympique appli) {
         this.requete = requete;
+        this.appli = appli;
     }
 
     public Scene createScene() {
@@ -104,7 +106,16 @@ public class SceneAthletes {
             }
         });
 
+
+        Button boutonretour = new Button();
+        boutonretour.setStyle("-fx-font-size: 20px; -fx-padding: 20px; -fx-background-color: #f0f0f0;");
+        boutonretour.setText("Retour");
+        boutonretour.setOnAction(event -> {
+            this.appli.changerFenetre(this.appli.getSceneAccueilJournaliste(), "Accueil journaliste");
+        });
+
         borderPaneInterieur.setTop(recherche);
+        borderPaneInterieur.setBottom(boutonretour);
         return new Scene(borderPaneInterieur, 1000, 650);
     }
 

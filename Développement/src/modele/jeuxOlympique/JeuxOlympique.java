@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import src.modele.exceptions.*;
 import src.modele.comparator.*;
-import src.basededonnee.*;
 
 /**
  * Classe représentant les jeux olympiques
@@ -149,13 +148,10 @@ public class JeuxOlympique {
      * @return
      */
     public Map<Epreuve, List<Participant>> getParticipantsParEpreuve(String cheminVersCSV){
-        System.out.println("-------------------");
         Map<Epreuve, List<Participant>> participantsParEpreuve = new HashMap<>();
         for (Epreuve epreuve : this.epreuves) {
             participantsParEpreuve.put(epreuve, epreuve.getParticipants());
         }
-        System.out.println("Je suis dans getParticipantsParEpreuve");
-        System.out.println(participantsParEpreuve);
         //vider la liste des epreuves car elle va etre reconstruite a la fin de la methode
         this.epreuves.clear();
         // a ce moment la on a tous les participants par epreuve representé par une map comme cela : {Epreuve1 : [Participant1, Participant2, Participant3], Epreuve2 : [Participant4, Participant5, Participant6]}
@@ -178,7 +174,7 @@ public class JeuxOlympique {
                 boolean joueurAjoute = false;
                 boolean sportExiste = false;
                 if (nomSPort.equals("Natation relais libre")){
-                    System.out.println("Le nom du sport est Natation relais libre");
+                    // System.out.println("Le nom du sport est Natation relais libre");
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.NatationRelais) {
                             sportExiste = true;
@@ -188,7 +184,7 @@ public class JeuxOlympique {
                                     if (equipeNatation.getPays().getNomPays().equals(athlete.getPays().getNomPays())){
                                         if (equipeNatation.getSexeEquipe().equals(athlete.getSexe())){                                    
                                             equipeNatation.ajouterMembre(athlete);
-                                    System.out.println("J'ai ajouté un membre à l'équipe de natation");
+                                    // System.out.println("J'ai ajouté un membre à l'équipe de natation");
                                     joueurAjoute = true;
                                     break;
                                         }
@@ -214,7 +210,7 @@ public class JeuxOlympique {
                     }
                 }
                 else if (nomSPort.equals("Volley-Ball")){
-                    System.out.println("Le nom du sport est Volley-Ball");
+                    // System.out.println("Le nom du sport est Volley-Ball");
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.Volley) {
                             sportExiste = true;
@@ -224,7 +220,7 @@ public class JeuxOlympique {
                                     if (equipeVolley.getPays().getNomPays().equals(athlete.getPays().getNomPays())){
                                         if (equipeVolley.getSexeEquipe().equals(athlete.getSexe())){                                    
                                             equipeVolley.ajouterMembre(athlete);
-                                            System.out.println("J'ai ajouté un membre à l'équipe de volley");
+                                            // System.out.println("J'ai ajouté un membre à l'équipe de volley");
                                             joueurAjoute = true;
                                             break;
                                         }
@@ -250,7 +246,7 @@ public class JeuxOlympique {
                     }
                 }
                 else if (nomSPort.equals("Handball")){
-                    System.out.println("Le nom du sport est Handball");
+                    // System.out.println("Le nom du sport est Handball");
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.Handball) {
                             sportExiste = true;
@@ -260,7 +256,7 @@ public class JeuxOlympique {
                                     if (equipeHandball.getPays().getNomPays().equals(athlete.getPays().getNomPays())){
                                         if (equipeHandball.getSexeEquipe().equals(athlete.getSexe())){                                    
                                             equipeHandball.ajouterMembre(athlete);
-                                            System.out.println("J'ai ajouté un membre à l'équipe de handball");
+                                            // System.out.println("J'ai ajouté un membre à l'équipe de handball");
                                             joueurAjoute = true;
                                             break;
                                         }
@@ -286,7 +282,7 @@ public class JeuxOlympique {
                     }
                 }
                 else if (nomSPort.equals("Athlétisme relais 400m")){
-                    System.out.println("Le nom du sport est Athlétisme relais 400m");
+                    // System.out.println("Le nom du sport est Athlétisme relais 400m");
                     for (Epreuve e : participantsParEpreuve.keySet()) {
                         if (e.getSport() == Epreuve.TypeSport.AthlétismeRelais) {
                             sportExiste = true;
@@ -297,7 +293,7 @@ public class JeuxOlympique {
                                         if (equipeAthletisme.getSexeEquipe().equals(athlete.getSexe())){
                                             System.out.println("Tout les tests sont passés");
                                             equipeAthletisme.ajouterMembre(athlete);
-                                            System.out.println("J'ai ajouté un membre à l'équipe d'athlétisme");
+                                            // System.out.println("J'ai ajouté un membre à l'équipe d'athlétisme");
                                             joueurAjoute = true;
                                             break;
                                         }
@@ -305,7 +301,7 @@ public class JeuxOlympique {
                                 }
                             }
                             if(!joueurAjoute){
-                                System.out.println("le joueur na pas été ajouté on va donc créer une nouvelle équipe");
+                                // le joueur na pas été ajouté on va donc créer une nouvelle équipe");
                                 Equipe nouvelleEquipeAthletisme = new Equipe(pays.getNomPays() + " " + indice, pays, sexe);
                                 indice++;
                                 nouvelleEquipeAthletisme.ajouterMembre(athlete);
