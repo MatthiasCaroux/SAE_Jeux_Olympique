@@ -78,7 +78,7 @@ public class ApplicationJeuxOlympique extends Application {
     /**Métode de construction de la requête */
     private void constructionRequete(){
         try {
-            Map<Epreuve, List<Participant>> map = this.modele.getParticipantsParEpreuve("/home/caroux/Bureau/SAE_Jeux_Olympique/Développement/donnees.csv");
+            Map<Epreuve, List<Participant>> map = this.modele.getParticipantsParEpreuve("./donnees.csv");
             this.requete = new Requete();
             for (Epreuve epreuve : map.keySet()) {
                 this.requete.ajouteEpreuve(epreuve, modele);
