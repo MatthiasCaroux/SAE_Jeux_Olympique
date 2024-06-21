@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"src.basededonnee"},{"l":"src.basededonnee.exception"},{"l":"src.controlleur"},{"l":"src.modele.comparator"},{"l":"src.modele.exceptions"},{"l":"src.modele.jeuxOlympique"},{"l":"src.vues"}];updateSearchResults();
