@@ -160,12 +160,16 @@ public class JeuxOlympique {
         this.epreuves.clear();
         // a ce moment la on a tous les participants par epreuve representé par une map comme cela : {Epreuve1 : [Participant1, Participant2, Participant3], Epreuve2 : [Participant4, Participant5, Participant6]}
         try {
+            System.out.println("11111111111111");
             BufferedReader br = new BufferedReader(new FileReader(cheminVersCSV));
+            System.out.println("Je suis dans le try");
             String line = "";
             br.readLine();
+            System.out.println("5555555555555");
             int indice = 0;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
+                System.out.println("Je suis dans la boucle while");
                 String nom = values[0];
                 String prenom = values[1];
                 Epreuve.Sexe sexe = Epreuve.Sexe.valueOf(values[2]);

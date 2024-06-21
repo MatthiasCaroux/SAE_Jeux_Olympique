@@ -25,6 +25,7 @@ public class Requete {
         }
     }
 
+    
     public String getColumName(String nomTable) {
         try {
             PreparedStatement requete = this.connexionBD.prepareStatement("Select * from " + nomTable);
@@ -655,7 +656,9 @@ public class Requete {
                 // requete.setInt(4, epreuve.getNbEquipes());
                 // requete.setInt(5, epreuve.getNbAthletesParEquipe());
                 requete.executeUpdate();
+                System.out.println("99999999999999999");
                 if (epreuve instanceof EpreuveIndividuelle) {
+                    System.out.println("99999999999999999");
                     this.ajouterAthleteDansEpreuveIndiv((EpreuveIndividuelle) epreuve, jeuxOlympique);
                     // jeuxOlympique.ajouteEpreuve((EpreuveIndividuelle) epreuve);
                     System.out.println("99999999999999999");
@@ -700,6 +703,7 @@ public class Requete {
             List<EpreuveIndividuelle> epreuves = new ArrayList<>();
             EpreuveIndividuelle epreuve;
             while (resultat.next()) {
+                System.out.println("1");
                 System.out.println(this.getIdJO(jeuxOlympique));
                 System.out.println("type : " + resultat.getString("type_Epreuve") + " " + resultat.getString("sexe_Epreuve"));
                 epreuve = new EpreuveIndividuelle(Epreuve.TypeSport.valueOf(resultat.getString("type_Epreuve")), Epreuve.Sexe.valueOf(resultat.getString("sexe_Epreuve")));
@@ -708,11 +712,14 @@ public class Requete {
                     jeuxOlympique.ajouterPays(athlete.getPays());
                 }
                 epreuves.add(epreuve);
+                System.out.println("}}}}}}}}}}}}}}}}}}}}}");
             }
             System.out.println("AA");
             // System.out.println(epreuves + " " + jeuxOlympique.getEpreuves());
             return epreuves;
         } catch (Exception e) {
+            System.out.println("ppppppppppp");
+            System.out.println(e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -746,6 +753,9 @@ public class Requete {
                 // jeuxOlympique.ajouteEpreuve(epreuve);
                 if (resultat.getBoolean("a_ete_joue")) {
                     jeuxOlympique.lancerUneEpreuve(epreuve);
+                    for (Pays pays : jeuxOlympique.getLesPays()) {
+                        this.majPays(pays);
+                    }
                 }
                 epreuves.add(epreuve);
                 System.out.println("ça marche");
@@ -771,10 +781,16 @@ public class Requete {
             requete.executeUpdate();
             System.out.println("1");
             jeuxOlympique.lancerUneEpreuve(epreuve);
+            System.out.println(jeuxOlympique.getLesPays() + "************");
+            for (Pays pays : jeuxOlympique.getLesPays()) {
+                this.majPays(pays);
+                System.out.println("je passsssssssssssssssss" + pays);
+            }
+            System.out.println(jeuxOlympique.getClassementPays() + "+*+*+*+*+*+*+*+*+*");
             System.out.println("2");
             for (Pays pays : jeuxOlympique.getLesPays()) {
                 this.majPays(pays);
-                System.out.println("je passsssssssssssssssss");
+                System.out.println("je passsssssssssssssssss" + pays);
             }
             System.out.println("ééééééééééééééééééééééééééééé");
         } catch (Exception e) {
@@ -948,6 +964,7 @@ public class Requete {
             requete.setInt(4, pays.getScoreTotal());
             requete.setString(5, pays.getNomPays());
             requete.executeUpdate();
+            System.out.println(pays.getMedailles() + ":::::::::::::::::");
             System.out.println("icic aussi ^^^^^^^^^^^^^^");
         } catch (Exception e) {
             throw new PaysInexistantException(pays.getNomPays());

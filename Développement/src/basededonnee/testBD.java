@@ -152,18 +152,20 @@ public class testBD {
         // } catch (Exception e) {
         //     // TODO: handle exception
         // }
-        JeuxOlympique jeux = new JeuxOlympique(2036, "Paris", "France");
+        JeuxOlympique jeux = new JeuxOlympique(2024, "Paris", "France");
         Requete requete = new Requete();
         System.out.println(requete.getAthletes() + "&&&&&&&&&&&&&&&&&&&&&&&&&&");
         // Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("Développement/donnees.csv");
-        Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("donnees.csv");
+        Map<Epreuve, List<Participant>> test = jeux.getParticipantsParEpreuve("Développement/donnees.csv");
         System.out.println(test.keySet() + "***********************");
         for (Epreuve epreuve : test.keySet()) {
             System.out.println("Attention !!!!!!!!!!");
             System.out.println(epreuve);
             requete.ajouteEpreuve(epreuve, jeux);
+            requete.lancerUneEpreuve(epreuve, jeux);
             System.out.println("je passs");
         }
+        System.out.println(jeux.getClassementPays() + "????????????????????????????,");
         for (Equipe equipe : requete.getLesEquipes()) {
             System.out.println(equipe.getLesAthlètes().size() + "!!!!!!!!!!!!!!!!!!!!!!");
         }
@@ -178,7 +180,8 @@ public class testBD {
         }
         System.out.println(jeux.getEpreuves());
         System.out.println(requete.getEpreuves(jeux));
-        System.out.println(jeux.getClassementPays());
+        // System.out.println(jeux.getClassementPays());
+        System.out.println(requete.getPays());
         // EpreuveCollective epreuveCollective = new EpreuveCollective(Epreuve.TypeSport.NatationRelais, Epreuve.Sexe.M);
         // try {
         //     System.out.println(requete.getEpreuve(epreuveCollective.getSport(), epreuveCollective.getSexe()));

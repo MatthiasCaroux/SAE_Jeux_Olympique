@@ -33,7 +33,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Actus">
+                        <Button fx:id="Actus" mnemonicParsing="false" prefHeight="80.0" prefWidth="113.0" style="-fx-background-color: #f1f1f1;" text="Actus">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -44,7 +44,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="Athlètes" mnemonicParsing="false" prefHeight="79.0" prefWidth="131.0" style="-fx-background-color: #f1f1f1;" text="Gérer Epreuves" underline="true">
+                        <Button fx:id="GererEpreuves" mnemonicParsing="false" prefHeight="79.0" prefWidth="131.0" style="-fx-background-color: #f1f1f1;" text="Gérer Epreuves" underline="true">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
