@@ -68,12 +68,6 @@ public class ApplicationJeuxOlympique extends Application {
     public void init() throws ClassNotFoundException, SQLException, IOException {
         this.modele = new JeuxOlympique(2024, "Paris", "Jeux Olympique de Paris 2024");
 
-        
-        // for (Epreuve epreuve : map.keySet()) {
-        //     for (Participant participant : map.get(epreuve)) {
-        //         epreuve.ajouterParticipant(participant);
-        //     }
-        // }
 
 
         this.constructionRequete();
@@ -247,11 +241,11 @@ public class ApplicationJeuxOlympique extends Application {
         Button button = (Button) scene.lookup(buttonId);
         if (button != null) {
             button.setOnAction(handler);
-            System.out.println("Bouton " + buttonId + " trouvé et configuré");
-        } else {
-            System.out.println("Bouton " + buttonId + " non trouvé dans " + scene);
-        }
-        System.out.println("Bouton configuré");
+            //System.out.println("Bouton " + buttonId + " trouvé et configuré");
+        } //else {
+            //System.out.println("Bouton " + buttonId + " non trouvé dans " + scene);
+        //}
+        //System.out.println("Bouton configuré");
     }
 
 
@@ -285,7 +279,6 @@ public class ApplicationJeuxOlympique extends Application {
         try {
             for (Pays pays : this.requete.getPays()) {
 
-                System.out.println("coucou");
                 BorderPane borderPane = new BorderPane();
                 borderPane.setPadding(new Insets(10, 50, 10, 50));
                 if (i%2 == 1){
@@ -300,7 +293,6 @@ public class ApplicationJeuxOlympique extends Application {
                 Label indice = new Label("" + i);
                 i++;
                 ImageView imageview = new ImageView(new Image("images/drapeaux/fr.png"));
-                System.out.println("l'image est a null");
                 switch (pays.getNomPays()) {
                     case "France":
                         imageview = new ImageView(new Image("images/drapeaux/fr.png"));
@@ -357,9 +349,6 @@ public class ApplicationJeuxOlympique extends Application {
                     imageview.setPreserveRatio(true);
                 }
     
-                System.out.println("salut");
-                System.out.println("salutsalut");
-    
                 Label label = new Label(pays.getNomPays());
                 HBox.setHgrow(label, Priority.ALWAYS);
     
@@ -370,13 +359,11 @@ public class ApplicationJeuxOlympique extends Application {
                 HBox hb2 = new HBox(10);
                 hb2.setAlignment(Pos.CENTER);
     
-                System.out.println("jesuisla");
     
                 ImageView medailleOr = new ImageView(new Image("images/médailles/medaille_or.png"));
                 medailleOr.setFitHeight(50);
                 medailleOr.setFitWidth(50);
     
-                System.out.println("jesuisla2");
     
                 Label or = new Label(pays.getMedailles().get("Or").toString());
                 HBox.setHgrow(or, Priority.ALWAYS);
@@ -411,7 +398,6 @@ public class ApplicationJeuxOlympique extends Application {
                 borderPane.setCenter(vb2);
                 borderPane.setRight(hb3);
     
-                System.out.println("Je suis dans la méthode getSceneClassement, dans le try");
     
                 vBox.getChildren().add(borderPane);
                 vBox.setAlignment(Pos.CENTER);
@@ -625,9 +611,7 @@ public class ApplicationJeuxOlympique extends Application {
         gridPane.setAlignment(Pos.TOP_CENTER); // Centrer le GridPane horizontalement
 
         try{
-            System.out.println("Je suis dans la méthode getSceneEquipe, dans le try");
             List<Equipe> equipes = this.requete.getLesEquipes();
-            System.out.println(equipes);
             for (int i = 0; i < equipes.size(); i++) {
                 Equipe equipe = equipes.get(i);
                 VBox vb = new VBox();
@@ -676,7 +660,6 @@ public class ApplicationJeuxOlympique extends Application {
     }
 
     public Scene getSceneGestionEpreuve(){
-        System.out.println("3");
         return this.sceneGestionEpreuve;
     }
 
@@ -787,7 +770,6 @@ public class ApplicationJeuxOlympique extends Application {
 
     public String getMotDePasseInscription() {
         PasswordField motDePasse = (PasswordField) sceneInscription.lookup("#champMDP");
-        System.out.println(motDePasse.getText());
         return motDePasse.getText();
     }
 
@@ -807,14 +789,12 @@ public class ApplicationJeuxOlympique extends Application {
             try {
                 this.requete.ajouterPays(pays.getNomPays());
             } catch (Exception e) {
-                System.out.println("le pays");
                 System.err.println(e.getMessage());
             }
         }
     }
 
     public static void main(String[] args) {
-        System.out.println("Lancement de l'application JavaFX");
         launch(args);
     }  
 }
